@@ -1,6 +1,6 @@
 package io.github.gitbucket.markedj.token;
 
-public class ListStartToken {
+public class ListStartToken implements Token {
 
     private boolean orderd;
 
