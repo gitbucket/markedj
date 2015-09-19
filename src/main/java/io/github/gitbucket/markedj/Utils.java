@@ -23,10 +23,6 @@ public class Utils {
         }
     }
 
-    public static boolean isNumber(String str){
-        return (str.length() > 0 && str.matches("^[0-9]+$"));
-    }
-
     public static boolean isEmpty(String str){
         return str == null || str.length() == 0;
     }

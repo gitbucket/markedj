@@ -163,7 +163,7 @@ public class Lexer {
                     src = src.substring(cap.get(0).length());
                     String bull = cap.get(2);
 
-                    context.pushToken(new ListStartToken(isNumber(bull)));
+                    context.pushToken(new ListStartToken(bull.matches("^[0-9]+\\.$")));
                     boolean next = false;
 
                     // Get each top-level item.
