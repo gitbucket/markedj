@@ -11,4 +11,9 @@ public class TextToken implements  Token {
     public String getText() {
         return text;
     }
+
+    @Override
+    public String getType() {
+        return "TextToken";
+    }
 }

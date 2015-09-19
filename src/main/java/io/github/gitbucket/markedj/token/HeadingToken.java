@@ -17,4 +17,10 @@ public class HeadingToken implements Token {
     public String getText() {
         return text;
     }
+
+    @Override
+    public String getType() {
+        return "HeadingToken";
+    }
+
 }

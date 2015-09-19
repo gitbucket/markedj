@@ -25,4 +25,10 @@ public class CodeToken implements Token {
     public boolean isEscaped() {
         return escaped;
     }
+
+    @Override
+    public String getType() {
+        return "CodeToken";
+    }
+
 }

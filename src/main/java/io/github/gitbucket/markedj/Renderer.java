@@ -66,8 +66,12 @@ public class Renderer {
         return "<" + listType + ">\n" + body + "</" + listType + ">\n";
     }
 
-    public String listitems(String text){
+    public String listitem(String text){
         return "<li>" + text + "</li>";
+    }
+
+    public String paragraph(String text){
+        return "<p>" + text + "</p>";
     }
 
     public String table(String header, String body){

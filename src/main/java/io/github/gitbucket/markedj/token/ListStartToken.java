@@ -11,4 +11,10 @@ public class ListStartToken implements Token {
     public boolean isOrderd() {
         return orderd;
     }
+
+    @Override
+    public String getType() {
+        return "ListStartToken";
+    }
+
 }

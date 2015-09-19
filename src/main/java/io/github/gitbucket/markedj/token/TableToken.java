@@ -26,4 +26,10 @@ public class TableToken implements  Token {
     public List<List<String>> getCells() {
         return cells;
     }
+
+    @Override
+    public String getType() {
+        return "TableToken";
+    }
+
 }

@@ -17,4 +17,10 @@ public class HtmlToken implements Token {
     public boolean isPre() {
         return pre;
     }
+
+    @Override
+    public String getType() {
+        return "HtmlToken";
+    }
+
 }
