@@ -99,7 +99,7 @@ public class InlineLexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     inLink = true;
-                    out.append(outputLink(cap, new Lexer.Link(cap.get(2), Optional.of(cap.get(3)))));
+                    out.append(outputLink(cap, new Lexer.Link(cap.get(2), Optional.ofNullable(cap.get(3)))));
                     inLink = false;
                     continue;
                 }
