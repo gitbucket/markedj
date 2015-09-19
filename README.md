@@ -31,5 +31,5 @@ import io.github.gitbucket.markedj.Marked;
 import io.github.gitbucket.markedj.Options;
 
 String markdown = ...
-String html = Marked.marked(md, new Options());
+String html = Marked.marked(markdown, new Options());
 ```
