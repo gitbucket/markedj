@@ -5,7 +5,7 @@ import static io.github.gitbucket.markedj.Utils.*;
 
 public class Renderer {
 
-    private Options options;
+    protected Options options;
 
     public Renderer(Options options){
         this.options = options;

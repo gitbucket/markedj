@@ -21,6 +21,13 @@ public class MarkedTest {
         assertEquals(expect, result);
     }
 
+    @Test
+    public void testAutolink() throws Exception {
+        String md = Marked.marked("<takezoe@gmail.com>", new Options());
+        String result = Marked.marked(md, new Options());
+        assertEquals("<p><a href=\"mailto:takezoe@gmail.com\">takezoe@gmail.com</a></p>", result);
+    }
+
 
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);

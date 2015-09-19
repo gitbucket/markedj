@@ -27,4 +27,8 @@ public class Utils {
         return (str.length() > 0 && str.matches("^[0-9]+$"));
     }
 
+    public static boolean isEmpty(String str){
+        return str == null || str.length() == 0;
+    }
+
 }

@@ -4,16 +4,13 @@ import io.github.gitbucket.markedj.rule.Rule;
 import io.github.gitbucket.markedj.token.*;
 
 import java.util.*;
-import java.util.regex.Pattern;
 
 import static io.github.gitbucket.markedj.Utils.*;
 
 public class Lexer {
 
-    private Options options;
-    private Stack<Token> tokens = new Stack<>();
-    private List<Link> links = new ArrayList<>();
-    private Map<String, Rule> rules = null;
+    protected Options options;
+    protected Map<String, Rule> rules = null;
 
     public Lexer(Options options){
         this.options = options;
@@ -26,19 +23,21 @@ public class Lexer {
         }
     }
 
-    public Stack<Token> lex(String src){
+    public LexerResult lex(String src){
+        LexerContext context = new LexerContext();
+
         token(src
             .replace("\r\n", "\n")
             .replace("\r", "\n")
             .replace("\t", "    ")
             .replace("\u00a0", " ")
             .replace("\u2424", "\n"),
-             true, false);
+             true, false, context);
 
-        return tokens;
+        return new LexerResult(context.getTokens(), context.getLinks());
     }
 
-    protected void token(String src, boolean top, boolean bq){
+    protected void token(String src, boolean top, boolean bq, LexerContext context){
         while(src.length() > 0){
             // newline
             {
@@ -46,9 +45,8 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     if(cap.get(0).length() > 1){
-                        tokens.push(new SpaceToken());
+                        context.pushToken(new SpaceToken());
                     }
-                    // TODO continue??
                 }
             }
 
@@ -59,9 +57,9 @@ public class Lexer {
                     src = src.substring(cap.get(0).length());
                     String code = cap.get(0).replaceAll("(?m)^ {4}", "");
                     if(!options.isPedantic()){
-                        tokens.push(new CodeToken(code.replaceAll("\\n+$", ""), Optional.empty(), false));
+                        context.pushToken(new CodeToken(code.replaceAll("\\n+$", ""), Optional.empty(), false));
                     } else {
-                        tokens.push(new CodeToken(code, Optional.empty(), false));
+                        context.pushToken(new CodeToken(code, Optional.empty(), false));
                     }
                     continue;
                 }
@@ -72,7 +70,7 @@ public class Lexer {
                 List<String> cap = rules.get("fences").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    tokens.push(new CodeToken(cap.get(3), Optional.ofNullable(cap.get(2)), false));
+                    context.pushToken(new CodeToken(cap.get(3), Optional.ofNullable(cap.get(2)), false));
                     continue;
                 }
             }
@@ -82,7 +80,7 @@ public class Lexer {
                 List<String> cap = rules.get("heading").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    tokens.push(new HeadingToken(cap.get(1).length(), cap.get(2)));
+                    context.pushToken(new HeadingToken(cap.get(1).length(), cap.get(2)));
                     continue;
                 }
             }
@@ -117,7 +115,7 @@ public class Lexer {
                         cells2.add(Arrays.asList(cell.split(" *\\| *")));
                     }
 
-                    tokens.push(new TableToken(header2, align2, cells2));
+                    context.pushToken(new TableToken(header2, align2, cells2));
                     continue;
                 }
             }
@@ -128,9 +126,9 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     if(cap.get(2).equals("=")){
-                        tokens.push(new HeadingToken(1, cap.get(1)));
+                        context.pushToken(new HeadingToken(1, cap.get(1)));
                     } else {
-                        tokens.push(new HeadingToken(2, cap.get(1)));
+                        context.pushToken(new HeadingToken(2, cap.get(1)));
                     }
                     continue;
                 }
@@ -141,7 +139,7 @@ public class Lexer {
                 List<String> cap = rules.get("hr").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    tokens.push(new HrToken());
+                    context.pushToken(new HrToken());
                     continue;
                 }
             }
@@ -151,9 +149,9 @@ public class Lexer {
                 List<String> cap = rules.get("blockquote").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    tokens.push(new BlockquoteStartToken());
-                    token(cap.get(0).replaceAll("(?m) *> ?", ""), top, true);
-                    tokens.push(new BlockquoteEndToken());
+                    context.pushToken(new BlockquoteStartToken());
+                    token(cap.get(0).replaceAll("(?m) *> ?", ""), top, true, context);
+                    context.pushToken(new BlockquoteEndToken());
                     continue;
                 }
             }
@@ -165,7 +163,7 @@ public class Lexer {
                     src = src.substring(cap.get(0).length());
                     String bull = cap.get(2);
 
-                    tokens.push(new ListStartToken(isNumber(bull)));
+                    context.pushToken(new ListStartToken(isNumber(bull)));
                     boolean next = false;
 
                     // Get each top-level item.
@@ -175,7 +173,7 @@ public class Lexer {
                             String item = cap.get(i);
 
                             // Remove the list item's bullet
-                            // so it is seen as the next token.
+                            // so it is seen as the nextToken token.
                             int space = item.length();
                             item = item.replaceAll("^ *([*+-]|\\d+\\.) +", "");
 
@@ -190,15 +188,15 @@ public class Lexer {
                                 }
                             }
 
-                            // Determine whether the next list item belongs here.
-                            // Backpedal if it does not belong in this list.
-                            if(options.isSmartLists() && i != cap.size() - 1){
-                                Pattern p = Pattern.compile(Grammer.BULLET);
-                                if(p.matcher(cap.get(i + 1)).find()){
-                                    src = String.join("\n", cap.subList(i + 1, cap.size())) + src;
-                                    i = i - 1;
-                                }
-                            }
+//                            // Determine whether the nextToken list item belongs here.
+//                            // Backpedal if it does not belong in this list.
+//                            if(options.isSmartLists() && i != cap.size() - 1){
+//                                Pattern p = Pattern.compile(Grammer.BULLET);
+//                                if(p.matcher(cap.get(i + 1)).find()){
+//                                    src = String.join("\n", cap.subList(i + 1, cap.size())) + src;
+//                                    i = i - 1;
+//                                }
+//                            }
 
                             // Determine whether item is loose or not.
                             // Use: /(^|\n)(?! )[^\n]+\n\n(?!\s*$)/
@@ -212,16 +210,16 @@ public class Lexer {
                             }
 
                             if(loose){
-                                tokens.push(new LooseItemStartToken());
+                                context.pushToken(new LooseItemStartToken());
                             } else {
-                                tokens.push(new ListItemStartToken());
+                                context.pushToken(new ListItemStartToken());
                             }
 
-                            token(item, false, bq);
-                            tokens.push(new ListItemEndToken());
+                            token(item, false, bq, context);
+                            context.pushToken(new ListItemEndToken());
                         }
                     }
-                    tokens.push(new ListEndToken());
+                    context.pushToken(new ListEndToken());
                     continue;
                 }
             }
@@ -232,9 +230,9 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     if(options.isSanitize()){
-                        tokens.push(new ParagraphToken(cap.get(0)));
+                        context.pushToken(new ParagraphToken(cap.get(0)));
                     } else {
-                        tokens.push(new HtmlToken(cap.get(0),
+                        context.pushToken(new HtmlToken(cap.get(0),
                                 !options.isSanitize() && (cap.get(0).equals("pre") || cap.get(0).equals("script") || cap.get(0).equals("style"))));
                     }
                     continue;
@@ -242,11 +240,11 @@ public class Lexer {
             }
 
             // def
-            if(top){
+            if(!bq && top){
                 List<String> cap = rules.get("def").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    links.add(new Link(cap.get(2), Optional.of(cap.get(3)))); // TODO Stack??
+                    context.defineLink(cap.get(1).toLowerCase(), new Link(cap.get(2), Optional.of(cap.get(3))));
                     continue;
                 }
             }
@@ -281,7 +279,7 @@ public class Lexer {
                         cells2.add(Arrays.asList(cell.replaceAll("^ *\\| *| *\\| *$", "").split(" *\\| *")));
                     }
 
-                    tokens.push(new TableToken(header2, align2, cells2));
+                    context.pushToken(new TableToken(header2, align2, cells2));
                     continue;
                 }
             }
@@ -292,9 +290,9 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     if(cap.get(1).charAt(cap.get(1).length() - 1) == '\n'){
-                        tokens.push(new ParagraphToken(cap.get(1).substring(0, cap.get(1).length() - 1)));
+                        context.pushToken(new ParagraphToken(cap.get(1).substring(0, cap.get(1).length() - 1)));
                     } else {
-                        tokens.push(new ParagraphToken(cap.get(1)));
+                        context.pushToken(new ParagraphToken(cap.get(1)));
                     }
                     continue;
                 }
@@ -305,7 +303,7 @@ public class Lexer {
                 List<String> cap = rules.get("text").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    tokens.push(new TextToken((cap.get(0))));
+                    context.pushToken(new TextToken((cap.get(0))));
                     continue;
                 }
             }
@@ -314,6 +312,46 @@ public class Lexer {
             //println("Infinite loop on byte: " + source.charAt(0).toByte)
         }
     }
+
+    public static class LexerContext {
+        private Stack<Token> tokens = new Stack<>();
+        private Map<String, Link> links = new HashMap<>();
+
+        public void pushToken(Token token){
+            this.tokens.push(token);
+        }
+
+        public void defineLink(String key, Link link){
+            this.links.put(key, link);
+        }
+
+        public Stack<Token> getTokens() {
+            return tokens;
+        }
+
+        public Map<String, Link> getLinks() {
+            return links;
+        }
+    }
+
+    public static class LexerResult {
+        private Stack<Token> tokens;
+        private Map<String, Link> links = new HashMap<>();
+
+        public LexerResult(Stack<Token> tokens, Map<String, Link> links){
+            this.tokens = tokens;
+            this.links = links;
+        }
+
+        public Stack<Token> getTokens() {
+            return tokens;
+        }
+
+        public Map<String, Link> getLinks() {
+            return links;
+        }
+    }
+
 
     public static class Link {
         private String href;
