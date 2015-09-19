@@ -24,9 +24,13 @@ public class Grammer {
     public static String BLOCK_LIST        = "^( *)(" + BULLET + ") [\\s\\S]+?(?:" + HR + "|\\n+(?=" + DEF + ")|\\n{2,}(?! )(?!\\1" + BULLET + " )\\n*|\\s*$)";
     public static String BLOCK_DEF         = "^ *\\[([^\\]]+)\\]: *<?([^\\s>]+)>?(?: +[\"(]([^\\n]+)[\")])? *(?:\\n+|$)";
     public static String BLOCK_PARAGRAPH   = "^((?:[^\\n]+\\n?(?!" + BLOCK_HR + "|" + BLOCK_HEADING + "|" + BLOCK_LHEADING + "|" + BLOCK_BLOCKQUOTE + "|<" +TAG + "|" + BLOCK_DEF + "))+)\\n*";
+    public static String BLOCK_GFM_FENCES  = "^ *(`{3,}|~{3,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
 
     public static Map<String, Rule> BLOCK_RULES = new HashMap<>();
-    {
+    public static Map<String, Rule> BLOCK_GFM_RULES = new HashMap<>();
+    public static Map<String, Rule> BLOCK_TABLE_RULES = new HashMap<>();
+
+    static {
         BLOCK_RULES.put("newline", new FindFirstRule("^\n+"));
         BLOCK_RULES.put("code", new FindFirstRule("^( {4}[^\n]+\n*)+"));
         BLOCK_RULES.put("fences", new NoopRule());
@@ -42,18 +46,11 @@ public class Grammer {
         BLOCK_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH));
         BLOCK_RULES.put("text", new FindFirstRule("^[^\n]+"));
         BLOCK_RULES.put("item", new FindAllRule(("(?m)^( *)(" + BULLET + ") [^\\n]*(?:\\n(?!\\1" + BULLET + " )[^\\n]*)*")));
-    }
 
-    public static String BLOCK_GFM_FENCES = "^ *(`{3,}|~{3,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
-
-    public static Map<String, Rule> BLOCK_GFM_RULES = new HashMap<>();
-    static {
         BLOCK_GFM_RULES.putAll(BLOCK_RULES);
         BLOCK_GFM_RULES.put("fences", new FindFirstRule(BLOCK_GFM_FENCES));
         BLOCK_GFM_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH.replace("(?!", "(?!" + BLOCK_GFM_FENCES.replace("\\1", "\\2") + "|" + BLOCK_LIST.replace("\\1", "\\3") + "|")));
         BLOCK_GFM_RULES.put("heading", new FindFirstRule("^ *(#{1,6}) +([^\\n]+?) *#* *(?:\\n+|$)"));
-    }
-
 // TODO
 //  block.gfm.paragraph = replace(block.paragraph)
 //    ('(?!', '(?!'
@@ -61,8 +58,6 @@ public class Grammer {
 //      + block.list.source.replace('\\1', '\\3') + '|')
 //    ();
 
-    public static Map<String, Rule> BLOCK_TABLE_RULES = new HashMap<>();
-    static {
         BLOCK_TABLE_RULES.putAll(BLOCK_GFM_RULES);
         BLOCK_TABLE_RULES.put("nptable", new FindFirstRule("^ *(\\S.*\\|.*)\\n *([-:]+ *\\|[-| :]*)\\n((?:.*\\|.*(?:\\n|$))*)\\n*"));
         BLOCK_TABLE_RULES.put("table", new FindFirstRule("^ *\\|(.+)\\n *\\|( *[-:]+[-| :]*)\\n((?: *\\|.*(?:\\n|$))*)\\n*"));
@@ -72,6 +67,7 @@ public class Grammer {
     public static String HREF   = "\\s*<?([\\s\\S]*?)>?(?:\\s+['\"]([\\s\\S]*?)['\"])?\\s*";
 
     public static Map<String, Rule> INLINE_RULES = new HashMap<>();
+
     static {
         INLINE_RULES.put("escape", new FindFirstRule("^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])"));
         INLINE_RULES.put("autolink", new FindFirstRule("^<([^ >]+(@|:\\/)[^ >]+)>"));

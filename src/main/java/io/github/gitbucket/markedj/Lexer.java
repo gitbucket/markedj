@@ -72,7 +72,7 @@ public class Lexer {
                 List<String> cap = rules.get("fences").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    tokens.push(new CodeToken(cap.get(3), Optional.of(cap.get(2)), false));
+                    tokens.push(new CodeToken(cap.get(3), Optional.ofNullable(cap.get(2)), false));
                     continue;
                 }
             }
@@ -90,34 +90,36 @@ public class Lexer {
             // table no leading pipe (gfm)
             if(top){
                 List<String> cap = rules.get("nptable").exec(src);
-                src = src.substring(cap.get(0).length());
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
 
-                String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
-                String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
-                String[] cells  = cap.get(3).replaceAll("\\n$", "").split(" \\n");
+                    String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
+                    String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
+                    String[] cells  = cap.get(3).replaceAll("\\n$", "").split(" \\n");
 
-                List<String> header2 = Arrays.asList(header);
+                    List<String> header2 = Arrays.asList(header);
 
-                List<Optional<String>> align2 = new ArrayList<>();
-                for (String s : align) {
-                    if(s.matches("^ *-+: *$")){
-                        align2.add(Optional.of("right"));
-                    } else if(s.matches("^ *:-+: *$")){
-                        align2.add(Optional.of("center"));
-                    } else if(s.matches("^ *:-+ *$")){
-                        align2.add(Optional.of("left"));
-                    } else {
-                        align2.add(Optional.empty());
+                    List<Optional<String>> align2 = new ArrayList<>();
+                    for (String s : align) {
+                        if(s.matches("^ *-+: *$")){
+                            align2.add(Optional.of("right"));
+                        } else if(s.matches("^ *:-+: *$")){
+                            align2.add(Optional.of("center"));
+                        } else if(s.matches("^ *:-+ *$")){
+                            align2.add(Optional.of("left"));
+                        } else {
+                            align2.add(Optional.empty());
+                        }
                     }
-                }
 
-                List<List<String>> cells2 = new ArrayList<>();
-                for (String cell : cells) {
-                    cells2.add(Arrays.asList(cell.split(" *\\| *")));
-                }
+                    List<List<String>> cells2 = new ArrayList<>();
+                    for (String cell : cells) {
+                        cells2.add(Arrays.asList(cell.split(" *\\| *")));
+                    }
 
-                tokens.push(new TableToken(header2, align2, cells2));
-                continue;
+                    tokens.push(new TableToken(header2, align2, cells2));
+                    continue;
+                }
             }
 
             // lheading
@@ -136,7 +138,7 @@ public class Lexer {
 
             // hr
             {
-                List<String> cap = rules.get("he").exec(src);
+                List<String> cap = rules.get("hr").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     tokens.push(new HrToken());
@@ -168,7 +170,7 @@ public class Lexer {
 
                     cap = rules.get("item").exec(src);
                     if(!cap.isEmpty()){
-                        for(int i = 0; i < cap.size();){
+                        for(int i = 0; i < cap.size(); i++){
                             String item = cap.get(i);
 
                             // Remove the list item's bullet
@@ -251,34 +253,36 @@ public class Lexer {
             // table (gfm)
             if(top){
                 List<String> cap = rules.get("table").exec(src);
-                src = src.substring(cap.get(0).length());
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
 
-                String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
-                String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
-                String[] cells  = cap.get(3).replaceAll("(?: *\\| *)?\\n$", "").split(" \\n");
+                    String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
+                    String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
+                    String[] cells  = cap.get(3).replaceAll("(?: *\\| *)?\\n$", "").split("\\n");
 
-                List<String> header2 = Arrays.asList(header);
+                    List<String> header2 = Arrays.asList(header);
 
-                List<Optional<String>> align2 = new ArrayList<>();
-                for (String s : align) {
-                    if(s.matches("^ *-+: *$")){
-                        align2.add(Optional.of("right"));
-                    } else if(s.matches("^ *:-+: *$")){
-                        align2.add(Optional.of("center"));
-                    } else if(s.matches("^ *:-+ *$")){
-                        align2.add(Optional.of("left"));
-                    } else {
-                        align2.add(Optional.empty());
+                    List<Optional<String>> align2 = new ArrayList<>();
+                    for (String s : align) {
+                        if(s.matches("^ *-+: *$")){
+                            align2.add(Optional.of("right"));
+                        } else if(s.matches("^ *:-+: *$")){
+                            align2.add(Optional.of("center"));
+                        } else if(s.matches("^ *:-+ *$")){
+                            align2.add(Optional.of("left"));
+                        } else {
+                            align2.add(Optional.empty());
+                        }
                     }
-                }
 
-                List<List<String>> cells2 = new ArrayList<>();
-                for (String cell : cells) {
-                    cells2.add(Arrays.asList(cell.replaceAll("^ *\\| *| *\\| *$", "").split(" *\\| *")));
-                }
+                    List<List<String>> cells2 = new ArrayList<>();
+                    for (String cell : cells) {
+                        cells2.add(Arrays.asList(cell.replaceAll("^ *\\| *| *\\| *$", "").split(" *\\| *")));
+                    }
 
-                tokens.push(new TableToken(header2, align2, cells2));
-                continue;
+                    tokens.push(new TableToken(header2, align2, cells2));
+                    continue;
+                }
             }
 
             // top-level paragraph

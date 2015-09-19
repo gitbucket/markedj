@@ -21,7 +21,7 @@ public class Parser {
     }
 
     public String parse(Stack<Token> src){
-        InlineLexer inline = new InlineLexer(Grammer.INLINE_RULES, options, renderer);
+        inline = new InlineLexer(Grammer.INLINE_RULES, options, renderer);
 
         StringBuilder out = new StringBuilder();
 
@@ -96,6 +96,8 @@ public class Parser {
                 for(int i = 0; i < t.getCells().size(); i++){
                     outCell.setLength(0);
                     for(int j = 0; j < t.getCells().get(i).size(); j++){
+                        System.out.println(i + ":" + j);
+                        System.out.println("aligns: " + t.getAlign().size());
                         outCell.append(renderer.tablecell(
                                 inline.output(t.getCells().get(i).get(j)), new Renderer.TableCellFlags(false, t.getAlign().get(j))));
                     }
@@ -164,7 +166,9 @@ public class Parser {
                 return renderer.paragraph(parseText());
             }
             default: {
-                throw new RuntimeException("Unexpected token: " + token);
+                //throw new RuntimeException("Unexpected token: " + token);
+                return "Unexpected token: " + token;
+
             }
         }
     }

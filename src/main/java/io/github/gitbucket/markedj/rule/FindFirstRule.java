@@ -18,7 +18,7 @@ public class FindFirstRule implements Rule {
         Matcher matcher = pattern.matcher(src);
         if(matcher.find()){
             List<String> result = new ArrayList<>();
-            for(int i = 0; i < matcher.groupCount(); i++){
+            for(int i = 0; i <= matcher.groupCount(); i++){
                 result.add(matcher.group(i));
             }
             return result;
