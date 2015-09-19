@@ -24,7 +24,7 @@ At first, add following dependency into your `pom.xml`:
 </dependencies>
 ```
 
-You can easily use markedj in your program using a static method of `io.github.gitbucket.markedj.Marked`.
+You can easily use markedj via `io.github.gitbucket.markedj.Marked`.
 
 ```java
 import io.github.gitbucket.markedj.Marked;
