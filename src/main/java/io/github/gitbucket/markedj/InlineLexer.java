@@ -113,7 +113,12 @@ public class InlineLexer {
                 }
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    String key = or(cap.get(2), cap.get(1)).replaceAll("\\s+", "");
+                    String key;
+                    if(cap.size() > 2){
+                        key = cap.get(2).replaceAll("\\s+", "");
+                    } else {
+                        key = cap.get(1).replaceAll("\\s+", "");
+                    }
                     Lexer.Link link = links.get(key);
                     if(link == null || isEmpty(link.getHref())){
                         out.append(cap.get(0).charAt(0));
