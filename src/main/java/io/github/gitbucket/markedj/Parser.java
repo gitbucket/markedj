@@ -26,8 +26,10 @@ public class Parser {
         StringBuilder out = new StringBuilder();
 
         // reverse
-        tokens = new Stack<Token>();
-        src.stream().forEach(e -> tokens.push(e));
+        tokens = new Stack<>();
+        while(!src.isEmpty()){
+            tokens.push(src.pop());
+        }
 
         while(next().isPresent()){
             out.append(tok());
@@ -96,8 +98,6 @@ public class Parser {
                 for(int i = 0; i < t.getCells().size(); i++){
                     outCell.setLength(0);
                     for(int j = 0; j < t.getCells().get(i).size(); j++){
-                        System.out.println(i + ":" + j);
-                        System.out.println("aligns: " + t.getAlign().size());
                         outCell.append(renderer.tablecell(
                                 inline.output(t.getCells().get(i).get(j)), new Renderer.TableCellFlags(false, t.getAlign().get(j))));
                     }
@@ -162,13 +162,15 @@ public class Parser {
                     return renderer.html(t.getText());
                 }
             }
+            case "ParagraphToken": {
+                ParagraphToken t = (ParagraphToken) token;
+                return renderer.paragraph(inline.output(t.getText()));
+            }
             case "TextToken": {
                 return renderer.paragraph(parseText());
             }
             default: {
-                //throw new RuntimeException("Unexpected token: " + token);
-                return "Unexpected token: " + token;
-
+                throw new RuntimeException("Unexpected token: " + token);
             }
         }
     }

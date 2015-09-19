@@ -168,7 +168,8 @@ public class Lexer {
                     tokens.push(new ListStartToken(isNumber(bull)));
                     boolean next = false;
 
-                    cap = rules.get("item").exec(src);
+                    // Get each top-level item.
+                    cap = rules.get("item").exec(cap.get(0));
                     if(!cap.isEmpty()){
                         for(int i = 0; i < cap.size(); i++){
                             String item = cap.get(i);

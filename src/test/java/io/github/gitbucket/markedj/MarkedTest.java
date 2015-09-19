@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 import static org.junit.Assert.*;
 
@@ -17,8 +16,9 @@ public class MarkedTest {
     @Test
     public void testMarked() throws Exception {
         String md = loadResourceAsString("ldap_settings.md");
-        String html = Marked.marked(md, new Options());
-        System.out.println(html);
+        String result = Marked.marked(md, new Options());
+        String expect = loadResourceAsString("ldap_settings.html");
+        assertEquals(expect, result);
     }
 
 
