@@ -2,6 +2,10 @@ package io.github.gitbucket.markedj;
 
 public class Utils {
 
+    public static String escape(String html){
+        return escape(html, false);
+    }
+
     public static String escape(String html, boolean encode){
         if(!encode){
             html = html.replaceAll("&(?!#?\\w+;)", "&amp;");

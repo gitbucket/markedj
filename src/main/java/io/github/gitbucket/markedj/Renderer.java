@@ -106,7 +106,7 @@ public class Renderer {
         return "<code>" + text + "</code>";
     }
 
-    public String br(String text){
+    public String br(){
         if(options.isXhtml()){
             return "<br/>";
         } else {

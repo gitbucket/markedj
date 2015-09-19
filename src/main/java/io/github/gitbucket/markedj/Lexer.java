@@ -5,7 +5,6 @@ import io.github.gitbucket.markedj.token.*;
 
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static io.github.gitbucket.markedj.Utils.*;
 
@@ -311,7 +310,7 @@ public class Lexer {
         }
     }
 
-    private class Link {
+    public static class Link {
         private String href;
         private Optional<String> title;
 
