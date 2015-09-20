@@ -136,7 +136,7 @@ public class InlineLexer {
                 List<String> cap = rules.get("strong").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    out.append(renderer.strong(or(cap.get(2), cap.get(1))));
+                    out.append(renderer.strong(output(or(cap.get(2), cap.get(1)))));
                     continue;
                 }
             }
@@ -146,7 +146,7 @@ public class InlineLexer {
                 List<String> cap = rules.get("em").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    out.append(renderer.em(or(cap.get(2), cap.get(1))));
+                    out.append(renderer.em(output(or(cap.get(2), cap.get(1)))));
                     continue;
                 }
             }
@@ -176,7 +176,7 @@ public class InlineLexer {
                 List<String> cap = rules.get("del").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    out.append(renderer.del(cap.get(1)));
+                    out.append(renderer.del(output(cap.get(1))));
                     continue;
                 }
             }
