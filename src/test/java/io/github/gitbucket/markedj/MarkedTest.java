@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +22,24 @@ public class MarkedTest {
         String expect = loadResourceAsString("ldap_settings.html");
         assertEquals(expect, result);
     }
+
+    @Test
+    public void testMarked2() throws Exception {
+        String md = loadResourceAsString("gitbucket.md");
+        String result = Marked.marked(md, new Options());
+        String expect = loadResourceAsString("gitbucket.html");
+        assertEquals(expect, result);
+    }
+
+    @Test
+    public void testMarked3() throws Exception {
+        String md = loadResourceAsString("wikilink.md");
+        String result = Marked.marked(md, new Options());
+        String expect = loadResourceAsString("wikilink.html");
+        assertEquals(expect, result);
+//        Files.write(Paths.get("wikilink.html"), result.getBytes("UTF-8"));
+    }
+
 
     @Test
     public void testAutolink() throws Exception {
