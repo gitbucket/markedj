@@ -67,9 +67,13 @@ public class Grammer {
     public static String HREF   = "\\s*<?([\\s\\S]*?)>?(?:\\s+['\"]([\\s\\S]*?)['\"])?\\s*";
 
     public static Map<String, Rule> INLINE_RULES = new HashMap<>();
+    public static Map<String, Rule> INLINE_GFM_RULES = new HashMap<>();
+
+    public static String INLINE_ESCAPE = "^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])";
+    public static String INLINE_TEXT   = "^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)";
 
     static {
-        INLINE_RULES.put("escape", new FindFirstRule("^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])"));
+        INLINE_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE));
         INLINE_RULES.put("autolink", new FindFirstRule("^<([^ >]+(@|:\\/)[^ >]+)>"));
         INLINE_RULES.put("url", new NoopRule());
         INLINE_RULES.put("tag", new FindFirstRule("^<!--[\\s\\S]*?-->|^<\\/?\\w+(?:\"[^\"]*\"|'[^']*'|[^'\">])*?>"));
@@ -82,6 +86,12 @@ public class Grammer {
         INLINE_RULES.put("br", new FindFirstRule("^ {2,}\\n(?!\\s*$)"));
         INLINE_RULES.put("del", new NoopRule());
         INLINE_RULES.put("text", new FindFirstRule("^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)"));
+
+        INLINE_GFM_RULES.putAll(INLINE_RULES);
+        INLINE_GFM_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE.replace("])", "~|])")));
+        INLINE_GFM_RULES.put("url", new FindFirstRule("^(https?:\\/\\/[^\\s<]+[^<.,:;\"')\\]\\s])"));
+        INLINE_GFM_RULES.put("del", new FindFirstRule("^~~(?=\\S)([\\s\\S]*?\\S)~~"));
+        INLINE_GFM_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|")));
     }
 
 }

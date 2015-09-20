@@ -1,5 +1,6 @@
 package io.github.gitbucket.markedj;
 
+import io.github.gitbucket.markedj.rule.Rule;
 import io.github.gitbucket.markedj.token.*;
 
 import java.util.Map;
@@ -17,7 +18,14 @@ public class Parser {
     }
 
     public String parse(Stack<Token> src, Map<String, Lexer.Link> links){
-        ParserContext context = new ParserContext(src, links);
+        Map<String, Rule> rules;
+        if(options.isGfm()){
+            rules = Grammer.INLINE_GFM_RULES;
+        } else {
+            rules = Grammer.INLINE_RULES;
+        }
+
+        ParserContext context = new ParserContext(src, links, rules);
         StringBuilder out = new StringBuilder();
 
         while(context.nextToken().isPresent()){
@@ -153,14 +161,14 @@ public class Parser {
         private Token token = null;
         private InlineLexer inline;
 
-        public ParserContext(Stack<Token> src, Map<String, Lexer.Link> links){
+        public ParserContext(Stack<Token> src, Map<String, Lexer.Link> links, Map<String, Rule> rules){
             // reverse
             tokens = new Stack<>();
             while(!src.isEmpty()){
                 tokens.push(src.pop());
             }
 
-            inline = new InlineLexer(Grammer.INLINE_RULES, links, options, renderer);
+            inline = new InlineLexer(rules, links, options, renderer);
         }
 
         public Token currentToken(){
