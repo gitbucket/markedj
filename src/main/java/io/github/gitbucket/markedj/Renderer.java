@@ -139,6 +139,10 @@ public class Renderer {
         }
     }
 
+    public String nolink(String text){
+        return escape(text);
+    }
+
     public String text(String text){
         return text;
     }

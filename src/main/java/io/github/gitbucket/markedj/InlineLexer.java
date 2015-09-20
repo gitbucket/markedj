@@ -121,7 +121,7 @@ public class InlineLexer {
                     }
                     Lexer.Link link = links.get(key);
                     if(link == null || isEmpty(link.getHref())){
-                        out.append(outputNoLink(cap.get(0)));
+                        out.append(renderer.nolink(cap.get(0)));
                         continue;
                     }
                     inLink = true;
@@ -197,10 +197,6 @@ public class InlineLexer {
             //println("Infinite loop on byte: " + source.charAt(0).toByte)
         }
         return out.toString();
-    }
-
-    protected String outputNoLink(String text){
-        return escape(text);
     }
 
     protected String outputLink(List<String> cap, Lexer.Link link){
