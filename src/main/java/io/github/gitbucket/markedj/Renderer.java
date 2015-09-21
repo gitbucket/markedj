@@ -67,11 +67,11 @@ public class Renderer {
     }
 
     public String listitem(String text){
-        return "<li>" + text + "</li>";
+        return "<li>" + text + "</li>\n";
     }
 
     public String paragraph(String text){
-        return "<p>" + text + "</p>";
+        return "<p>" + text + "</p>\n";
     }
 
     public String table(String header, String body){
@@ -89,11 +89,9 @@ public class Renderer {
         } else {
             cellType = "td";
         }
-        String tag = flags.getAlign().map(align ->  {
-            return "<" + cellType + " style=\"text-align: " + align + "\">";
-        }).orElseGet(() -> {
-            return "<" + cellType + ">";
-        });
+        String tag = flags.getAlign()
+                .map(align    -> "<" + cellType + " style=\"text-align: " + align + "\">")
+                .orElseGet(() -> "<" + cellType + ">");
 
         return tag + content + "</" + cellType + ">\n";
     }
