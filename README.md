@@ -28,7 +28,6 @@ You can easily use markedj via `io.github.gitbucket.markedj.Marked`.
 
 ```java
 import io.github.gitbucket.markedj.Marked;
-import io.github.gitbucket.markedj.Options;
 
 String markdown = ...
 String html = Marked.marked(markdown);
