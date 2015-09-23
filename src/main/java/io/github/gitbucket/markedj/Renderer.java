@@ -1,6 +1,5 @@
 package io.github.gitbucket.markedj;
 
-import java.util.Optional;
 import static io.github.gitbucket.markedj.Utils.*;
 
 public class Renderer {
@@ -11,10 +10,10 @@ public class Renderer {
         this.options = options;
     }
 
-    public String code(String code, Optional<String> lang, boolean escaped){
-        return lang.map(l -> {
+    public String code(String code, String lang, boolean escaped){
+        if(lang != null){
             StringBuilder sb = new StringBuilder();
-            sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(l, true) + "\">");
+            sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + "\">");
             if(escaped){
                 sb.append(code);
             } else {
@@ -22,7 +21,7 @@ public class Renderer {
             }
             sb.append("\n</code></pre>\n");
             return sb.toString();
-        }).orElseGet(() -> {
+        } else {
             StringBuilder sb = new StringBuilder();
             sb.append("<pre><code>");
             if(escaped){
@@ -32,7 +31,7 @@ public class Renderer {
             }
             sb.append("\n</code></pre>\n");
             return sb.toString();
-        });
+        }
     }
 
     public String blockquote(String quote){
@@ -89,11 +88,13 @@ public class Renderer {
         } else {
             cellType = "td";
         }
-        String tag = flags.getAlign()
-                .map(align    -> "<" + cellType + " style=\"text-align: " + align + "\">")
-                .orElseGet(() -> "<" + cellType + ">");
 
-        return tag + content + "</" + cellType + ">\n";
+        String align = flags.getAlign();
+        if(align != null){
+            return "<" + cellType + " style=\"text-align: " + align + "\">" + content + "</" + cellType + ">\n";
+        } else {
+            return "<" + cellType + ">" + content + "</" + cellType + ">\n";
+        }
     }
 
     public String strong(String text){
@@ -120,16 +121,25 @@ public class Renderer {
         return "<del>" + text + "</del>";
     }
 
-    public String link(String href, Optional<String> title, String text){
+    public String link(String href, String title, String text){
         if(options.isSanitize()){
             // TODO
         }
-        String titleAttr = title.map(t -> " title=\"" + t + "\"").orElseGet(() -> "");
+
+        String titleAttr = "";
+        if(title != null){
+            titleAttr = " title=\"" + title + "\"";
+        }
+
         return "<a href=\"" + href + "\"" + titleAttr + ">" + text + "</a>";
     }
 
-    public String image(String href, Optional<String> title, String text){
-        String titleAttr = title.map(t -> " title=\"" + t + "\"").orElseGet(() -> "");
+    public String image(String href, String title, String text){
+        String titleAttr = "";
+        if(title != null){
+            titleAttr = " title=\"" + title + "\"";
+        }
+
         if(options.isXhtml()){
             return "<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr + "/>";
         } else {
@@ -147,9 +157,9 @@ public class Renderer {
 
     public static class TableCellFlags {
         private boolean header;
-        private Optional<String> align;
+        private String align;
 
-        public TableCellFlags(boolean header, Optional<String> align){
+        public TableCellFlags(boolean header, String align){
             this.header = header;
             this.align = align;
         }
@@ -158,7 +168,7 @@ public class Renderer {
             return header;
         }
 
-        public Optional<String> getAlign() {
+        public String getAlign() {
             return align;
         }
     }

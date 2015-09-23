@@ -4,7 +4,6 @@ import io.github.gitbucket.markedj.rule.Rule;
 import io.github.gitbucket.markedj.token.*;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Stack;
 
 public class Parser {
@@ -28,7 +27,7 @@ public class Parser {
         ParserContext context = new ParserContext(src, links, rules);
         StringBuilder out = new StringBuilder();
 
-        while(context.nextToken().isPresent()){
+        while(context.nextToken() != null){
             out.append(tok(context));
         }
 
@@ -38,11 +37,11 @@ public class Parser {
     protected String parseText(ParserContext context){
         StringBuilder body = new StringBuilder(((TextToken) context.currentToken()).getText());
         while(true){
-            Optional<Token> p = context.peekToken();
-            if(!p.isPresent() || !(p.get().getType().equals("TextToken"))){
+            Token p = context.peekToken();
+            if(p == null || !p.getType().equals("TextToken")){
                 break;
             }
-            body.append("\n" + ((TextToken) context.nextToken().get()).getText());
+            body.append("\n" + ((TextToken) context.nextToken()).getText());
         }
         return context.getInlineLexer().output(body.toString());
     }
@@ -88,8 +87,8 @@ public class Parser {
             case "BlockquoteStartToken": {
                 StringBuilder body = new StringBuilder();
                 while(true){
-                    Optional<Token> n = context.nextToken();
-                    if(!n.isPresent() || n.get().getType().equals("BlockquoteEndToken")){
+                    Token n = context.nextToken();
+                    if(n == null || n.getType().equals("BlockquoteEndToken")){
                         break;
                     }
                     body.append(tok(context));
@@ -100,8 +99,8 @@ public class Parser {
                 ListStartToken t = (ListStartToken) context.currentToken();
                 StringBuilder out = new StringBuilder();
                 while(true){
-                    Optional<Token> n = context.nextToken();
-                    if(!n.isPresent() || n.get().getType().equals("ListEndToken")){
+                    Token n = context.nextToken();
+                    if(n == null || n.getType().equals("ListEndToken")){
                         break;
                     }
                     out.append(tok(context));
@@ -111,8 +110,8 @@ public class Parser {
             case "ListItemStartToken": {
                 StringBuilder out = new StringBuilder();
                 while(true){
-                    Optional<Token> n = context.nextToken();
-                    if(!n.isPresent() || n.get().getType().equals("ListItemEndToken")){
+                    Token n = context.nextToken();
+                    if(n == null || n.getType().equals("ListItemEndToken")){
                         break;
                     }
                     if(context.currentToken().getType().equals("TextToken")){
@@ -126,8 +125,8 @@ public class Parser {
             case "LooseItemStartToken": {
                 StringBuilder out = new StringBuilder();
                 while(true){
-                    Optional<Token> n = context.nextToken();
-                    if(!n.isPresent() || n.get().getType().equals("ListItemEndToken")){
+                    Token n = context.nextToken();
+                    if(n == null || n.getType().equals("ListItemEndToken")){
                         break;
                     }
                     out.append(tok(context));
@@ -175,20 +174,20 @@ public class Parser {
             return token;
         }
 
-        public Optional<Token> nextToken(){
+        public Token nextToken(){
             if(tokens.isEmpty()){
-                return Optional.empty();
+                return null;
             } else {
                 token = tokens.pop();
-                return Optional.of(token);
+                return token;
             }
         }
 
-        public Optional<Token> peekToken(){
+        public Token peekToken(){
             if(tokens.isEmpty()){
-                return Optional.empty();
+                return null;
             } else {
-                return Optional.of(tokens.get(tokens.size() - 1));
+                return tokens.get(tokens.size() - 1);
             }
         }
 

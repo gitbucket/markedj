@@ -45,7 +45,7 @@ public class MarkedTest {
     public void testAutolink() throws Exception {
         String md = Marked.marked("<takezoe@gmail.com>", new Options());
         String result = Marked.marked(md, new Options());
-        assertEquals("<p><a href=\"mailto:takezoe@gmail.com\">takezoe@gmail.com</a></p>", result);
+        assertEquals("<p><a href=\"mailto:takezoe@gmail.com\">takezoe@gmail.com</a></p>\n", result);
     }
 
 

@@ -57,9 +57,9 @@ public class Lexer {
                     src = src.substring(cap.get(0).length());
                     String code = cap.get(0).replaceAll("(?m)^ {4}", "");
                     if(!options.isPedantic()){
-                        context.pushToken(new CodeToken(code.replaceAll("\\n+$", ""), Optional.empty(), false));
+                        context.pushToken(new CodeToken(code.replaceAll("\\n+$", ""), null, false));
                     } else {
-                        context.pushToken(new CodeToken(code, Optional.empty(), false));
+                        context.pushToken(new CodeToken(code, null, false));
                     }
                     continue;
                 }
@@ -70,7 +70,7 @@ public class Lexer {
                 List<String> cap = rules.get("fences").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    context.pushToken(new CodeToken(cap.get(3), Optional.ofNullable(cap.get(2)), false));
+                    context.pushToken(new CodeToken(cap.get(3), cap.get(2), false));
                     continue;
                 }
             }
@@ -97,16 +97,16 @@ public class Lexer {
 
                     List<String> header2 = Arrays.asList(header);
 
-                    List<Optional<String>> align2 = new ArrayList<>();
+                    List<String> align2 = new ArrayList<>();
                     for (String s : align) {
                         if(s.matches("^ *-+: *$")){
-                            align2.add(Optional.of("right"));
+                            align2.add("right");
                         } else if(s.matches("^ *:-+: *$")){
-                            align2.add(Optional.of("center"));
+                            align2.add("center");
                         } else if(s.matches("^ *:-+ *$")){
-                            align2.add(Optional.of("left"));
+                            align2.add("left");
                         } else {
-                            align2.add(Optional.empty());
+                            align2.add(null);
                         }
                     }
 
@@ -244,7 +244,7 @@ public class Lexer {
                 List<String> cap = rules.get("def").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    context.defineLink(cap.get(1).toLowerCase(), new Link(cap.get(2), Optional.of(cap.get(3))));
+                    context.defineLink(cap.get(1).toLowerCase(), new Link(cap.get(2), cap.get(3)));
                     continue;
                 }
             }
@@ -261,16 +261,16 @@ public class Lexer {
 
                     List<String> header2 = Arrays.asList(header);
 
-                    List<Optional<String>> align2 = new ArrayList<>();
+                    List<String> align2 = new ArrayList<>();
                     for (String s : align) {
                         if(s.matches("^ *-+: *$")){
-                            align2.add(Optional.of("right"));
+                            align2.add("right");
                         } else if(s.matches("^ *:-+: *$")){
-                            align2.add(Optional.of("center"));
+                            align2.add("center");
                         } else if(s.matches("^ *:-+ *$")){
-                            align2.add(Optional.of("left"));
+                            align2.add("left");
                         } else {
-                            align2.add(Optional.empty());
+                            align2.add(null);
                         }
                     }
 
@@ -355,9 +355,9 @@ public class Lexer {
 
     public static class Link {
         private String href;
-        private Optional<String> title;
+        private String title;
 
-        public Link(String href, Optional<String> title){
+        public Link(String href, String title){
             this.href = href;
             this.title = title;
         }
@@ -366,7 +366,7 @@ public class Lexer {
             return href;
         }
 
-        public Optional<String> getTitle() {
+        public String getTitle() {
             return title;
         }
     }

@@ -1,14 +1,12 @@
 package io.github.gitbucket.markedj.token;
 
-import java.util.Optional;
-
 public class CodeToken implements Token {
 
     private String code;
-    private Optional<String> lang;
+    private String lang;
     private boolean escaped;
 
-    public CodeToken(String code, Optional<String> lang, boolean escaped){
+    public CodeToken(String code, String lang, boolean escaped){
         this.code = code;
         this.lang = lang;
         this.escaped = escaped;
@@ -18,7 +16,7 @@ public class CodeToken implements Token {
         return code;
     }
 
-    public Optional<String> getLang() {
+    public String getLang() {
         return lang;
     }
 

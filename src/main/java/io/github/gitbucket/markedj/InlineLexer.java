@@ -4,7 +4,6 @@ import io.github.gitbucket.markedj.rule.Rule;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static io.github.gitbucket.markedj.Utils.*;
@@ -56,7 +55,7 @@ public class InlineLexer {
                         text = escape(cap.get(1));
                         href = text;
                     }
-                    out.append(renderer.link(href, Optional.empty(), text));
+                    out.append(renderer.link(href, null, text));
                     continue;
                 }
             }
@@ -68,7 +67,7 @@ public class InlineLexer {
                     src = src.substring(cap.get(0).length());
                     String text = escape(cap.get(1));
                     String href = text;
-                    out.append(renderer.link(text, Optional.empty(), href));
+                    out.append(renderer.link(text, null, href));
                     continue;
                 }
             }
@@ -99,7 +98,7 @@ public class InlineLexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     inLink = true;
-                    out.append(outputLink(cap, new Lexer.Link(cap.get(2), Optional.ofNullable(cap.get(3)))));
+                    out.append(outputLink(cap, new Lexer.Link(cap.get(2), cap.get(3))));
                     inLink = false;
                     continue;
                 }
