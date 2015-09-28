@@ -155,7 +155,7 @@ public class InlineLexer {
                 List<String> cap = rules.get("code").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    out.append(renderer.codespan(cap.get(2)));
+                    out.append(renderer.codespan(escape(cap.get(2), true)));
                     continue;
                 }
             }

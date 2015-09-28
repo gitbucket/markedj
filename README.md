@@ -19,7 +19,7 @@ At first, add following dependency into your `pom.xml`:
   <dependency>
     <groupId>io.github.gitbucket</groupId>
     <artifactId>markedj</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
   </dependency>
 </dependencies>
 ```
@@ -27,8 +27,16 @@ At first, add following dependency into your `pom.xml`:
 You can easily use markedj via `io.github.gitbucket.markedj.Marked`.
 
 ```java
-import io.github.gitbucket.markedj.Marked;
+import io.github.gitbucket.markedj.*;
 
 String markdown = ...
-String html = Marked.marked(markdown);
+
+// With default options
+String html1 = Marked.marked(markdown);
+
+// Specify options
+Options options = new  Options();
+options.setSanitize(true);
+
+String html2 = Marked.marked(markdown, options);
 ```
