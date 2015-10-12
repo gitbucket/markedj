@@ -1,0 +1,125 @@
+2015-10-10 08:25:23,915 INFO  [org.jboss.modules] (main) JBoss Modules version 1.4.3.Final
+2015-10-10 08:25:24,262 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.6.Final
+2015-10-10 08:25:24,359 INFO  [org.jboss.as] (MSC service thread 1-7) WFLYSRV0049: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) starting
+2015-10-10 08:25:24,362 DEBUG [org.jboss.as.config] (MSC service thread 1-7) Configured system properties:
+	awt.toolkit = sun.awt.windows.WToolkit
+	file.encoding = MS932
+	file.encoding.pkg = sun.io
+	file.separator = \
+	java.awt.graphicsenv = sun.awt.Win32GraphicsEnvironment
+	java.awt.printerjob = sun.awt.windows.WPrinterJob
+	java.class.path = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\jboss-modules.jar
+	java.class.version = 52.0
+	java.endorsed.dirs = C:\work\Java\jdk1.8.0_51\jre\lib\endorsed
+	java.ext.dirs = C:\work\Java\jdk1.8.0_51\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext
+	java.home = C:\work\Java\jdk1.8.0_51\jre
+	java.io.tmpdir = C:\Users\testuser\AppData\Local\Temp\
+	java.library.path = C:\work\Java\jdk1.8.0_51\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\ATI Stream\bin\x86_64;C:\Program Files (x86)\ATI Stream\bin\x86;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Sony\VAIO Improvement;C:\Program Files (x86)\Justsystems\JSLIB32\;C:\Program Files (x86)\Sony\VAIO Startup Setting Tool;C:\Program Files (x86)\Common Files\Roxio Shared\10.0\DLLShared\;C:\Program Files (x86)\Common Files\Roxio Shared\DLLShared\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\work\Java\jdk1.8.0_51\bin;C:\work\gradle\gradle-2.3\bin;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\nodejs\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Users\testuser\AppData\Roaming\npm;C:\Users\testuser\AppData\Local\atom\bin;.
+	java.net.preferIPv4Stack = true
+	java.runtime.name = Java(TM) SE Runtime Environment
+	java.runtime.version = 1.8.0_51-b16
+	java.specification.name = Java Platform API Specification
+	java.specification.vendor = Oracle Corporation
+	java.specification.version = 1.8
+	java.util.logging.manager = org.jboss.logmanager.LogManager
+	java.vendor = Oracle Corporation
+	java.vendor.url = http://java.oracle.com/
+	java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+	java.version = 1.8.0_51
+	java.vm.info = mixed mode
+	java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+	java.vm.specification.name = Java Virtual Machine Specification
+	java.vm.specification.vendor = Oracle Corporation
+	java.vm.specification.version = 1.8
+	java.vm.vendor = Oracle Corporation
+	java.vm.version = 25.51-b03
+	javax.management.builder.initial = org.jboss.as.jmx.PluggableMBeanServerBuilder
+	javax.xml.datatype.DatatypeFactory = __redirected.__DatatypeFactory
+	javax.xml.parsers.DocumentBuilderFactory = __redirected.__DocumentBuilderFactory
+	javax.xml.parsers.SAXParserFactory = __redirected.__SAXParserFactory
+	javax.xml.stream.XMLEventFactory = __redirected.__XMLEventFactory
+	javax.xml.stream.XMLInputFactory = __redirected.__XMLInputFactory
+	javax.xml.stream.XMLOutputFactory = __redirected.__XMLOutputFactory
+	javax.xml.transform.TransformerFactory = __redirected.__TransformerFactory
+	javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema = __redirected.__SchemaFactory
+	javax.xml.xpath.XPathFactory:http://java.sun.com/jaxp/xpath/dom = __redirected.__XPathFactory
+	jboss.home.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final
+	jboss.host.name = vaioz
+	jboss.modules.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\modules
+	jboss.modules.system.pkgs = org.jboss.byteman
+	jboss.node.name = vaioz
+	jboss.qualified.host.name = vaioz
+	jboss.server.base.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone
+	jboss.server.config.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\configuration
+	jboss.server.data.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\data
+	jboss.server.deploy.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\data\content
+	jboss.server.log.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\log
+	jboss.server.name = vaioz
+	jboss.server.persist.config = true
+	jboss.server.temp.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\tmp
+	line.separator =
+
+	logging.configuration = file:C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\configuration/logging.properties
+	module.path = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\modules
+	org.jboss.boot.log.file = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\log\server.log
+	org.jboss.resolver.warning = true
+	org.xml.sax.driver = __redirected.__XMLReaderFactory
+	os.arch = amd64
+	os.name = Windows 8.1
+	os.version = 6.3
+	path.separator = ;
+	program.name = standalone.bat
+	sun.arch.data.model = 64
+	sun.boot.class.path = C:\work\Java\jdk1.8.0_51\jre\lib\resources.jar;C:\work\Java\jdk1.8.0_51\jre\lib\rt.jar;C:\work\Java\jdk1.8.0_51\jre\lib\sunrsasign.jar;C:\work\Java\jdk1.8.0_51\jre\lib\jsse.jar;C:\work\Java\jdk1.8.0_51\jre\lib\jce.jar;C:\work\Java\jdk1.8.0_51\jre\lib\charsets.jar;C:\work\Java\jdk1.8.0_51\jre\lib\jfr.jar;C:\work\Java\jdk1.8.0_51\jre\classes
+	sun.boot.library.path = C:\work\Java\jdk1.8.0_51\jre\bin
+	sun.cpu.endian = little
+	sun.cpu.isalist = amd64
+	sun.desktop = windows
+	sun.io.unicode.encoding = UnicodeLittle
+	sun.java.command = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\jboss-modules.jar -mp C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\modules org.jboss.as.standalone -Djboss.home.dir=C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final
+	sun.java.launcher = SUN_STANDARD
+	sun.jnu.encoding = MS932
+	sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+	sun.os.patch.level =
+	sun.stderr.encoding = ms932
+	sun.stdout.encoding = ms932
+	user.country = JP
+	user.dir = C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\bin
+	user.home = C:\Users\testuser
+	user.language = ja
+	user.name = testuser
+	user.script =
+	user.timezone = Asia/Tokyo
+	user.variant =
+2015-10-10 08:25:24,364 DEBUG [org.jboss.as.config] (MSC service thread 1-7) VM Arguments: -Dprogram.name=standalone.bat -Xms64M -Xmx512M -XX:MaxPermSize=256M -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Dorg.jboss.boot.log.file=C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\log\server.log -Dlogging.configuration=file:C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\configuration/logging.properties
+2015-10-10 08:25:25,994 INFO  [org.jboss.as.controller.management-deprecated] (ServerService Thread Pool -- 14) WFLYCTL0028: Attribute 'job-repository-type' in the resource at address '/subsystem=batch' is deprecated, and may be removed in future version. See the attribute description in the output of the read-resource-description operation to learn more about the deprecation.
+2015-10-10 08:25:25,995 INFO  [org.jboss.as.controller.management-deprecated] (ServerService Thread Pool -- 21) WFLYCTL0028: Attribute 'enabled' in the resource at address '/subsystem=datasources/data-source=ExampleDS' is deprecated, and may be removed in future version. See the attribute description in the output of the read-resource-description operation to learn more about the deprecation.
+2015-10-10 08:25:26,063 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0039: Creating http management service using socket-binding (management-http)
+2015-10-10 08:25:26,090 INFO  [org.xnio] (MSC service thread 1-1) XNIO version 3.3.1.Final
+2015-10-10 08:25:26,100 INFO  [org.xnio.nio] (MSC service thread 1-1) XNIO NIO Implementation Version 3.3.1.Final
+2015-10-10 08:25:26,167 INFO  [org.wildfly.extension.io] (ServerService Thread Pool -- 37) WFLYIO001: Worker 'default' has auto-configured to 8 core threads with 64 task threads based on your 4 available processors
+2015-10-10 08:25:26,206 INFO  [org.jboss.as.connector] (MSC service thread 1-5) WFLYJCA0009: Starting JCA Subsystem (IronJacamar 1.2.4.Final)
+2015-10-10 08:25:26,220 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 38) WFLYCLINF0001: Activating Infinispan subsystem.
+2015-10-10 08:25:26,238 INFO  [org.jboss.as.security] (ServerService Thread Pool -- 53) WFLYSEC0002: Activating Security Subsystem
+2015-10-10 08:25:26,251 WARN  [org.jboss.as.txn] (ServerService Thread Pool -- 54) WFLYTX0013: Node identifier property is set to the default value. Please make sure it is unique.
+2015-10-10 08:25:26,254 INFO  [org.jboss.as.webservices] (ServerService Thread Pool -- 56) WFLYWS0002: Activating WebServices Extension
+2015-10-10 08:25:26,268 INFO  [org.jboss.as.naming] (ServerService Thread Pool -- 46) WFLYNAM0001: Activating Naming Subsystem
+2015-10-10 08:25:26,295 INFO  [org.jboss.as.jsf] (ServerService Thread Pool -- 44) WFLYJSF0007: Activated the following JSF Implementations: [main]
+2015-10-10 08:25:26,318 INFO  [org.jboss.as.connector.subsystems.datasources] (ServerService Thread Pool -- 33) WFLYJCA0004: Deploying JDBC-compliant driver class org.h2.Driver (version 1.3)
+2015-10-10 08:25:26,365 INFO  [org.jboss.as.security] (MSC service thread 1-8) WFLYSEC0001: Current PicketBox version=4.9.2.Final
+2015-10-10 08:25:26,405 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 55) WFLYUT0003: Undertow 1.2.9.Final starting
+2015-10-10 08:25:26,406 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-4) WFLYUT0003: Undertow 1.2.9.Final starting
+2015-10-10 08:25:26,628 INFO  [org.jboss.remoting] (MSC service thread 1-1) JBoss Remoting version 4.0.9.Final
+2015-10-10 08:25:26,748 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-1) WFLYJCA0018: Started Driver service with driver-name = h2
+2015-10-10 08:25:26,752 INFO  [org.jboss.as.naming] (MSC service thread 1-2) WFLYNAM0003: Starting Naming Service
+2015-10-10 08:25:26,756 INFO  [org.jboss.as.mail.extension] (MSC service thread 1-7) WFLYMAIL0001: Bound mail session [java:jboss/mail/Default]
+2015-10-10 08:25:26,858 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 55) WFLYUT0014: Creating file handler for path C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final/welcome-content
+2015-10-10 08:25:26,871 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-4) WFLYUT0012: Started server default-server.
+2015-10-10 08:25:26,992 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-8) WFLYUT0018: Host default-host starting
+2015-10-10 08:25:27,123 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-4) WFLYUT0006: Undertow HTTP listener default listening on /127.0.0.1:8080
+2015-10-10 08:25:27,270 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-3) WFLYJCA0001: Bound data source [java:jboss/datasources/ExampleDS]
+2015-10-10 08:25:27,283 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-8) WFLYDS0013: Started FileSystemDeploymentService for directory C:\work\wildfly-9.0.1.Final\wildfly-9.0.1.Final\standalone\deployments
+2015-10-10 08:25:27,608 INFO  [org.jboss.ws.common.management] (MSC service thread 1-5) JBWS022052: Starting JBoss Web Services - Stack CXF Server 5.0.0.Final
+2015-10-10 08:25:27,807 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
+2015-10-10 08:25:27,810 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
+2015-10-10 08:25:27,811 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) started in 4401ms - Started 203 of 379 services (210 services are lazy, passive or on-demand)
