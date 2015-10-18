@@ -93,7 +93,7 @@ public class Lexer {
 
                     String[] header = cap.get(1).replaceAll("^ *| *\\| *$", "").split(" *\\| *");
                     String[] align  = cap.get(2).replaceAll("^ *|\\| *$", "").split(" *\\| *");
-                    String[] cells  = cap.get(3).replaceAll("\\n$", "").split(" \\n");
+                    String[] cells  = cap.get(3).replaceAll("\n$", "").split("\n");
 
                     List<String> header2 = Arrays.asList(header);
 

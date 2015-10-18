@@ -5,8 +5,6 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
@@ -71,8 +69,16 @@ public class MarkedTest {
     @Test
     public void testStackoverFlow() throws Exception {
         // Make sure StackOverflowError does not occur by em regular expression
-        Marked.marked(loadResourceAsString("fail.txt"), new Options());
+        Marked.marked(loadResourceAsString("stackoverflow.txt"), new Options());
     }
+
+    @Test
+    public void testNptable() throws Exception {
+        String result = Marked.marked(loadResourceAsString("nptable.md"), new Options());
+        String expect = loadResourceAsString("nptable.html");
+        assertEquals(expect, result);
+    }
+
 
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
