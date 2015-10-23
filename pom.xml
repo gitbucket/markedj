@@ -20,9 +20,9 @@
     <url>http://amateras.sourceforge.jp/</url>
   </organization>
   <scm>
-    <connection>scm:git:https://github.com/gitbucket/markedj.git</connection>
-    <developerConnection>scm:git:https://github.com/gitbucket/markedj.git</developerConnection>
-    <url>https://github.com/gitbucket/markedj</url>
+    <connection>scm:git:https://github.com/support-project/markedj.git</connection>
+    <developerConnection>scm:git:https://github.com/support-project/markedj.git</developerConnection>
+    <url>https://github.com/support-project/markedj</url>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
@@ -30,9 +30,8 @@
   </issueManagement>
   <repositories>
     <repository>
-      <id>amateras</id>
-      <name>Project Amateras Maven2 Repository</name>
-      <url>http://amateras.sourceforge.jp/mvn/</url>
+      <id>private</id>
+      <url>https://support-project.org/nexus/content/repositories/public/</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -52,6 +51,7 @@
   </dependencies>
 
   <build>
+    <!-- 
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -59,7 +59,9 @@
         <version>1.0</version>
       </extension>
     </extensions>
+    -->
     <plugins>
+      <!-- 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -73,6 +75,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -123,12 +126,12 @@
 
   <distributionManagement>
     <repository>
-      <id>sourceforge.jp</id>
-      <url>scp://shell.sourceforge.jp/home/groups/a/am/amateras/htdocs/mvn/</url>
+      <id>org.support.project-releases</id>
+      <url>https://support-project.org/nexus/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
-      <id>sourceforge.jp</id>
-      <url>scp://shell.sourceforge.jp/home/groups/a/am/amateras/htdocs/mvn-snapshot/</url>
+      <id>org.support.project-snapshots</id>
+      <url>https://support-project.org/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
   
