@@ -38,6 +38,12 @@ public class MarkedTest {
 //        Files.write(Paths.get("wikilink.html"), result.getBytes("UTF-8"));
     }
 
+    @Test
+    public void testOembed() throws Exception {
+        String md = Marked.marked("[oembed https://speakerdeck.com/speakerdeck/introduction-to-speakerdeck]", new Options());
+        String result = Marked.marked(md, new Options());
+        assertEquals("<p><a class=\"oembed\" href=\"https://speakerdeck.com/speakerdeck/introduction-to-speakerdeck\">https://speakerdeck.com/speakerdeck/introduction-to-speakerdeck</a></p>\n", result);
+    }
 
     @Test
     public void testAutolink() throws Exception {
