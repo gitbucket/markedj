@@ -121,6 +121,10 @@ public class Renderer {
         return "<del>" + text + "</del>";
     }
 
+    public String oembed(String href) {
+        return "<a class=\"oembed\" href=\"" + href + "\">" + href + "</a>";
+    }
+
     public String link(String href, String title, String text){
         if(options.isSanitize()){
             // TODO

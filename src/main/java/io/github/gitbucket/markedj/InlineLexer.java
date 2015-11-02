@@ -37,6 +37,16 @@ public class InlineLexer {
                 }
             }
 
+            // oembed
+            {
+                List<String> cap = rules.get("oembed").exec(src);
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
+                    out.append(renderer.oembed(cap.get(1)));
+                    continue;
+                }
+            }
+
             // autolink
             {
                 List<String> cap = rules.get("autolink").exec(src);

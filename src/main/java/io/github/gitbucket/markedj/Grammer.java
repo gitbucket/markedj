@@ -77,6 +77,7 @@ public class Grammer {
         INLINE_RULES.put("autolink", new FindFirstRule("^<([^ >]+(@|:\\/)[^ >]+)>"));
         INLINE_RULES.put("url", new NoopRule());
         INLINE_RULES.put("tag", new FindFirstRule("^<!--[\\s\\S]*?-->|^<\\/?\\w+(?:\"[^\"]*\"|'[^']*'|[^'\">])*?>"));
+        INLINE_RULES.put("oembed", new FindFirstRule("^\\[oembed\\s(" + HREF + ")\\]"));
         INLINE_RULES.put("link", new FindFirstRule(("^!?\\[(" + INSIDE + ")\\]\\(" + HREF + "\\)")));
         INLINE_RULES.put("reflink", new FindFirstRule(("^!?\\[(" + INSIDE + ")\\]\\s*\\[([^\\]]*)\\]")));
         INLINE_RULES.put("nolink", new FindFirstRule("^!?\\[((?:\\[[^\\]]*\\]|[^\\[\\]])*)\\]"));
