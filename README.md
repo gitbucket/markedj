@@ -40,3 +40,19 @@ options.setSanitize(true);
 
 String html2 = Marked.marked(markdown, options);
 ```
+
+## Options
+
+`io.github.gitbucket.markedj.Options` has following properties to control Markdown conversion:
+
+Name         | Default | Description
+:------------|:--------|:------------
+gfm          | true    | Enable [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown).
+tables       | true    | Enable GFM [tables](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#wiki-tables). This option requires the `gfm` option to be true.
+breaks       | false   | Enable GFM [line breaks](https://help.github.com/articles/github-flavored-markdown#newlines). This option requires the `gfm` option to be true.
+pedantic     | false   | Conform to obscure parts of `markdown.pl` as much as possible.
+sanitize     | false   | Ignore any HTML that has been input.
+langPrefix   | "lang-" | Prefix of class attribute of code block
+headerPrefix | ""      | Prefix of id attribute of header
+xhtml        | false   | Generate XHTML rather than HTML
+
