@@ -68,9 +68,11 @@ public class Grammer {
 
     public static Map<String, Rule> INLINE_RULES = new HashMap<>();
     public static Map<String, Rule> INLINE_GFM_RULES = new HashMap<>();
+    public static Map<String, Rule> INLINE_BREAKS_RULES = new HashMap<>();
 
     public static String INLINE_ESCAPE = "^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])";
     public static String INLINE_TEXT   = "^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)";
+    public static String INLINE_BR     = "^ {2,}\\n(?!\\s*$)";
 
     static {
         INLINE_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE));
@@ -83,15 +85,19 @@ public class Grammer {
         INLINE_RULES.put("strong", new FindFirstRule("^__([\\s\\S]+?)__(?!_)|^\\*\\*([\\s\\S]+?)\\*\\*(?!\\*)"));
         INLINE_RULES.put("em", new FindFirstRule("^\\b_((?:[^_]|__)++)_\\b|^\\*((?:\\*\\*|[\\s\\S])+?)\\*(?!\\*)"));
         INLINE_RULES.put("code", new FindFirstRule("^(`+)\\s*([\\s\\S]*?[^`])\\s*\\1(?!`)"));
-        INLINE_RULES.put("br", new FindFirstRule("^ {2,}\\n(?!\\s*$)"));
+        INLINE_RULES.put("br", new FindFirstRule(INLINE_BR));
         INLINE_RULES.put("del", new NoopRule());
-        INLINE_RULES.put("text", new FindFirstRule("^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)"));
+        INLINE_RULES.put("text", new FindFirstRule(INLINE_TEXT));
 
         INLINE_GFM_RULES.putAll(INLINE_RULES);
         INLINE_GFM_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE.replace("])", "~|])")));
         INLINE_GFM_RULES.put("url", new FindFirstRule("^(https?:\\/\\/[^\\s<]+[^<.,:;\"')\\]\\s])"));
         INLINE_GFM_RULES.put("del", new FindFirstRule("^~~(?=\\S)([\\s\\S]*?\\S)~~"));
         INLINE_GFM_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|")));
+
+        INLINE_BREAKS_RULES.putAll(INLINE_GFM_RULES);
+        INLINE_BREAKS_RULES.put("br", new FindFirstRule(INLINE_BR.replace("{2,}", "*")));
+        INLINE_BREAKS_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|").replace("{2,}", "*")));
     }
 
 }

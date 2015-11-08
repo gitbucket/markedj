@@ -41,26 +41,22 @@ public class MarkedTest {
 
     @Test
     public void testAutolink() throws Exception {
-        String md = Marked.marked("<takezoe@gmail.com>", new Options());
-        String result = Marked.marked(md, new Options());
+        String result = Marked.marked("<takezoe@gmail.com>", new Options());
         assertEquals("<p><a href=\"mailto:takezoe@gmail.com\">takezoe@gmail.com</a></p>\n", result);
     }
 
     @Test
     public void testEm() throws Exception {
         {
-            String md = Marked.marked("_aa__a__aa_", new Options());
-            String result = Marked.marked(md, new Options());
+            String result = Marked.marked("_aa__a__aa_", new Options());
             assertEquals("<p><em>aa<strong>a</strong>aa</em></p>\n", result);
         }
         {
-            String md = Marked.marked("*aa*o*aa*", new Options());
-            String result = Marked.marked(md, new Options());
+            String result = Marked.marked("*aa*o*aa*", new Options());
             assertEquals("<p><em>aa</em>o<em>aa</em></p>\n", result);
         }
         {
-            String md = Marked.marked("_aa__aa_", new Options());
-            String result = Marked.marked(md, new Options());
+            String result = Marked.marked("_aa__aa_", new Options());
             assertEquals("<p><em>aa__aa</em></p>\n", result);
         }
     }
@@ -79,6 +75,27 @@ public class MarkedTest {
         assertEquals(expect, result);
     }
 
+    @Test
+    public void testBreaks() throws Exception {
+        {
+            String md = "first line\nsecond line";
+            Options options = new Options();
+            //options.setBreaks(false); // default is false
+            //options.setGfm(true);     // default is true
+            String result = Marked.marked(md, options);
+
+            assertEquals("<p>first line\nsecond line</p>\n", result);
+        }
+        {
+            String md = "first line\nsecond line";
+            Options options = new Options();
+            options.setBreaks(true);
+            //options.setGfm(true); // default is true
+            String result = Marked.marked(md, options);
+
+            assertEquals("<p>first line<br>second line</p>\n", result);
+        }
+    }
 
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);

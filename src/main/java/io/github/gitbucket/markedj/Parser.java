@@ -19,7 +19,11 @@ public class Parser {
     public String parse(Stack<Token> src, Map<String, Lexer.Link> links){
         Map<String, Rule> rules;
         if(options.isGfm()){
-            rules = Grammer.INLINE_GFM_RULES;
+            if(options.isBreaks()){
+                rules = Grammer.INLINE_BREAKS_RULES;
+            } else {
+                rules = Grammer.INLINE_GFM_RULES;
+            }
         } else {
             rules = Grammer.INLINE_RULES;
         }
