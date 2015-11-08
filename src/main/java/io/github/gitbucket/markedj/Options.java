@@ -10,7 +10,7 @@ public class Options {
     // TOOO private Object sanitizer = null;
 //    private boolean mangle = false;
 //    private boolean smartLists = false;
-    private boolean silent = false;
+//    private boolean silent = false;
     // TODO private Object highlight = null;
     private String langPrefix = "lang-";
 //    private boolean smartypants = false;
@@ -45,9 +45,9 @@ public class Options {
 //        this.smartLists = smartLists;
 //    }
 
-    public void setSilent(boolean silent) {
-        this.silent = silent;
-    }
+//    public void setSilent(boolean silent) {
+//        this.silent = silent;
+//    }
 
     public void setLangPrefix(String langPrefix) {
         this.langPrefix = langPrefix;
@@ -93,9 +93,9 @@ public class Options {
 //        return smartLists;
 //    }
 
-    public boolean isSilent() {
-        return silent;
-    }
+//    public boolean isSilent() {
+//        return silent;
+//    }
 
     public String getLangPrefix() {
         return langPrefix;
