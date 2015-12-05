@@ -52,7 +52,6 @@
   </dependencies>
 
   <build>
-    <!--
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -60,7 +59,6 @@
         <version>1.0</version>
       </extension>
     </extensions>
-    -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
