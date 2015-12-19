@@ -81,8 +81,12 @@ public class Parser {
                 for(int i = 0; i < t.getCells().size(); i++){
                     outCell.setLength(0);
                     for(int j = 0; j < t.getCells().get(i).size(); j++){
+                        String align = null;
+                        if(t.getAlign().size() > j){
+                            align = t.getAlign().get(j);
+                        }
                         outCell.append(renderer.tablecell(
-                                context.getInlineLexer().output(t.getCells().get(i).get(j)), new Renderer.TableCellFlags(false, t.getAlign().get(j))));
+                                context.getInlineLexer().output(t.getCells().get(i).get(j)), new Renderer.TableCellFlags(false, align)));
                     }
                     outBody.append(renderer.tablerow(outCell.toString()));
                 }
