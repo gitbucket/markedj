@@ -1,4 +1,4 @@
-# markedj
+# markedj [![Build Status](https://travis-ci.org/gitbucket/markedj.svg?branch=master)](https://travis-ci.org/gitbucket/markedj)
 
 JVM port of graceful markdown processor [marked.js](https://github.com/chjj/marked).
 
