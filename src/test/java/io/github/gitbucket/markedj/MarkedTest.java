@@ -105,6 +105,19 @@ public class MarkedTest {
         }
     }
 
+    @Test
+    public void testCodeBlock() throws Exception {
+        {
+            String result = Marked.marked(
+                    "    public class HelloWorld {\n" +
+                    "    }", new Options());
+            assertEquals(
+                    "<pre><code>public class HelloWorld {\n" +
+                    "}\n" +
+                    "</code></pre>\n", result);
+        }
+    }
+
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {
