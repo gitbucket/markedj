@@ -107,15 +107,19 @@ public class MarkedTest {
 
     @Test
     public void testCodeBlock() throws Exception {
-        {
-            String result = Marked.marked(
-                    "    public class HelloWorld {\n" +
-                    "    }", new Options());
-            assertEquals(
-                    "<pre><code>public class HelloWorld {\n" +
-                    "}\n" +
-                    "</code></pre>\n", result);
-        }
+        String result = Marked.marked(
+                "    public class HelloWorld {\n" +
+                "    }", new Options());
+        assertEquals(
+                "<pre><code>public class HelloWorld {\n" +
+                "}\n" +
+                "</code></pre>\n", result);
+    }
+
+    @Test
+    public void testEmptyItemOfList() throws Exception {
+        String result = Marked.marked(loadResourceAsString("empty_item_of_list.md"), new Options());
+        assertEquals(loadResourceAsString("empty_item_of_list.html"), result);
     }
 
     private String loadResourceAsString(String path) throws IOException {
