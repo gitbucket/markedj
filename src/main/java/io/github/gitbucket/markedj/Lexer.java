@@ -203,7 +203,7 @@ public class Lexer {
                             // for discount behavior.
                             boolean loose = next || item.matches("\\n\\n(?!\\s*$)");
                             if(i != cap.size() - 1){
-                                next = item.charAt(item.length() - 1) == '\n';
+                                next = !item.isEmpty() && item.charAt(item.length() - 1) == '\n';
                                 if(!loose) {
                                     loose = next;
                                 }

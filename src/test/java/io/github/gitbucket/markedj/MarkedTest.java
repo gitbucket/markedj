@@ -105,6 +105,12 @@ public class MarkedTest {
         }
     }
 
+    @Test
+    public void testEmptyItemOfList() throws Exception {
+        String result = Marked.marked(loadResourceAsString("empty_item_of_list.md"), new Options());
+        assertEquals(loadResourceAsString("empty_item_of_list.html"), result);
+    }
+
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {
