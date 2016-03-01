@@ -7,14 +7,6 @@ JVM port of graceful markdown processor [marked.js](https://github.com/chjj/mark
 At first, add following dependency into your `pom.xml`:
 
 ```xml
-<repositories>
-  <repository>
-    <id>amateras</id>
-    <name>Project Amateras Maven2 Repository</name>
-    <url>http://amateras.sourceforge.jp/mvn/</url>
-  </repository>
-</repositories>
-
 <dependencies>
   <dependency>
     <groupId>io.github.gitbucket</groupId>
