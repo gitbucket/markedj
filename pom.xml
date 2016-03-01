@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.gitbucket</groupId>
   <artifactId>markedj</artifactId>
@@ -16,8 +16,8 @@
     </license>
   </licenses>
   <organization>
-    <name>Project Amateras</name>
-    <url>http://amateras.sourceforge.jp/</url>
+    <name>GitBucket</name>
+    <url>https://github.com/gitbucket</url>
   </organization>
   <scm>
     <connection>scm:git:https://github.com/gitbucket/markedj.git</connection>
@@ -28,19 +28,15 @@
     <system>GitHub Issues</system>
     <url>https://github.com/gitbucket/markedj/issues</url>
   </issueManagement>
-  <repositories>
-    <repository>
-      <id>amateras</id>
-      <name>Project Amateras Maven2 Repository</name>
-      <url>http://amateras.sourceforge.jp/mvn/</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>java.net2</id>
-      <url>http://download.java.net/maven/2</url>
-    </pluginRepository>
-  </pluginRepositories>
+  <developers>
+    <developer>
+      <id>takezoe</id>
+      <name>Naoki Takezoe</name>
+      <email>takezoe_at_gmail.com</email>
+      <url>http://takezoe.hatenablog.com/</url>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
 
   <dependencies>
     <dependency>
@@ -121,33 +117,33 @@
           </execution>
         </executions>
       </plugin>
-      <plugin> 
-        <artifactId>maven-javadoc-plugin</artifactId> 
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <encoding>UTF-8</encoding>
           <docencoding>UTF-8</docencoding>
           <locale>en</locale>
         </configuration>
-        <executions> 
-          <execution> 
+        <executions>
+          <execution>
             <id>javadoc-jar</id>
             <phase>package</phase>
-            <goals><goal>jar</goal></goals> 
-          </execution> 
-        </executions> 
+            <goals><goal>jar</goal></goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
 
   <distributionManagement>
     <repository>
-      <id>sourceforge.jp</id>
-      <url>scp://shell.sourceforge.jp/home/groups/a/am/amateras/htdocs/mvn/</url>
+      <id>sonatype-nexus-staging</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>sourceforge.jp</id>
-      <url>scp://shell.sourceforge.jp/home/groups/a/am/amateras/htdocs/mvn-snapshot/</url>
+      <id>sonatype-nexus-snapshot</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
-  
+
 </project>
