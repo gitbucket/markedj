@@ -122,6 +122,21 @@ public class MarkedTest {
         assertEquals(loadResourceAsString("empty_item_of_list.html"), result);
     }
 
+    @Test
+    public void testParagraphSeparation() throws Exception {
+        String result = Marked.marked(
+                "Message A\n" +
+                "- List A\n" +
+                "- List B", new Options());
+
+        assertEquals(
+                "<p>Message A</p>\n" +
+                "<ul>\n" +
+                "<li>List A</li>\n" +
+                "<li>List B</li>\n" +
+                "</ul>\n", result);
+    }
+
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {

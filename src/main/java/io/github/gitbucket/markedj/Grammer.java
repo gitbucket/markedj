@@ -20,10 +20,10 @@ public class Grammer {
     public static String BLOCK_HR          = "^( *[-*_]){3,} *(?:\\n+|$)";
     public static String BLOCK_HEADING     = "^ *(#{1,6}) *([^\\n]+?) *#* *(?:\\n+|$)";
     public static String BLOCK_LHEADING    = "^([^\\n]+)\\n *(=|-){2,} *(?:\\n+|$)";
-    public static String BLOCK_BLOCKQUOTE  = "^( *>[^\\n]+(\\n(?!" + DEF + ")[^\\n]+)*\\n*)+";
-    public static String BLOCK_LIST        = "^( *)(" + BULLET + ") [\\s\\S]+?(?:" + HR + "|\\n+(?=" + DEF + ")|\\n{2,}(?! )(?!\\1" + BULLET + " )\\n*|\\s*$)";
+    public static String BLOCK_BLOCKQUOTE  = "^( *>[^\\n]+(\\n(?!" + removeLineStart(DEF) + ")[^\\n]+)*\\n*)+";
+    public static String BLOCK_LIST        = "^( *)(" + BULLET + ") [\\s\\S]+?(?:" + HR + "|\\n+(?=" + removeLineStart(DEF) + ")|\\n{2,}(?! )(?!\\1" + BULLET + " )\\n*|\\s*$)";
     public static String BLOCK_DEF         = "^ *\\[([^\\]]+)\\]: *<?([^\\s>]+)>?(?: +[\"(]([^\\n]+)[\")])? *(?:\\n+|$)";
-    public static String BLOCK_PARAGRAPH   = "^((?:[^\\n]+\\n?(?!" + BLOCK_HR + "|" + BLOCK_HEADING + "|" + BLOCK_LHEADING + "|" + BLOCK_BLOCKQUOTE + "|<" +TAG + "|" + BLOCK_DEF + "))+)\\n*";
+    public static String BLOCK_PARAGRAPH   = "^((?:[^\\n]+\\n?(?!" + removeLineStart(BLOCK_HR) + "|" + removeLineStart(BLOCK_HEADING) + "|" + removeLineStart(BLOCK_LHEADING) + "|" + removeLineStart(BLOCK_BLOCKQUOTE) + "|<" + TAG + "|" + removeLineStart(BLOCK_DEF) + "))+)\\n*";
     public static String BLOCK_GFM_FENCES  = "^ *(`{3,}|~{3,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
 
     public static Map<String, Rule> BLOCK_RULES = new HashMap<>();
@@ -49,7 +49,7 @@ public class Grammer {
 
         BLOCK_GFM_RULES.putAll(BLOCK_RULES);
         BLOCK_GFM_RULES.put("fences", new FindFirstRule(BLOCK_GFM_FENCES));
-        BLOCK_GFM_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH.replace("(?!", "(?!" + BLOCK_GFM_FENCES.replace("\\1", "\\2") + "|" + BLOCK_LIST.replace("\\1", "\\3") + "|")));
+        BLOCK_GFM_RULES.put("paragraph", new FindFirstRule(BLOCK_PARAGRAPH.replace("(?!", "(?!" + removeLineStart(BLOCK_GFM_FENCES).replace("\\1", "\\2") + "|" + removeLineStart(BLOCK_LIST).replace("\\1", "\\3") + "|")));
         BLOCK_GFM_RULES.put("heading", new FindFirstRule("^ *(#{1,6}) +([^\\n]+?) *#* *(?:\\n+|$)"));
 // TODO
 //  block.gfm.paragraph = replace(block.paragraph)
@@ -61,6 +61,10 @@ public class Grammer {
         BLOCK_TABLE_RULES.putAll(BLOCK_GFM_RULES);
         BLOCK_TABLE_RULES.put("nptable", new FindFirstRule("^ *(\\S.*\\|.*)\\n *([-:]+ *\\|[-| :]*)\\n((?:.*\\|.*(?:\\n|$))*)\\n*"));
         BLOCK_TABLE_RULES.put("table", new FindFirstRule("^ *\\|(.+)\\n *\\|( *[-:]+[-| :]*)\\n((?: *\\|.*(?:\\n|$))*)\\n*"));
+    }
+
+    private static String removeLineStart(String regex){
+        return regex.replaceAll("(^|[^\\[])\\^", "$1");
     }
 
     public static String INSIDE = "(?:\\[[^\\]]*\\]|[^\\[\\]]|\\](?=[^\\[]*\\]))*";
