@@ -118,7 +118,7 @@ public class InlineLexer {
                     } else {
                         key = cap.get(1).replaceAll("\\s+", "");
                     }
-                    Lexer.Link link = links.get(key);
+                    Lexer.Link link = links.get(key.toLowerCase());
                     if(link == null || isEmpty(link.getHref())){
                         out.append(renderer.nolink(cap.get(0)));
                         continue;

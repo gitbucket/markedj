@@ -46,6 +46,12 @@ public class MarkedTest {
     }
 
     @Test
+    public void testReflink() throws Exception {
+      String result = Marked.marked("[FOO], [bar][Foo], [Bar]\n\n[Foo]: http://example.com");
+      assertEquals("<p><a href=\"http://example.com\">FOO</a>, <a href=\"http://example.com\">bar</a>, [Bar]</p>\n", result);
+    }
+
+    @Test
     public void testEm() throws Exception {
         {
             String result = Marked.marked("_aa__a__aa_", new Options());
