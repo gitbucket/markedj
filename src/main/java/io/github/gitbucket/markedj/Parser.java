@@ -107,6 +107,18 @@ public class Parser {
                 }
                 return renderer.blockquote(body.toString());
             }
+            case "NotificationStartToken": {
+                NotificationStartToken t = (NotificationStartToken) context.currentToken();
+                StringBuilder body = new StringBuilder();
+                while(true){
+                    Token n = context.nextToken();
+                    if(n == null || n.getType().equals("NotificationEndToken")){
+                        break;
+                    }
+                    body.append(tok(context));
+                }
+                return renderer.notification(body.toString(), t.getNotification());
+            }
             case "ListStartToken": {
                 ListStartToken t = (ListStartToken) context.currentToken();
                 StringBuilder out = new StringBuilder();

@@ -2,10 +2,7 @@ package io.github.gitbucket.markedj;
 
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
+import static io.github.gitbucket.markedj.Resources.loadResourceAsString;
 import static org.junit.Assert.*;
 
 /**
@@ -154,20 +151,5 @@ public class MarkedTest {
     public void testNestedContentOfList() throws Exception {
         String result = Marked.marked(loadResourceAsString("nested_content_of_list.md"), new Options());
         assertEquals(loadResourceAsString("nested_content_of_list.html"), result);
-    }
-
-    private String loadResourceAsString(String path) throws IOException {
-        InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-        try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buf = new byte[1024 * 8];
-            int length = 0;
-            while((length = in.read(buf)) != -1){
-                out.write(buf, 0, length);
-            }
-            return new String(out.toByteArray(), "UTF-8");
-        } finally {
-            in.close();
-        }
     }
 }

@@ -2,6 +2,10 @@ package io.github.gitbucket.markedj;
 
 import static io.github.gitbucket.markedj.Utils.*;
 
+import java.util.Locale;
+
+import io.github.gitbucket.markedj.token.NotificationStartToken.Notification;
+
 public class Renderer {
 
     protected Options options;
@@ -32,6 +36,10 @@ public class Renderer {
             sb.append("\n</code></pre>\n");
             return sb.toString();
         }
+    }
+    
+    public String notification(String info, Notification notification) {
+        return String.format("<div class=\"notification_%s\">\n%s</div>\n", notification.name().toLowerCase(Locale.ENGLISH), info);
     }
 
     public String blockquote(String quote){

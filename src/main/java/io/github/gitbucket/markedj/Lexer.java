@@ -156,6 +156,18 @@ public class Lexer {
                 }
             }
 
+            // notification info
+            {
+                List<String> cap = rules.get("notification").exec(src);
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
+                    context.pushToken(new NotificationStartToken(cap.get(2).substring(1)));
+                    token(cap.get(0).replaceAll("(?m) *" + cap.get(2) + " ?", ""), top, true, context);
+                    context.pushToken(new NotificationEndToken());
+                    continue;
+                }
+            }
+
             // list
             {
                 List<String> cap = rules.get("list").exec(src);
