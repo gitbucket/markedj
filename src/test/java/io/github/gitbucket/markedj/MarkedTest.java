@@ -12,6 +12,13 @@ import static org.junit.Assert.*;
  * Created by takezoe on 15/09/19.
  */
 public class MarkedTest {
+    @Test
+    public void testQuote() throws Exception {
+        String md = loadResourceAsString("quote.md");
+        String result = Marked.marked(md, new Options());
+        String expect = loadResourceAsString("quote.html");
+        assertEquals(expect, result);
+    }
 
     @Test
     public void testMarked() throws Exception {
