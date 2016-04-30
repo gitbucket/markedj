@@ -1,0 +1,25 @@
+<ul>
+<li><a href="#es6-computed-properties">3.4</a> Use computed property names when creating objects with dynamic property names.<blockquote>
+<p>Why? They allow you to define all the properties of an object in one place.</p>
+</blockquote>
+<pre><code class="lang-javascript">
+function getKey(k) {
+  return `a key named ${k}`;
+}
+
+// bad
+const obj = {
+  id: 5,
+  name: &#39;San Francisco&#39;,
+};
+obj[getKey(&#39;enabled&#39;)] = true;
+
+// good
+const obj = {
+  id: 5,
+  name: &#39;San Francisco&#39;,
+  [getKey(&#39;enabled&#39;)]: true,
+};
+</code></pre>
+</li>
+</ul>

@@ -143,6 +143,12 @@ public class MarkedTest {
                 "</ul>\n", result);
     }
 
+    @Test
+    public void testNestedContentOfList() throws Exception {
+        String result = Marked.marked(loadResourceAsString("nested_content_of_list.md"), new Options());
+        assertEquals(loadResourceAsString("nested_content_of_list.html"), result);
+    }
+
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {
