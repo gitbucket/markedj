@@ -11,7 +11,7 @@ At first, add following dependency into your `pom.xml`:
   <dependency>
     <groupId>io.github.gitbucket</groupId>
     <artifactId>markedj</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
   </dependency>
 </dependencies>
 ```
