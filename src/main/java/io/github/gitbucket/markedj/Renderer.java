@@ -1,10 +1,10 @@
 package io.github.gitbucket.markedj;
 
-import static io.github.gitbucket.markedj.Utils.*;
+import static io.github.gitbucket.markedj.Utils.escape;
 
 import java.util.Locale;
 
-import io.github.gitbucket.markedj.token.NotificationStartToken.Notification;
+import io.github.gitbucket.markedj.Notifications.Notification;
 
 public class Renderer {
 

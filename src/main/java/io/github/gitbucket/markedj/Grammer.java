@@ -21,7 +21,7 @@ public class Grammer {
     public static String BLOCK_HEADING     = "^ *(#{1,6}) *([^\\n]+?) *#* *(?:\\n+|$)";
     public static String BLOCK_LHEADING    = "^([^\\n]+)\\n *(=|-){2,} *(?:\\n+|$)";
     public static String BLOCK_BLOCKQUOTE  = "^( *>[^\\n]+(\\n(?!" + removeLineStart(DEF) + ")[^\\n]+)*\\n*)+";
-    public static String BLOCK_NOTIFICATION  = "^( *(\\![vx!]?)[^\\n]+(\\n(?!" + removeLineStart(DEF) + ")[^\\n]+)*\\n*)+";
+    public static String BLOCK_NOTIFICATION  = "^((?:(!([xv!]?))[^\n]*(?!^!)\n?)+)";
     //public static String BLOCK_LIST        = "^( *)(" + BULLET + ") [\\s\\S]+?(?:" + HR + "|\\n+(?=" + removeLineStart(DEF) + ")|\\n{2,}(?! )(?!\\1" + BULLET + " )\\n*|\\s*$)";
     public static String BLOCK_LIST        = "^( *)(" + BULLET + ") [\\s\\S]+?(?:\\n{2,}(?! )(?!\\1" + BULLET + " )\\n*|\\s*$)";
     public static String BLOCK_DEF         = "^ *\\[([^\\]]+)\\]: *<?([^\\s>]+)>?(?: +[\"(]([^\\n]+)[\")])? *(?:\\n+|$)";
@@ -41,7 +41,6 @@ public class Grammer {
         BLOCK_RULES.put("nptable", new NoopRule());
         BLOCK_RULES.put("lheading", new FindFirstRule(BLOCK_LHEADING));
         BLOCK_RULES.put("blockquote", new FindFirstRule(BLOCK_BLOCKQUOTE));
-        BLOCK_RULES.put("notification", new FindFirstRule(BLOCK_NOTIFICATION));
         BLOCK_RULES.put("list", new FindFirstRule(BLOCK_LIST));
         BLOCK_RULES.put("html", new FindFirstRule("^ *(?:" + COMMENT + " *(?:\\n|\\s*$)|" + CLOSED + " *(?:\\n{2,}|\\s*$)|" + CLOSING + " *(?:\\n{2,}|\\s*$))"));
         BLOCK_RULES.put("def", new FindFirstRule(BLOCK_DEF));
@@ -106,9 +105,15 @@ public class Grammer {
         INLINE_BREAKS_RULES.put("br", new FindFirstRule(INLINE_BR.replace("{2,}", "*")));
         INLINE_BREAKS_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|").replace("{2,}", "*")));
     }
+    
+    public static Map<String, Rule> enhanceRulesWithNotifications(Map<String, Rule> existingRules) {
+        Map<String, Rule> rulesWithNotifications = new HashMap<>(existingRules);
+        rulesWithNotifications.put("notification", new FindFirstRule(BLOCK_NOTIFICATION));
+        return rulesWithNotifications;
+    }
 
     public static void main(String[] args) {
         System.out.println(removeLineStart(DEF));
-        System.out.println(BLOCK_BLOCKQUOTE);
+        System.out.println(BLOCK_NOTIFICATION);
     }
 }

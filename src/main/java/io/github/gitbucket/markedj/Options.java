@@ -16,25 +16,31 @@ public class Options {
 //    private boolean smartypants = false;
     private String headerPrefix = "";
     private boolean xhtml = false;
+    private boolean useNotifications = false;
 
-    public void setGfm(boolean gfm) {
+    public Options setGfm(boolean gfm) {
         this.gfm = gfm;
+        return this;
     }
 
-    public void setTables(boolean tables) {
+    public Options setTables(boolean tables) {
         this.tables = tables;
+        return this;
     }
 
-    public void setBreaks(boolean breaks) {
+    public Options setBreaks(boolean breaks) {
         this.breaks = breaks;
+        return this;
     }
 
-    public void setPedantic(boolean pedantic) {
+    public Options setPedantic(boolean pedantic) {
         this.pedantic = pedantic;
+        return this;
     }
 
-    public void setSanitize(boolean sanitize) {
+    public Options setSanitize(boolean sanitize) {
         this.sanitize = sanitize;
+        return this;
     }
 
 //    public void setMangle(boolean mangle) {
@@ -49,20 +55,23 @@ public class Options {
 //        this.silent = silent;
 //    }
 
-    public void setLangPrefix(String langPrefix) {
+    public Options setLangPrefix(String langPrefix) {
         this.langPrefix = langPrefix;
+        return this;
     }
 
 //    public void setSmartypants(boolean smartypants) {
 //        this.smartypants = smartypants;
 //    }
 
-    public void setHeaderPrefix(String headerPrefix) {
+    public Options setHeaderPrefix(String headerPrefix) {
         this.headerPrefix = headerPrefix;
+        return this;
     }
 
-    public void setXhtml(boolean xhtml) {
+    public Options setXhtml(boolean xhtml) {
         this.xhtml = xhtml;
+        return this;
     }
 
     public boolean isGfm() {
@@ -111,5 +120,14 @@ public class Options {
 
     public boolean isXhtml() {
         return xhtml;
+    }
+    
+    public boolean useNotifications() {
+        return useNotifications;
+    }
+
+    public Options useNotifications(boolean value) {
+        useNotifications = value;
+        return this;
     }
 }

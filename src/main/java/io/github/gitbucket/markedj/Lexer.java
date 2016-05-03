@@ -1,11 +1,33 @@
 package io.github.gitbucket.markedj;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import io.github.gitbucket.markedj.rule.Rule;
-import io.github.gitbucket.markedj.token.*;
-
-import java.util.*;
-
-import static io.github.gitbucket.markedj.Utils.*;
+import io.github.gitbucket.markedj.token.BlockquoteEndToken;
+import io.github.gitbucket.markedj.token.BlockquoteStartToken;
+import io.github.gitbucket.markedj.token.CodeToken;
+import io.github.gitbucket.markedj.token.HeadingToken;
+import io.github.gitbucket.markedj.token.HrToken;
+import io.github.gitbucket.markedj.token.HtmlToken;
+import io.github.gitbucket.markedj.token.ListEndToken;
+import io.github.gitbucket.markedj.token.ListItemEndToken;
+import io.github.gitbucket.markedj.token.ListItemStartToken;
+import io.github.gitbucket.markedj.token.ListStartToken;
+import io.github.gitbucket.markedj.token.LooseItemStartToken;
+import io.github.gitbucket.markedj.token.NotificationEndToken;
+import io.github.gitbucket.markedj.token.NotificationStartToken;
+import io.github.gitbucket.markedj.token.ParagraphToken;
+import io.github.gitbucket.markedj.token.SpaceToken;
+import io.github.gitbucket.markedj.token.TableToken;
+import io.github.gitbucket.markedj.token.TextToken;
+import io.github.gitbucket.markedj.token.Token;
 
 public class Lexer {
 
@@ -20,6 +42,10 @@ public class Lexer {
             this.rules = Grammer.BLOCK_TABLE_RULES;
         } else {
             this.rules = Grammer.BLOCK_GFM_RULES;
+        }
+        
+        if (options.useNotifications()) {
+            this.rules = Grammer.enhanceRulesWithNotifications(this.rules);
         }
     }
 
@@ -157,13 +183,32 @@ public class Lexer {
             }
 
             // notification info
-            {
+            if (options.useNotifications()) {
                 List<String> cap = rules.get("notification").exec(src);
-                if(!cap.isEmpty()){
-                    src = src.substring(cap.get(0).length());
-                    context.pushToken(new NotificationStartToken(cap.get(2).substring(1)));
-                    token(cap.get(0).replaceAll("(?m) *" + cap.get(2) + " ?", ""), top, true, context);
-                    context.pushToken(new NotificationEndToken());
+                if(!cap.isEmpty()) {
+                    // we have detected several contiguous lines of notifications
+                    // ensure that all are of same kind
+                    String allNotificationsLines = cap.get(0);
+                    
+                    // if other kind of notifications lines are detected
+                    // let's split them so that they are handled separately
+                    String findOtherLinesPattern = "(?m)^(!" + Notifications.exceptGivenNotificationClass(cap.get(3)) + " .*)";
+                    Matcher otherLinesMatcher = Pattern.compile(findOtherLinesPattern).matcher(cap.get(1));
+                    
+                    if (otherLinesMatcher.find()) {
+                        String otherLinesSeparated = otherLinesMatcher.replaceAll("\n$1\n");
+                        
+                        // change the source to parse
+                        // replace all the notifications lines with separated notifications lines
+                        // and reparse the string
+                        src = otherLinesSeparated + src.substring(allNotificationsLines.length());
+                    } else {
+                        src = src.substring(allNotificationsLines.length());
+                        context.pushToken(new NotificationStartToken(cap.get(3)));
+                        token(allNotificationsLines.replaceAll("(?m)^" + cap.get(2) + "[ ]?", ""), false, false, context);
+                        context.pushToken(new NotificationEndToken());
+                    }
+                    
                     continue;
                 }
             }

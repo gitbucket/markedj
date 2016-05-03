@@ -1,10 +1,18 @@
 package io.github.gitbucket.markedj;
 
-import io.github.gitbucket.markedj.rule.Rule;
-import io.github.gitbucket.markedj.token.*;
-
 import java.util.Map;
 import java.util.Stack;
+
+import io.github.gitbucket.markedj.rule.Rule;
+import io.github.gitbucket.markedj.token.CodeToken;
+import io.github.gitbucket.markedj.token.HeadingToken;
+import io.github.gitbucket.markedj.token.HtmlToken;
+import io.github.gitbucket.markedj.token.ListStartToken;
+import io.github.gitbucket.markedj.token.NotificationStartToken;
+import io.github.gitbucket.markedj.token.ParagraphToken;
+import io.github.gitbucket.markedj.token.TableToken;
+import io.github.gitbucket.markedj.token.TextToken;
+import io.github.gitbucket.markedj.token.Token;
 
 public class Parser {
 
