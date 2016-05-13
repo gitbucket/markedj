@@ -73,24 +73,16 @@ public class Parser {
                 StringBuilder outBody   = new StringBuilder();
 
                 for(int i = 0; i < t.getHeader().size(); i++){
-                    String align = null;
-                    if(t.getAlign().size() > i){
-                        align = t.getAlign().get(i);
-                    }
                     outCell.append(renderer.tablecell(
-                            context.getInlineLexer().output(t.getHeader().get(i)), new Renderer.TableCellFlags(true, align)));
+                            context.getInlineLexer().output(t.getHeader().get(i)), new Renderer.TableCellFlags(true, t.getAlign().get(i))));
                 }
                 outHeader.append(renderer.tablerow(outCell.toString()));
 
                 for(int i = 0; i < t.getCells().size(); i++){
                     outCell.setLength(0);
                     for(int j = 0; j < t.getCells().get(i).size(); j++){
-                        String align = null;
-                        if(t.getAlign().size() > j){
-                            align = t.getAlign().get(j);
-                        }
                         outCell.append(renderer.tablecell(
-                                context.getInlineLexer().output(t.getCells().get(i).get(j)), new Renderer.TableCellFlags(false, align)));
+                                context.getInlineLexer().output(t.getCells().get(i).get(j)), new Renderer.TableCellFlags(false, t.getAlign().get(j))));
                     }
                     outBody.append(renderer.tablerow(outCell.toString()));
                 }

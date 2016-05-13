@@ -1,5 +1,8 @@
 package io.github.gitbucket.markedj;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utils {
 
     public static String escape(String html){
@@ -25,6 +28,20 @@ public class Utils {
 
     public static boolean isEmpty(String str){
         return str == null || str.length() == 0;
+    }
+
+    public static void fillList(List<String> list, int length, String value){
+        while(list.size() < length){
+            list.add(value);
+        }
+    }
+
+    public static List<String> array2list(String[] array){
+        List<String> list = new ArrayList<>(array.length);
+        for(String value: array){
+            list.add(value);
+        }
+        return list;
     }
 
 }
