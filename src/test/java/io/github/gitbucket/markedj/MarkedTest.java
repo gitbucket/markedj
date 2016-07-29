@@ -42,7 +42,9 @@ public class MarkedTest {
         String result = Marked.marked(md, new Options());
         String expect = loadResourceAsString("wikilink.html");
         assertEquals(expect, result);
+//        Files.write(Paths.get("wikilink.html"), result.getBytes("UTF-8"));
     }
+
 
     @Test
     public void testAutolink() throws Exception {
@@ -156,6 +158,39 @@ public class MarkedTest {
     public void testNestedContentOfList() throws Exception {
         String result = Marked.marked(loadResourceAsString("nested_content_of_list.md"), new Options());
         assertEquals(loadResourceAsString("nested_content_of_list.html"), result);
+    }
+
+    @Test
+    public void testEmptyTableCell() throws Exception {
+        String result = Marked.marked(
+                "|ID|name|note|\n" +
+                "|-|-|-|\n" +
+                "|1|foo|This is foo|\n" +
+                "|2|bar||");
+
+
+        assertEquals(
+                "<table>\n" +
+                        "<thead>\n" +
+                        "<tr>\n" +
+                        "<th>ID</th>\n" +
+                        "<th>name</th>\n" +
+                        "<th>note</th>\n" +
+                        "</tr>\n" +
+                        "</thead>\n" +
+                        "<tbody>\n" +
+                        "<tr>\n" +
+                        "<td>1</td>\n" +
+                        "<td>foo</td>\n" +
+                        "<td>This is foo</td>\n" +
+                        "</tr>\n" +
+                        "<tr>\n" +
+                        "<td>2</td>\n" +
+                        "<td>bar</td>\n" +
+                        "<td></td>\n" +
+                        "</tr>\n" +
+                        "</tbody>\n" +
+                        "</table>\n", result);
     }
 
     private String loadResourceAsString(String path) throws IOException {
