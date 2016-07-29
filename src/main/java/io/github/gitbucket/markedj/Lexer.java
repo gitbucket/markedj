@@ -162,7 +162,7 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     context.pushToken(new BlockquoteStartToken());
-                    token(cap.get(0).replaceAll("(?m) *> ?", ""), top, true, context);
+                    token(cap.get(0).replaceAll("(?m)^ *> ?", ""), top, true, context);
                     context.pushToken(new BlockquoteEndToken());
                     continue;
                 }
