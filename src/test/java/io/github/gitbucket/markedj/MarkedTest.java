@@ -77,8 +77,12 @@ public class MarkedTest {
 
     @Test
     public void testStackoverFlow() throws Exception {
-        // Make sure StackOverflowError does not occur by em regular expression
-        Marked.marked(loadResourceAsString("stackoverflow.txt"), new Options());
+        System.out.println(Marked.marked(loadResourceAsString("stackoverflow.txt"), new Options()));
+    }
+
+    @Test
+    public void testStackoverFlow2() throws Exception {
+        System.out.println(Marked.marked(loadResourceAsString("stackoverflow2.txt"), new Options()));
     }
 
     @Test

@@ -15,15 +15,18 @@ public class FindFirstRule implements Rule {
     }
 
     public List<String> exec(String src) {
-        Matcher matcher = pattern.matcher(src);
-        if(matcher.find()){
-            List<String> result = new ArrayList<>();
-            for(int i = 0; i <= matcher.groupCount(); i++){
-                result.add(matcher.group(i));
+        try {
+            Matcher matcher = pattern.matcher(src);
+            if (matcher.find()) {
+                List<String> result = new ArrayList<>();
+                for (int i = 0; i <= matcher.groupCount(); i++) {
+                    result.add(matcher.group(i));
+                }
+                return result;
             }
-            return result;
-        } else {
-            return Collections.emptyList();
+        } catch(StackOverflowError e){
+            // ignore
         }
+        return Collections.emptyList();
     }
 }

@@ -15,15 +15,18 @@ public class FindAllRule implements Rule {
     }
 
     public List<String> exec(String src) {
-        Matcher matcher = pattern.matcher(src);
-        List<String> result = new ArrayList<>();
-        while(matcher.find()){
-            result.add(matcher.group(0));
+        try {
+            Matcher matcher = pattern.matcher(src);
+            List<String> result = new ArrayList<>();
+            while (matcher.find()) {
+                result.add(matcher.group(0));
+            }
+            if (!result.isEmpty()) {
+                return result;
+            }
+        } catch(StackOverflowError e){
+            // ignore
         }
-        if(!result.isEmpty()){
-            return result;
-        } else {
-            return Collections.emptyList();
-        }
+        return Collections.emptyList();
     }
 }
