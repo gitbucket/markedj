@@ -89,6 +89,10 @@ public class Renderer {
             cellType = "td";
         }
 
+        if(content.length() == 0){
+            content = "&nbsp;";
+        }
+
         String align = flags.getAlign();
         if(align != null){
             return "<" + cellType + " style=\"text-align: " + align + "\">" + content + "</" + cellType + ">\n";
