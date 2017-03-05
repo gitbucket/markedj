@@ -24,13 +24,19 @@ public class InlineLexer {
     }
 
     public String output(String src){
-
         StringBuilder out = new StringBuilder();
+        StringBuilder textBuffer = new StringBuilder();
+
         while(src.length() > 0){
             //escape
             {
                 List<String> cap = rules.get("escape").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     out.append(cap.get(1));
                     continue;
@@ -41,6 +47,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("autolink").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     String text;
                     String href;
@@ -64,6 +75,11 @@ public class InlineLexer {
             if(!inLink){
                 List<String> cap = rules.get("url").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     String text = escape(cap.get(1));
                     String href = text;
@@ -76,6 +92,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("tag").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     if(!inLink && Pattern.compile("^<a ").matcher(cap.get(0)).find()){
                         inLink = true;
                     } else if(inLink && Pattern.compile("^</a>").matcher(cap.get(0)).find()){
@@ -96,6 +117,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("link").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     inLink = true;
                     out.append(outputLink(cap, new Lexer.Link(cap.get(2), cap.get(3))));
@@ -111,6 +137,11 @@ public class InlineLexer {
                     cap = rules.get("nolink").exec(src);
                 }
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     String key;
                     if(cap.size() > 2){
@@ -134,6 +165,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("strong").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     out.append(renderer.strong(output(or(cap.get(2), cap.get(1)))));
                     continue;
@@ -144,6 +180,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("em").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     out.append(renderer.em(output(or(cap.get(2), cap.get(1)))));
                     continue;
@@ -154,6 +195,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("code").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     out.append(renderer.codespan(escape(cap.get(2), true)));
                     continue;
@@ -164,6 +210,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("br").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     out.append(renderer.br());
                     continue;
@@ -174,6 +225,11 @@ public class InlineLexer {
             {
                 List<String> cap = rules.get("del").exec(src);
                 if(!cap.isEmpty()){
+                    if(textBuffer.length() != 0){
+                        out.append(renderer.text(textBuffer.toString()));
+                        textBuffer.setLength(0);
+                    }
+
                     src = src.substring(cap.get(0).length());
                     out.append(renderer.del(output(cap.get(1))));
                     continue;
@@ -187,7 +243,7 @@ public class InlineLexer {
                     src = src.substring(cap.get(0).length());
                     // TODO smartypants
                     //out.append(renderer.text(escape(smartypants(cap.get(0)))));
-                    out.append(renderer.text(escape(cap.get(0))));
+                    textBuffer.append(escape(cap.get(0)));
                     continue;
                 }
             }
@@ -195,6 +251,11 @@ public class InlineLexer {
             // TODO Error
             //println("Infinite loop on byte: " + source.charAt(0).toByte)
         }
+
+        if(textBuffer.length() != 0){
+            out.append(renderer.text(textBuffer.toString()));
+        }
+
         return out.toString();
     }
 
