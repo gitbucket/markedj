@@ -56,11 +56,7 @@ public class Lexer {
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
                     String code = cap.get(0).replaceAll("(?m)^ {4}", "");
-                    if(!options.isPedantic()){
-                        context.pushToken(new CodeToken(code.replaceAll("\\n+$", ""), null, false));
-                    } else {
-                        context.pushToken(new CodeToken(code, null, false));
-                    }
+                    context.pushToken(new CodeToken(code.replaceAll("\\n+$", ""), null, false));
                     continue;
                 }
             }
@@ -193,11 +189,7 @@ public class Lexer {
                             // list item contains. Hacky.
                             if(item.indexOf("\n ") > 0){
                                 space = space - item.length();
-                                if(!options.isPedantic()){
-                                    item = item.replaceAll("(?m)^ {1," + space + "}", "");
-                                } else {
-                                    item = item.replaceAll("(?m)^ {1,4}", "");
-                                }
+                                item = item.replaceAll("(?m)^ {1," + space + "}", "");
                             }
 
 //                            // Determine whether the nextToken list item belongs here.
@@ -244,8 +236,7 @@ public class Lexer {
                     if(options.isSanitize()){
                         context.pushToken(new ParagraphToken(cap.get(0)));
                     } else {
-                        context.pushToken(new HtmlToken(cap.get(0),
-                                !options.isSanitize() && (cap.get(0).equals("pre") || cap.get(0).equals("script") || cap.get(0).equals("style"))));
+                        context.pushToken(new HtmlToken(cap.get(0)));
                     }
                     continue;
                 }

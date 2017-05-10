@@ -139,11 +139,7 @@ public class Parser {
             }
             case "HtmlToken": {
                 HtmlToken t = (HtmlToken) context.currentToken();
-                if(!t.isPre() && !options.isPedantic()){
-                    return renderer.html(context.getInlineLexer().output(t.getText()));
-                } else {
-                    return renderer.html(t.getText());
-                }
+                return renderer.html(context.getInlineLexer().output(t.getText()));
             }
             case "ParagraphToken": {
                 ParagraphToken t = (ParagraphToken) context.currentToken();
