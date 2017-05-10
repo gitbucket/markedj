@@ -21,15 +21,10 @@ public class Marked {
         String html = parser.parse(result.getTokens(), result.getLinks());
 
         Whitelist whitelist = Whitelist.relaxed();
-        whitelist.addAttributes("code", "class");
-        whitelist.addAttributes("th", "style");
-        whitelist.addAttributes("td", "style");
-        whitelist.addAttributes("h1", "id");
-        whitelist.addAttributes("h2", "id");
-        whitelist.addAttributes("h3", "id");
-        whitelist.addAttributes("h4", "id");
-        whitelist.addAttributes("h5", "id");
-        whitelist.addAttributes("h6", "id");
+        whitelist.addAttributes(":all", "id", "class", "style");
+        whitelist.addTags("input");
+        whitelist.addAttributes("input", "type", "checked", "name", "value", "disabled");
+        whitelist.addProtocols("a", "href", "#");
 
         return Jsoup.clean(html, whitelist);
     }

@@ -48,11 +48,7 @@ public class Renderer {
     }
 
     public String hr() {
-        if (options.isXhtml()){
-            return "<hr/>\n";
-        } else {
-            return "<hr>\n";
-        }
+        return "<hr>\n";
     }
 
     public String list(String body, boolean ordered){
@@ -110,11 +106,7 @@ public class Renderer {
     }
 
     public String br(){
-        if(options.isXhtml()){
-            return "<br/>";
-        } else {
-            return "<br>";
-        }
+        return "<br>";
     }
 
     public String del(String text){
@@ -122,10 +114,6 @@ public class Renderer {
     }
 
     public String link(String href, String title, String text){
-        if(options.isSanitize()){
-            // TODO
-        }
-
         String titleAttr = "";
         if(title != null){
             titleAttr = " title=\"" + title + "\"";
@@ -140,11 +128,7 @@ public class Renderer {
             titleAttr = " title=\"" + title + "\"";
         }
 
-        if(options.isXhtml()){
-            return "<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr + "/>";
-        } else {
-            return "<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr + ">";
-        }
+        return "<img src=\"" + href + "\" alt=\"" + text + "\"" + titleAttr + ">";
     }
 
     public String nolink(String text){

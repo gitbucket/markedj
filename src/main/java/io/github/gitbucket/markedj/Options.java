@@ -6,10 +6,8 @@ public class Options {
     private boolean tables = true;
     private boolean breaks = false;
     private boolean sanitize = false;
-    // TODO private Object highlight = null;
     private String langPrefix = "lang-";
     private String headerPrefix = "";
-    private boolean xhtml = false;
 
     public void setGfm(boolean gfm) {
         this.gfm = gfm;
@@ -33,10 +31,6 @@ public class Options {
 
     public void setHeaderPrefix(String headerPrefix) {
         this.headerPrefix = headerPrefix;
-    }
-
-    public void setXhtml(boolean xhtml) {
-        this.xhtml = xhtml;
     }
 
     public boolean isGfm() {
@@ -63,7 +57,4 @@ public class Options {
         return headerPrefix;
     }
 
-    public boolean isXhtml() {
-        return xhtml;
-    }
 }
