@@ -1,120 +1,114 @@
-<p>GitBucket added support for LDAP Authentication in the version 1.5.
-This Wiki page describes how to configure and troubleshoot it.</p>
-<h2 id="configuration">Configuration</h2>
-<ol>
-<li>Login as Admin</li>
-<li>Go to <strong>Administration</strong> and click <strong>System Settings</strong></li>
-<li>Check <strong>LDAP</strong> and enter the LDAP configuration:</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th style="text-align: left">Name</th>
-<th style="text-align: left">Description</th>
-<th style="text-align: left">Example Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left">LDAP Host</td>
-<td style="text-align: left">LDAP host name</td>
-<td style="text-align: left">192.168.32.1</td>
-</tr>
-<tr>
-<td style="text-align: left">LDAP Port</td>
-<td style="text-align: left">LDAP port</td>
-<td style="text-align: left">389 (default 389)</td>
-</tr>
-<tr>
-<td style="text-align: left">Bind DN</td>
-<td style="text-align: left">Username that has read access to the LDAP</td>
-<td style="text-align: left">uid=binduser,cn=bindclients,dc=example,dc=com</td>
-</tr>
-<tr>
-<td style="text-align: left">Bind Password</td>
-<td style="text-align: left">Password for Bind DN account</td>
-<td style="text-align: left">password</td>
-</tr>
-<tr>
-<td style="text-align: left">Base DN</td>
-<td style="text-align: left">Top level DN of your LDAP directory tree (used for user search)</td>
-<td style="text-align: left">dc=example,dc=com</td>
-</tr>
-<tr>
-<td style="text-align: left">User name attribute</td>
-<td style="text-align: left">Name of the LDAP attribute. This is used as the GitBucket username</td>
-<td style="text-align: left">uid</td>
-</tr>
-<tr>
-<td style="text-align: left">Mail address attribute</td>
-<td style="text-align: left">Email address of LDAP attribute</td>
-<td style="text-align: left">mail</td>
-</tr>
-<tr>
-<td style="text-align: left">Enable TLS</td>
-<td style="text-align: left">Whether to use encrypted connection</td>
-<td style="text-align: left">checked</td>
-</tr>
-<tr>
-<td style="text-align: left">Keystore</td>
-<td style="text-align: left">Path to the Java keystore</td>
-<td style="text-align: left">/etc/pki/java/cacerts</td>
-</tr>
-</tbody>
-</table>
-<h3 id="keystore">Keystore</h3>
-<p>Default system keystore is in:</p>
+<p>GitBucket added support for LDAP Authentication in the version 1.5. This Wiki page describes how to configure and troubleshoot it.</p> 
+<h2 id="configuration">Configuration</h2> 
+<ol> 
+ <li>Login as Admin</li> 
+ <li>Go to <strong>Administration</strong> and click <strong>System Settings</strong></li> 
+ <li>Check <strong>LDAP</strong> and enter the LDAP configuration:</li> 
+</ol> 
+<table> 
+ <thead> 
+  <tr> 
+   <th style="text-align: left">Name</th> 
+   <th style="text-align: left">Description</th> 
+   <th style="text-align: left">Example Value</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td style="text-align: left">LDAP Host</td> 
+   <td style="text-align: left">LDAP host name</td> 
+   <td style="text-align: left">192.168.32.1</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">LDAP Port</td> 
+   <td style="text-align: left">LDAP port</td> 
+   <td style="text-align: left">389 (default 389)</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">Bind DN</td> 
+   <td style="text-align: left">Username that has read access to the LDAP</td> 
+   <td style="text-align: left">uid=binduser,cn=bindclients,dc=example,dc=com</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">Bind Password</td> 
+   <td style="text-align: left">Password for Bind DN account</td> 
+   <td style="text-align: left">password</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">Base DN</td> 
+   <td style="text-align: left">Top level DN of your LDAP directory tree (used for user search)</td> 
+   <td style="text-align: left">dc=example,dc=com</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">User name attribute</td> 
+   <td style="text-align: left">Name of the LDAP attribute. This is used as the GitBucket username</td> 
+   <td style="text-align: left">uid</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">Mail address attribute</td> 
+   <td style="text-align: left">Email address of LDAP attribute</td> 
+   <td style="text-align: left">mail</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">Enable TLS</td> 
+   <td style="text-align: left">Whether to use encrypted connection</td> 
+   <td style="text-align: left">checked</td> 
+  </tr> 
+  <tr> 
+   <td style="text-align: left">Keystore</td> 
+   <td style="text-align: left">Path to the Java keystore</td> 
+   <td style="text-align: left">/etc/pki/java/cacerts</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3 id="keystore">Keystore</h3> 
+<p>Default system keystore is in:</p> 
 <pre><code>${JAVA_HOME}/lib/security/jssecacerts
-</code></pre>
-<p>or in:</p>
+</code></pre> 
+<p>or in:</p> 
 <pre><code>${JAVA_HOME}/lib/security/cacerts
-</code></pre>
-<p>Custom keystore can be set either in <code>/etc/sysconfig/gitbucket</code> by
-specifying the following option:</p>
-<pre><code>GITBUCKET_JVM_OPTS=&quot;-Djavax.net.ssl.trustStore=/path/to/your/keystore&quot;
-</code></pre>
-<p>or in Gitbucket&#39;s <strong>System Settings</strong> as described above.</p>
-<p>You can use the following command to add your CA certificate to the
-keystore:</p>
+</code></pre> 
+<p>Custom keystore can be set either in <code>/etc/sysconfig/gitbucket</code> by specifying the following option:</p> 
+<pre><code>GITBUCKET_JVM_OPTS="-Djavax.net.ssl.trustStore=/path/to/your/keystore"
+</code></pre> 
+<p>or in Gitbucket's <strong>System Settings</strong> as described above.</p> 
+<p>You can use the following command to add your CA certificate to the keystore:</p> 
 <pre><code>$ keytool -import \
 -file /path/to/your/cacert.pem \
 -alias &lt;your_cert_alias&gt; \
 -keystore /path/to/your/keystore
-</code></pre>
-<p>Older versions of Java don&#39;t know how to import certificate if it
-contains anything else than the certificate itself. Then it&#39;s necessary
-to strip everything else out like this:</p>
-<pre><code>$ cat /path/to/your/cacert.pem | sed -ne &#39;/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p&#39; &gt; /tmp/cacert.pem
+</code></pre> 
+<p>Older versions of Java don't know how to import certificate if it contains anything else than the certificate itself. Then it's necessary to strip everything else out like this:</p> 
+<pre><code>$ cat /path/to/your/cacert.pem | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' &gt; /tmp/cacert.pem
 $ keytool -import -trustcacerts -alias &lt;your_cert_alias&gt; -file /tmp/cacert.pem -keystore /path/to/your/keystore
-</code></pre>
-<p>You can list all keys from the keystore like this:</p>
+</code></pre> 
+<p>You can list all keys from the keystore like this:</p> 
 <pre><code>$ keytool -list -keystore /path/to/your/keystore
-</code></pre>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>LDAP debugging was enabled in the version 1.7. So if something goes
-wrong, you should see the error in the log file:</p>
+</code></pre> 
+<h2 id="troubleshooting">Troubleshooting</h2> 
+<p>LDAP debugging was enabled in the version 1.7. So if something goes wrong, you should see the error in the log file:</p> 
 <pre><code>15:43:56.529 [qtp1820788751-15] INFO  service.AccountService - LDAP Authentication Failed: System LDAP authentication failed.
 15:43:37.386 [qtp1820788751-15] INFO  service.AccountService - LDAP Authentication Failed: User does not exist
 15:49:34.565 [qtp1820788751-18] INFO  service.AccountService - LDAP Authentication Failed: User LDAP Authentication Failed.
-15:41:09.370 [qtp1820788751-16] INFO  service.AccountService - LDAP Authentication Failed: Can&#39;t find mail address.
-</code></pre>
-<p>The following is the explanation for the above error messages:</p>
-<ul>
-<li><strong>System LDAP authentication failed</strong><ul>
-<li>Failed to access LDAP server by using <em>Bind DN</em> and <em>Bind Password</em></li>
-<li>Wrong <em>LDAP Host</em>, <em>LDAP Port</em>, <em>Bind DN</em> or <em>Bind Password</em></li>
-</ul>
-</li>
-<li><strong>User does not exists</strong><ul>
-<li>LDAP searched the user account from <em>Base DN</em> but did not find it</li>
-</ul>
-</li>
-<li><strong>User LDAP Authentication Failed</strong><ul>
-<li>Found user but failed to login (maybe wrong <em>Bind Password</em>)</li>
-</ul>
-</li>
-<li><strong>Can&#39;t find mail address</strong><ul>
-<li>Found user and user authentication succeed but did not find email address (wrong <em>Mail address attribute</em>)</li>
-</ul>
-</li>
+15:41:09.370 [qtp1820788751-16] INFO  service.AccountService - LDAP Authentication Failed: Can't find mail address.
+</code></pre> 
+<p>The following is the explanation for the above error messages:</p> 
+<ul> 
+ <li><strong>System LDAP authentication failed</strong>
+  <ul> 
+   <li>Failed to access LDAP server by using <em>Bind DN</em> and <em>Bind Password</em></li> 
+   <li>Wrong <em>LDAP Host</em>, <em>LDAP Port</em>, <em>Bind DN</em> or <em>Bind Password</em></li> 
+  </ul> </li> 
+ <li><strong>User does not exists</strong>
+  <ul> 
+   <li>LDAP searched the user account from <em>Base DN</em> but did not find it</li> 
+  </ul> </li> 
+ <li><strong>User LDAP Authentication Failed</strong>
+  <ul> 
+   <li>Found user but failed to login (maybe wrong <em>Bind Password</em>)</li> 
+  </ul> </li> 
+ <li><strong>Can't find mail address</strong>
+  <ul> 
+   <li>Found user and user authentication succeed but did not find email address (wrong <em>Mail address attribute</em>)</li> 
+  </ul> </li> 
 </ul>
