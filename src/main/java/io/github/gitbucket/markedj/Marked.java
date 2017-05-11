@@ -20,13 +20,13 @@ public class Marked {
         Parser parser = new Parser(options, renderer);
         String html = parser.parse(result.getTokens(), result.getLinks());
 
-        Whitelist whitelist = Whitelist.relaxed();
-        whitelist.addAttributes(":all", "id", "class", "style");
-        whitelist.addTags("input");
-        whitelist.addAttributes("input", "type", "checked", "name", "value", "disabled");
-        whitelist.addProtocols("a", "href", "#");
+        Whitelist whitelist = options.getWhitelist();
 
-        return Jsoup.clean(html, whitelist);
+        if(whitelist != null) {
+            return Jsoup.clean(html, whitelist);
+        } else {
+            return html;
+        }
     }
 
 }
