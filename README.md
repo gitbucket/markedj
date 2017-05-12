@@ -11,7 +11,7 @@ At first, add following dependency into your `pom.xml`:
   <dependency>
     <groupId>io.github.gitbucket</groupId>
     <artifactId>markedj</artifactId>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
   </dependency>
 </dependencies>
 ```
@@ -45,4 +45,4 @@ breaks       | false   | Enable GFM [line breaks](https://help.github.com/articl
 sanitize     | false   | Ignore any HTML that has been input.
 langPrefix   | "lang-" | Prefix of class attribute of code block
 headerPrefix | ""      | Prefix of id attribute of header
-
+whitelist    | See [Options.java](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/Options.java) | Whitelist of HTML tags.
