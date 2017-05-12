@@ -4,7 +4,7 @@
   <groupId>io.github.gitbucket</groupId>
   <artifactId>markedj</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.10</version>
+  <version>1.0.11-SNAPSHOT</version>
   <name>markedj</name>
   <url>https://github.com/gitbucket/markedj</url>
   <description>JVM port of graceful markdown processor marked.js</description>
@@ -39,6 +39,11 @@
   </developers>
 
   <dependencies>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.10.2</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

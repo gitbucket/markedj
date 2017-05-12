@@ -1,15 +1,22 @@
 package io.github.gitbucket.markedj;
 
+import org.jsoup.safety.Whitelist;
+
 public class Options {
 
     private boolean gfm = true;
     private boolean tables = true;
     private boolean breaks = false;
     private boolean sanitize = false;
-    // TODO private Object highlight = null;
     private String langPrefix = "lang-";
     private String headerPrefix = "";
-    private boolean xhtml = false;
+    private Whitelist whitelist = Whitelist.relaxed();
+    {
+        whitelist.addAttributes(":all", "id", "class", "style");
+        whitelist.addTags("input");
+        whitelist.addAttributes("input", "type", "checked", "name", "value", "disabled");
+        whitelist.addProtocols("a", "href", "#");
+    }
 
     public void setGfm(boolean gfm) {
         this.gfm = gfm;
@@ -35,8 +42,8 @@ public class Options {
         this.headerPrefix = headerPrefix;
     }
 
-    public void setXhtml(boolean xhtml) {
-        this.xhtml = xhtml;
+    public void setWhitelist(Whitelist whitelist){
+        this.whitelist = whitelist;
     }
 
     public boolean isGfm() {
@@ -63,7 +70,8 @@ public class Options {
         return headerPrefix;
     }
 
-    public boolean isXhtml() {
-        return xhtml;
+    public Whitelist getWhitelist(){
+        return whitelist;
     }
+
 }
