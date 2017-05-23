@@ -59,6 +59,18 @@ public class MarkedTest {
     }
 
     @Test
+    public void testIns() throws Exception {
+        String result = Marked.marked("~~123~~");
+        assertEquals("<p><del>123</del></p>", result);
+    }
+
+    @Test
+    public void testStrong() throws Exception {
+        String result = Marked.marked("**123**");
+        assertEquals("<p><strong>123</strong></p>", result);
+    }
+
+    @Test
     public void testEm() throws Exception {
         {
             String result = Marked.marked("_aa__a__aa_", new Options());
