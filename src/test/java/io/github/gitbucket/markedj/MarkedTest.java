@@ -145,6 +145,14 @@ public class MarkedTest {
     }
 
     @Test
+    public void testFencedCodeBlock() throws Exception {
+        String md = "``` {#id .class1 attribute1=value1}\ntest\n```";
+        String result = Marked.marked(md, new Options());
+        String expect = "<pre><code>test\n</code></pre>";
+        assertEquals(expect, result);
+    }
+
+    @Test
     public void testEmptyItemOfList() throws Exception {
         String result = Marked.marked(loadResourceAsString("empty_item_of_list.md"), new Options());
         assertEquals(loadResourceAsString("empty_item_of_list.html"), result);

@@ -11,7 +11,7 @@ public class Renderer {
     }
 
     public String code(String code, String lang, boolean escaped){
-        if(lang != null){
+        if(!isEmpty(lang)){
             StringBuilder sb = new StringBuilder();
             sb.append("<pre><code class=\"" + options.getLangPrefix() + escape(lang, true) + "\">");
             if(escaped){
