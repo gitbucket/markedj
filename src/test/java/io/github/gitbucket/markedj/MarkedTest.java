@@ -231,6 +231,19 @@ public class MarkedTest {
         }
     }
 
+    @Test
+    public void testHr() throws Exception {
+        String result = Marked.marked(
+                "This is a paragraph\n" +
+                "\n" +
+                "--------------------------\n" +
+                "This is a paragraph after a horizontal rule");
+
+        assertEquals("<p>This is a paragraph</p> \n" +
+                "<hr> \n" +
+                "<p>This is a paragraph after a horizontal rule</p>", result);
+    }
+
     private String loadResourceAsString(String path) throws IOException {
         InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         try {
