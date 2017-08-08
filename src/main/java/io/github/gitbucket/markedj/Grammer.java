@@ -25,7 +25,7 @@ public class Grammer {
     public static String BLOCK_LIST        = "^( *)(" + BULLET + ") [\\s\\S]+?(?:\\n{2,}(?! )(?!\\1" + BULLET + " )\\n*|\\s*$)";
     public static String BLOCK_DEF         = "^ *\\[([^\\]]+)\\]: *<?([^\\s>]+)>?(?: +[\"(]([^\\n]+)[\")])? *(?:\\n+|$)";
     public static String BLOCK_PARAGRAPH   = "^((?:[^\\n]+\\n?(?!" + removeLineStart(BLOCK_HR) + "|" + removeLineStart(BLOCK_HEADING) + "|" + removeLineStart(BLOCK_LHEADING) + "|" + removeLineStart(BLOCK_BLOCKQUOTE) + "|<" + TAG + "|" + removeLineStart(BLOCK_DEF) + "))+)\\n*";
-    public static String BLOCK_GFM_FENCES  = "^ *(`{3,}|~{3,})[ \\.]*(\\S+)? *\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
+    public static String BLOCK_GFM_FENCES  = "^ *(`{3,}|~{3,})([ \\S]+)?\\n([\\s\\S]*?)\\s*\\1 *(?:\\n+|$)";
 
     public static Map<String, Rule> BLOCK_RULES = new HashMap<>();
     public static Map<String, Rule> BLOCK_GFM_RULES = new HashMap<>();

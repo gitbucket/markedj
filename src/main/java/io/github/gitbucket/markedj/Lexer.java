@@ -66,7 +66,13 @@ public class Lexer {
                 List<String> cap = rules.get("fences").exec(src);
                 if(!cap.isEmpty()){
                     src = src.substring(cap.get(0).length());
-                    context.pushToken(new CodeToken(cap.get(3), cap.get(2), false));
+                    String lang = cap.get(2);
+                    if(lang != null){
+                        // Ignore extra information in Pandoc, R Markdown or PHP Markdown Extra.
+                        // https://github.com/gitbucket/markedj/issues/20
+                        lang = lang.replaceFirst("\\{.*}", "");
+                    }
+                    context.pushToken(new CodeToken(cap.get(3), trim(lang), false));
                     continue;
                 }
             }

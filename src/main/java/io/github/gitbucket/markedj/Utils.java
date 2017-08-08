@@ -44,4 +44,12 @@ public class Utils {
         return list;
     }
 
+    public static String trim(String str){
+        if(str == null){
+            return null;
+        } else {
+            return str.trim();
+        }
+    }
+
 }
