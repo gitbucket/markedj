@@ -13,7 +13,7 @@ public class Utils {
         if(!encode){
             html = html.replaceAll("&(?!#?\\w+;)", "&amp;");
         } else {
-            html = html.replace("&", "&amp");
+            html = html.replace("&", "&amp;");
         }
         return html.replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
