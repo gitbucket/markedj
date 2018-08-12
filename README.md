@@ -4,7 +4,7 @@ JVM port of graceful markdown processor [marked.js](https://github.com/chjj/mark
 
 ## Usage
 
-At first, add following dependency into your `pom.xml`:
+First, add following dependency into your `pom.xml`:
 
 ```xml
 <dependencies>
