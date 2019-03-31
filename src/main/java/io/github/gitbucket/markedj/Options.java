@@ -18,10 +18,12 @@ public class Options {
                                 "sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u",
                                 "ul", "input", "del", "hr")
                 .addAttributes("a", "href", "title")
+                .addProtocols("a", "href", "http", "https", "mailto", "ftp", "#")
                 .addAttributes("blockquote", "cite")
                 .addAttributes("col", "span", "width")
                 .addAttributes("colgroup", "span", "width")
                 .addAttributes("img", "align", "alt", "height", "src", "title", "width")
+                .addProtocols("img", "src", "http", "https")
                 .addAttributes("ol", "start", "type")
                 .addAttributes("q", "cite")
                 .addAttributes("table", "summary", "width")
