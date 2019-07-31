@@ -5,3 +5,4 @@ matrix:
   - jdk: openjdk7
     dist: trusty
   - jdk: openjdk8
+  - jdk: openjdk11
