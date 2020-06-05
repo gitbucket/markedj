@@ -46,3 +46,16 @@ sanitize     | false   | Ignore any HTML that has been input.
 langPrefix   | "lang-" | Prefix of class attribute of code block
 headerPrefix | ""      | Prefix of id attribute of header
 whitelist    | See [Options.java](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/Options.java) | Whitelist of HTML tags.
+
+By default, markedj uses Jsoup's whitelist mechanism for HTML rendering. It restricts renderable tags, attributes and even protocols of attribute values. For example, the image url must be `http://` or `https://` by default. You can remove this restriction by customizing the whitelist as follows:
+
+```java
+String html1 = Marked.marked("![alt text](/img/some-image.png \"title\")");
+  // => <p><img alt=\"alt text\" title=\"title\"></p>
+
+Options options = new Options();
+options.getWhitelist().removeProtocols("img", "src", "http", "https");
+
+String html2 = Marked.marked("![alt text](/img/some-image.png \"title\")", options);
+  // => <p><img src="/img/some-image.png" alt="alt text" title="title"></p>
+```
