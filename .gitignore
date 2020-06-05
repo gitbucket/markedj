@@ -16,3 +16,8 @@ hs_err_pid*
 
 # Visual Studio Code
 .vscode
+
+# Eclipse
+.settings
+.classpath
+.project
