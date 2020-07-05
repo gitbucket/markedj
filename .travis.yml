@@ -1,8 +1,0 @@
-language: java
-dist: xenial
-matrix:
-  include:
-  - jdk: openjdk7
-    dist: trusty
-  - jdk: openjdk8
-  - jdk: openjdk11
