@@ -21,5 +21,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    - name: Build with Maven
+    - name: Build
+      run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - name: Test
       run: mvn test -B
