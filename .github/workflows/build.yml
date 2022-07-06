@@ -21,6 +21,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: ${{ matrix.java }}
+        distribution: temurin
     - name: Build
       run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
     - name: Test
