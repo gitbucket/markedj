@@ -1,7 +1,7 @@
 package io.github.gitbucket.markedj;
 
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 public class Marked {
 
@@ -20,7 +20,7 @@ public class Marked {
         Parser parser = new Parser(options, renderer);
         String html = parser.parse(result.getTokens(), result.getLinks());
 
-        Whitelist whitelist = options.getWhitelist();
+        Safelist whitelist = options.getSafelist();
 
         if(whitelist != null) {
             return Jsoup.clean(html, whitelist);

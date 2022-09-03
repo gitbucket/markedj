@@ -1,6 +1,6 @@
 package io.github.gitbucket.markedj;
 
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 public class Options {
 
@@ -10,7 +10,7 @@ public class Options {
     private boolean sanitize = false;
     private String langPrefix = "lang-";
     private String headerPrefix = "";
-    private Whitelist whitelist = new Whitelist()
+    private Safelist safelist = new Safelist()
                 .addTags(
                         "a", "b", "blockquote", "br", "caption", "cite", "code", "col",
                                 "colgroup", "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6",
@@ -57,8 +57,8 @@ public class Options {
         this.headerPrefix = headerPrefix;
     }
 
-    public void setWhitelist(Whitelist whitelist){
-        this.whitelist = whitelist;
+    public void setSafelist(Safelist whitelist){
+        this.safelist = safelist;
     }
 
     public boolean isGfm() {
@@ -85,8 +85,8 @@ public class Options {
         return headerPrefix;
     }
 
-    public Whitelist getWhitelist(){
-        return whitelist;
+    public Safelist getSafelist(){
+        return safelist;
     }
 
 }
