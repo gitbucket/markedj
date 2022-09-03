@@ -166,10 +166,10 @@ public class MarkedTest {
                 "- List B", new Options());
 
         assertEquals(
-                "<p>Message A</p> \n" +
-                "<ul> \n" +
-                " <li>List A</li> \n" +
-                " <li>List B</li> \n" +
+                "<p>Message A</p>\n" +
+                "<ul>\n" +
+                " <li>List A</li>\n" +
+                " <li>List B</li>\n" +
                 "</ul>", result);
     }
 
@@ -189,26 +189,26 @@ public class MarkedTest {
 
 
         assertEquals(
-                "<table> \n" +
-                        " <thead> \n" +
-                        "  <tr> \n" +
-                        "   <th>ID</th> \n" +
-                        "   <th>name</th> \n" +
-                        "   <th>note</th> \n" +
-                        "  </tr> \n" +
-                        " </thead> \n" +
-                        " <tbody> \n" +
-                        "  <tr> \n" +
-                        "   <td>1</td> \n" +
-                        "   <td>foo</td> \n" +
-                        "   <td>This is foo</td> \n" +
-                        "  </tr> \n" +
-                        "  <tr> \n" +
-                        "   <td>2</td> \n" +
-                        "   <td>bar</td> \n" +
-                        "   <td></td> \n" +
-                        "  </tr> \n" +
-                        " </tbody> \n" +
+                "<table>\n" +
+                        " <thead>\n" +
+                        "  <tr>\n" +
+                        "   <th>ID</th>\n" +
+                        "   <th>name</th>\n" +
+                        "   <th>note</th>\n" +
+                        "  </tr>\n" +
+                        " </thead>\n" +
+                        " <tbody>\n" +
+                        "  <tr>\n" +
+                        "   <td>1</td>\n" +
+                        "   <td>foo</td>\n" +
+                        "   <td>This is foo</td>\n" +
+                        "  </tr>\n" +
+                        "  <tr>\n" +
+                        "   <td>2</td>\n" +
+                        "   <td>bar</td>\n" +
+                        "   <td></td>\n" +
+                        "  </tr>\n" +
+                        " </tbody>\n" +
                         "</table>", result);
     }
 
@@ -231,11 +231,9 @@ public class MarkedTest {
             options.setSanitize(false);
             String result = Marked.marked("- <b>test", options);
             // It's not clean but tag is closed at least.
-            assertEquals("<ul> \n" +
-                    " <li><b>test</b></li>\n" +
-                    " <b> </b>\n" +
-                    "</ul>\n" +
-                    "<b> </b>", result);
+            assertEquals("<ul>\n" +
+                    " <li><b>test</b></li><b> </b>\n" +
+                    "</ul><b> </b>", result);
         }
     }
 
@@ -247,8 +245,8 @@ public class MarkedTest {
                 "--------------------------\n" +
                 "This is a paragraph after a horizontal rule");
 
-        assertEquals("<p>This is a paragraph</p> \n" +
-                "<hr> \n" +
+        assertEquals("<p>This is a paragraph</p>\n" +
+                "<hr>\n" +
                 "<p>This is a paragraph after a horizontal rule</p>", result);
     }
 
