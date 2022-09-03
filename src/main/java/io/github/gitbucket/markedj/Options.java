@@ -57,7 +57,7 @@ public class Options {
         this.headerPrefix = headerPrefix;
     }
 
-    public void setSafelist(Safelist whitelist){
+    public void setSafelist(Safelist safelist){
         this.safelist = safelist;
     }
 
