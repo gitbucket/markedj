@@ -20,10 +20,10 @@ public class Marked {
         Parser parser = new Parser(options, renderer);
         String html = parser.parse(result.getTokens(), result.getLinks());
 
-        Safelist whitelist = options.getSafelist();
+        Safelist safelist = options.getSafelist();
 
-        if(whitelist != null) {
-            return Jsoup.clean(html, whitelist);
+        if(safelist != null) {
+            return Jsoup.clean(html, safelist);
         } else {
             return html;
         }
