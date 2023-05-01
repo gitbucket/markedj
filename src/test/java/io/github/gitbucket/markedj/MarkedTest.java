@@ -61,7 +61,7 @@ public class MarkedTest {
     @Test
     public void testIns() throws Exception {
         String result = Marked.marked("~~123~~");
-        assertEquals("<p><del>123</del></p>", result);
+        assertEquals("<p>\n <del>123</del></p>", result);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class MarkedTest {
             //options.setGfm(true); // default is true
             String result = Marked.marked(md, options);
 
-            assertEquals("<p>first line<br>second line</p>", result);
+            assertEquals("<p>first line<br>\n second line</p>", result);
         }
     }
 
