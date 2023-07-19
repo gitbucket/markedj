@@ -77,7 +77,7 @@ public class Grammer {
 
     public static String INLINE_ESCAPE = "^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])";
     public static String INLINE_TEXT   = "^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)";
-    public static String INLINE_BR     = "^ {2,}\\n(?!\\s*$)";
+    public static String INLINE_BR     = "^( {2,}|\\\\)\\n(?!\\s*$)";
 
     static {
         INLINE_RULES.put("escape", new FindFirstRule(INLINE_ESCAPE));

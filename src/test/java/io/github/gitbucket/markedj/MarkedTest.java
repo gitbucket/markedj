@@ -264,4 +264,20 @@ public class MarkedTest {
             in.close();
         }
     }
+
+    @Test
+    public void testHardLineBreakWithSpaces() {
+        String result = Marked.marked("Line 1  \n" +
+                "Line 2");
+        assertEquals("<p>Line 1<br>\n" +
+                " Line 2</p>", result);
+    }
+
+    @Test
+    public void testHardLineBreakWithBackslash() {
+        String result = Marked.marked("Line 1\\\n" +
+                "Line 2");
+        assertEquals("<p>Line 1<br>\n" +
+                " Line 2</p>", result);
+    }
 }
