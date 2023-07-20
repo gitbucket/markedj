@@ -114,10 +114,10 @@
         <version>3.3.0</version>
         <executions>
           <execution>
-            <id>source-jar</id>
+            <id>attach-sources</id>
             <phase>package</phase>
             <goals>
-              <goal>jar</goal>
+              <goal>jar-no-fork</goal>
             </goals>
           </execution>
         </executions>
@@ -133,7 +133,9 @@
           <execution>
             <id>javadoc-jar</id>
             <phase>package</phase>
-            <goals><goal>jar</goal></goals>
+            <goals>
+              <goal>jar</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
