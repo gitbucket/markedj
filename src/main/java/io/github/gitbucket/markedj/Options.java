@@ -1,5 +1,8 @@
 package io.github.gitbucket.markedj;
 
+import io.github.gitbucket.markedj.extension.Extension;
+import java.util.HashMap;
+import java.util.Map;
 import org.jsoup.safety.Safelist;
 
 public class Options {
@@ -33,6 +36,16 @@ public class Options {
                 .addAttributes("input", "type", "checked", "name", "value", "disabled")
                 .addAttributes(":all", "id", "class", "style");
 
+	private Map<String, Extension> extensions = new HashMap<>();
+
+	public Options extension (String name, Extension extension) {
+		extensions.put(name, extension);
+		return this;
+	}
+	public Map<String, Extension> extensions () {
+		return extensions;
+	}
+	
     public void setGfm(boolean gfm) {
         this.gfm = gfm;
     }

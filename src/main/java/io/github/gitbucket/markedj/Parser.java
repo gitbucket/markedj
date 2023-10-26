@@ -1,15 +1,18 @@
 package io.github.gitbucket.markedj;
 
+import io.github.gitbucket.markedj.extension.Extension;
 import io.github.gitbucket.markedj.rule.Rule;
 import io.github.gitbucket.markedj.token.*;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Stack;
 
 public class Parser {
 
     protected Options options;
     protected Renderer renderer;
+    protected Map<String, Rule> rules;
 
     public Parser(Options options, Renderer renderer){
         this.options = options;
@@ -17,7 +20,6 @@ public class Parser {
     }
 
     public String parse(Stack<Token> src, Map<String, Lexer.Link> links){
-        Map<String, Rule> rules;
         if(options.isGfm()){
             if(options.isBreaks()){
                 rules = Grammer.INLINE_BREAKS_RULES;
@@ -27,6 +29,10 @@ public class Parser {
         } else {
             rules = Grammer.INLINE_RULES;
         }
+		
+		options.extensions().forEach((name, extension) -> {
+			rules = extension.enhanceRules(rules);
+		});
 
         ParserContext context = new ParserContext(src, links, rules);
         StringBuilder out = new StringBuilder();
@@ -149,6 +155,12 @@ public class Parser {
                 return renderer.paragraph(parseText(context));
             }
             default: {
+				// try to find extension
+				String tokenType = context.currentToken().getType();
+				Optional<Extension>	extension = options.extensions().values().stream().filter(ext -> ext.handlesToken(tokenType)).findFirst();
+				if (extension.isPresent()) {
+					return extension.get().parse(context, this::tok);
+				}
                 throw new RuntimeException("Unexpected token: " + context.currentToken());
             }
         }

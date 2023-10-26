@@ -6,6 +6,7 @@ import io.github.gitbucket.markedj.token.*;
 import java.util.*;
 
 import static io.github.gitbucket.markedj.Utils.*;
+import io.github.gitbucket.markedj.extension.Extension;
 
 public class Lexer {
 
@@ -21,6 +22,10 @@ public class Lexer {
         } else {
             this.rules = Grammer.BLOCK_GFM_RULES;
         }
+		
+		options.extensions().forEach((name, extension) -> {
+			this.rules = extension.enhanceRules(rules);
+		});
     }
 
     public LexerResult lex(String src){
@@ -170,6 +175,12 @@ public class Lexer {
                 }
             }
 
+			{
+				for (Extension extension : options.extensions().values()) {
+					src = extension.lex(src, context, this::token);
+				}
+			}
+			
             // list
             {
                 List<String> cap = rules.get("list").exec(src);
