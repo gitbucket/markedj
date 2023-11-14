@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,4 +101,9 @@ public class NotificationExtension implements Extension {
 	private String render(String info, Notifications.Notification notification) {
         return String.format("<div class=\"notification_%s\">\n%s</div>\n", notification.name().toLowerCase(Locale.ENGLISH), info);
     }
+
+	@Override
+	public String getName() {
+		return "notification";
+	}
 }

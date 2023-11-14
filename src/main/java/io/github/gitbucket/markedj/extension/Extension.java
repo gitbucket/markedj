@@ -26,6 +26,9 @@ import java.util.function.Function;
  * @author t.marx
  */
 public interface Extension {
+	
+	public String getName();
+	
 	public Map<String, Rule> enhanceRules(Map<String, Rule> existingRules);
 	
 	public String lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer);

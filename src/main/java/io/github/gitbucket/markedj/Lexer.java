@@ -23,7 +23,7 @@ public class Lexer {
             this.rules = Grammer.BLOCK_GFM_RULES;
         }
 		
-		options.extensions().forEach((name, extension) -> {
+		options.extensions().forEach((extension) -> {
 			this.rules = extension.enhanceRules(rules);
 		});
     }
@@ -176,7 +176,7 @@ public class Lexer {
             }
 
 			{
-				for (Extension extension : options.extensions().values()) {
+				for (Extension extension : options.extensions()) {
 					src = extension.lex(src, context, this::token);
 				}
 			}

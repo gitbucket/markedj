@@ -30,7 +30,7 @@ public class Parser {
             rules = Grammer.INLINE_RULES;
         }
 		
-		options.extensions().forEach((name, extension) -> {
+		options.extensions().forEach((extension) -> {
 			rules = extension.enhanceRules(rules);
 		});
 
@@ -157,7 +157,7 @@ public class Parser {
             default: {
 				// try to find extension
 				String tokenType = context.currentToken().getType();
-				Optional<Extension>	extension = options.extensions().values().stream().filter(ext -> ext.handlesToken(tokenType)).findFirst();
+				Optional<Extension>	extension = options.extensions().stream().filter(ext -> ext.handlesToken(tokenType)).findFirst();
 				if (extension.isPresent()) {
 					return extension.get().parse(context, this::tok);
 				}
