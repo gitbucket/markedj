@@ -12,7 +12,6 @@ public class Parser {
 
     protected Options options;
     protected Renderer renderer;
-    protected Map<String, Rule> rules;
 
     public Parser(Options options, Renderer renderer){
         this.options = options;
@@ -20,6 +19,7 @@ public class Parser {
     }
 
     public String parse(Stack<Token> src, Map<String, Lexer.Link> links){
+		Map<String, Rule> rules;
         if(options.isGfm()){
             if(options.isBreaks()){
                 rules = Grammer.INLINE_BREAKS_RULES;

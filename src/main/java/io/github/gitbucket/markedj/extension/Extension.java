@@ -17,8 +17,6 @@ package io.github.gitbucket.markedj.extension;
 
 import io.github.gitbucket.markedj.Lexer;
 import io.github.gitbucket.markedj.Parser;
-import io.github.gitbucket.markedj.rule.Rule;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -27,9 +25,27 @@ import java.util.function.Function;
  */
 public interface Extension {
 	
-	public String lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer);
+	public LexResult lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer);
 	
 	public boolean handlesToken (final String token);
 	
 	public String parse (Parser.ParserContext context, Function<Parser.ParserContext, String> tok);
+	
+	public static class LexResult {
+		private final String source;
+		private final boolean matches;
+
+		public LexResult(String source, boolean matches) {
+			this.source = source;
+			this.matches = matches;
+		}
+
+		public String getSource() {
+			return source;
+		}
+
+		public boolean matches() {
+			return matches;
+		}
+	}
 }

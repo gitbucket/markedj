@@ -22,10 +22,8 @@ import io.github.gitbucket.markedj.extension.TokenConsumer;
 import io.github.gitbucket.markedj.rule.FindFirstRule;
 import io.github.gitbucket.markedj.rule.Rule;
 import io.github.gitbucket.markedj.token.Token;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,8 +41,9 @@ public class NotificationExtension implements Extension {
 	}
 
 	@Override
-	public String lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer) {
+	public LexResult lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer) {
 		List<String> cap = notificationRule().exec(source);
+		boolean tokenFound = false;
 		if (!cap.isEmpty()) {
 			// we have detected several contiguous lines of notifications
 			// ensure that all are of same kind
@@ -68,8 +67,10 @@ public class NotificationExtension implements Extension {
 				consumer.token(allNotificationsLines.replaceAll("(?m)^" + cap.get(2) + "[ ]?", ""), false, false, context);
 				context.pushToken(new NotificationEndToken());
 			}
+			
+			tokenFound = true;
 		}
-		return source;
+		return new LexResult(source, tokenFound);
 	}
 
 	@Override
