@@ -172,13 +172,15 @@ public class Lexer {
             }
 
 			{
-				boolean doContinue = false;
+				Extension.LexResult result = null;
 				for (Extension extension : options.getExtensions()) {
-					Extension.LexResult result = extension.lex(src, context, this::token);
-					src = result.getSource();
-					doContinue = doContinue || result.matches();
+					result = extension.lex(src, context, this::token);
+					if (result.matches()) {
+						src = result.getSource();
+						break;
+					}
 				}
-				if (doContinue) {
+				if (result != null && result.matches()) {
 					continue;
 				}
 			}
