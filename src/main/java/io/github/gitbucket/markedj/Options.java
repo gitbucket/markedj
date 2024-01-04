@@ -2,9 +2,7 @@ package io.github.gitbucket.markedj;
 
 import io.github.gitbucket.markedj.extension.Extension;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.jsoup.safety.Safelist;
 
 public class Options {
@@ -40,11 +38,11 @@ public class Options {
 
 	private List<Extension> extensions = new ArrayList<>();
 
-	public Options extension (Extension extension) {
+	public void addExtension (Extension extension) {
 		extensions.add(extension);
-		return this;
 	}
-	public List<Extension> extensions () {
+	
+	public List<Extension> getExtensions () {
 		return extensions;
 	}
 	

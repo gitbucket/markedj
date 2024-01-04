@@ -22,10 +22,6 @@ public class Lexer {
         } else {
             this.rules = Grammer.BLOCK_GFM_RULES;
         }
-		
-		options.extensions().forEach((extension) -> {
-			this.rules = extension.enhanceRules(rules);
-		});
     }
 
     public LexerResult lex(String src){
@@ -176,7 +172,7 @@ public class Lexer {
             }
 
 			{
-				for (Extension extension : options.extensions()) {
+				for (Extension extension : options.getExtensions()) {
 					src = extension.lex(src, context, this::token);
 				}
 			}

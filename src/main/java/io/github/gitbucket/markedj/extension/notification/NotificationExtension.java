@@ -38,13 +38,6 @@ public class NotificationExtension implements Extension {
 
 	public static String BLOCK_NOTIFICATION = "^((?:(!([xv!]?))[^\n]*(?!^!)\n?)+)";
 
-	@Override
-	public Map<String, Rule> enhanceRules(Map<String, Rule> existingRules) {
-		Map<String, Rule> rulesWithNotifications = new HashMap<>(existingRules);
-		rulesWithNotifications.put("notification", notificationRule());
-		return rulesWithNotifications;
-	}
-
 	private Rule notificationRule() {
 		return new FindFirstRule(BLOCK_NOTIFICATION);
 	}
@@ -101,9 +94,4 @@ public class NotificationExtension implements Extension {
 	private String render(String info, Notifications.Notification notification) {
         return String.format("<div class=\"notification_%s\">\n%s</div>\n", notification.name().toLowerCase(Locale.ENGLISH), info);
     }
-
-	@Override
-	public String getName() {
-		return "notification";
-	}
 }
