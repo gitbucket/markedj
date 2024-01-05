@@ -46,6 +46,7 @@ sanitize     | false   | Ignore any HTML that has been input.
 langPrefix   | "lang-" | Prefix of class attribute of code block
 headerPrefix | ""      | Prefix of id attribute of header
 safelist     | See [Options.java](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/Options.java) | Safelist of HTML tags.
+extension    | none    | Extension added to the redering process
 
 By default, markedj uses Jsoup's safelist mechanism for HTML rendering. It restricts renderable tags, attributes and even protocols of attribute values. For example, the image url must be `http://` or `https://` by default. You can remove this restriction by customizing the safelist as follows:
 
@@ -58,4 +59,59 @@ options.getSafelist().removeProtocols("img", "src", "http", "https");
 
 String html2 = Marked.marked("![alt text](/img/some-image.png \"title\")", options);
   // => <p><img src="/img/some-image.png" alt="alt text" title="title"></p>
+```
+
+## Extensions
+
+```java
+Options options = new Options();
+options.addExtension(new NotificationExtension());
+String html2 = Marked.marked("! This is an info message", options);
+  // => <div class="notification_info"><p>This is an info message</p></div>
+```
+
+### Notification extension
+
+#### Info message
+```text
+! This is an info message
+```
+```html
+<div class="notification_info">
+  <p>This is an info message
+  That spans over several lines</p>
+</div>
+```
+
+#### Success message
+```text
+!v This is a success message
+```
+```html
+<div class="notification_success">
+  <p>This is a success message
+  That spans over several lines</p>
+</div>
+```
+
+#### Warning message
+```text
+!! This is a warnung message
+```
+```html
+<div class="notification_success">
+  <p>This is a success message
+  That spans over several lines</p>
+</div>
+```
+
+#### Error message
+```text
+!x  This is a success message
+```
+```html
+<div class="notification_error">
+  <p>This is an error message
+  That spans over several lines</p>
+</div>
 ```
