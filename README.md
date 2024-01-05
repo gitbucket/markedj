@@ -62,19 +62,20 @@ String html2 = Marked.marked("![alt text](/img/some-image.png \"title\")", optio
 
 ## Extensions
 
-Markedj can be extended by implementing [custom extensions](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/extensions/Extension.java)
+Markedj can be extended by implementing [custom extensions](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/extension/Extension.java).
 Extensions can be used by adding them to the options.
 
 ```java
 Options options = new Options();
 options.addExtension(new NotificationExtension());
-String html2 = Marked.marked("! This is an info message", options);
+String html = Marked.marked("! This is an info message", options);
   // => <div class="notification_info"><p>This is an info message</p></div>
 ```
 
 ### Notification extension
 
-The notification extension
+The notification extension helps you to add information messages to your markdown content.
+Keep in mind, you still need the CSS to style the messages as desired.
 
 #### Info message
 ```text
