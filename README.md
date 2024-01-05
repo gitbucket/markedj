@@ -46,7 +46,6 @@ sanitize     | false   | Ignore any HTML that has been input.
 langPrefix   | "lang-" | Prefix of class attribute of code block
 headerPrefix | ""      | Prefix of id attribute of header
 safelist     | See [Options.java](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/Options.java) | Safelist of HTML tags.
-extension    | none    | Extension added to the redering process
 
 By default, markedj uses Jsoup's safelist mechanism for HTML rendering. It restricts renderable tags, attributes and even protocols of attribute values. For example, the image url must be `http://` or `https://` by default. You can remove this restriction by customizing the safelist as follows:
 
@@ -63,6 +62,9 @@ String html2 = Marked.marked("![alt text](/img/some-image.png \"title\")", optio
 
 ## Extensions
 
+Markedj can be extended by implementing [custom extensions](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/extensions/Extension.java)
+Extensions can be used by adding them to the options.
+
 ```java
 Options options = new Options();
 options.addExtension(new NotificationExtension());
@@ -71,6 +73,8 @@ String html2 = Marked.marked("! This is an info message", options);
 ```
 
 ### Notification extension
+
+The notification extension
 
 #### Info message
 ```text
@@ -96,7 +100,7 @@ String html2 = Marked.marked("! This is an info message", options);
 
 #### Warning message
 ```text
-!! This is a warnung message
+!! This is a warning message
 ```
 ```html
 <div class="notification_success">
@@ -107,7 +111,7 @@ String html2 = Marked.marked("! This is an info message", options);
 
 #### Error message
 ```text
-!x  This is a success message
+!x  This is an error message
 ```
 ```html
 <div class="notification_error">
