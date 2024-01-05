@@ -6,6 +6,7 @@ import io.github.gitbucket.markedj.token.*;
 import java.util.*;
 
 import static io.github.gitbucket.markedj.Utils.*;
+import io.github.gitbucket.markedj.extension.Extension;
 
 public class Lexer {
 
@@ -170,6 +171,20 @@ public class Lexer {
                 }
             }
 
+			{
+				Extension.LexResult result = null;
+				for (Extension extension : options.getExtensions()) {
+					result = extension.lex(src, context, this::token);
+					if (result.matches()) {
+						src = result.getSource();
+						break;
+					}
+				}
+				if (result != null && result.matches()) {
+					continue;
+				}
+			}
+			
             // list
             {
                 List<String> cap = rules.get("list").exec(src);

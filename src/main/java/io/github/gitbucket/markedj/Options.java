@@ -1,5 +1,8 @@
 package io.github.gitbucket.markedj;
 
+import io.github.gitbucket.markedj.extension.Extension;
+import java.util.ArrayList;
+import java.util.List;
 import org.jsoup.safety.Safelist;
 
 public class Options {
@@ -33,6 +36,16 @@ public class Options {
                 .addAttributes("input", "type", "checked", "name", "value", "disabled")
                 .addAttributes(":all", "id", "class", "style");
 
+	private List<Extension> extensions = new ArrayList<>();
+
+	public void addExtension (Extension extension) {
+		extensions.add(extension);
+	}
+	
+	public List<Extension> getExtensions () {
+		return extensions;
+	}
+	
     public void setGfm(boolean gfm) {
         this.gfm = gfm;
     }
