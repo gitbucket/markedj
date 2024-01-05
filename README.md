@@ -83,8 +83,7 @@ Keep in mind, you still need the CSS to style the messages as desired.
 ```
 ```html
 <div class="notification_info">
-  <p>This is an info message
-  That spans over several lines</p>
+  <p>This is an info message</p>
 </div>
 ```
 
@@ -94,8 +93,7 @@ Keep in mind, you still need the CSS to style the messages as desired.
 ```
 ```html
 <div class="notification_success">
-  <p>This is a success message
-  That spans over several lines</p>
+  <p>This is a success message</p>
 </div>
 ```
 
@@ -104,9 +102,8 @@ Keep in mind, you still need the CSS to style the messages as desired.
 !! This is a warning message
 ```
 ```html
-<div class="notification_success">
-  <p>This is a success message
-  That spans over several lines</p>
+<div class="notification_warning">
+  <p>This is a warning message</p>
 </div>
 ```
 
@@ -116,7 +113,21 @@ Keep in mind, you still need the CSS to style the messages as desired.
 ```
 ```html
 <div class="notification_error">
-  <p>This is an error message
-  That spans over several lines</p>
+  <p>This is an error message</p>
 </div>
+```
+
+#### Multiline notifications
+Notifications can span multiple lines.
+
+```text
+! This is an info message
+! That spans over several lines
+```
+```html
+<div class="notification_info">
+<p>This is an info message
+That spans over several lines</p>
+</div>
+
 ```
