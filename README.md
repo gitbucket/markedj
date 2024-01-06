@@ -129,5 +129,17 @@ Notifications can span multiple lines.
 <p>This is an info message
 That spans over several lines</p>
 </div>
+```
+
+## for Developers
+
+### Release
+
+Run the following command to upload artifacts to sonatype:
 
 ```
+mvn clean deploy -DperformRelease=true
+```
+
+Then, go to https://oss.sonatype.org/, close and release the staging repository. 
+
