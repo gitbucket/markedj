@@ -4,7 +4,7 @@
   <groupId>io.github.gitbucket</groupId>
   <artifactId>markedj</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.18</version>
+  <version>1.0.19</version>
   <name>markedj</name>
   <url>https://github.com/gitbucket/markedj</url>
   <description>JVM port of graceful markdown processor marked.js</description>
