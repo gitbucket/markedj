@@ -39,17 +39,43 @@ public class GFMAlertExtension implements Extension {
 	private static final Rule RULE = new FindFirstRule(EXPRESSION);
 	
 	private final Map<GFMAlerts.Alert, String> titles = new HashMap<>();
+	
+	private final Map<GFMAlerts.Alert, String> icons = new HashMap<>();
 
+	/**
+	 * Creates the extension with default titles and icons.
+	 */
 	public GFMAlertExtension () {
 		titles.put(GFMAlerts.Alert.TIP, "Tip");
 		titles.put(GFMAlerts.Alert.NOTE, "Note");
 		titles.put(GFMAlerts.Alert.IMPORTANT, "Important");
 		titles.put(GFMAlerts.Alert.WARNING, "Warning");
 		titles.put(GFMAlerts.Alert.CAUTION, "Caution");
+		
+		icons.put(GFMAlerts.Alert.TIP, GFMAlerts.Icons.TIP);
+		icons.put(GFMAlerts.Alert.NOTE, GFMAlerts.Icons.NOTE);
+		icons.put(GFMAlerts.Alert.IMPORTANT, GFMAlerts.Icons.IMPORTANT);
+		icons.put(GFMAlerts.Alert.WARNING, GFMAlerts.Icons.WARNING);
+		icons.put(GFMAlerts.Alert.CAUTION, GFMAlerts.Icons.CAUTION);
 	}
 	
+	/**
+	 * Adds the title for an alert.
+	 * 
+	 * @param alert
+	 * @param title 
+	 */
 	public void addTitle (final GFMAlerts.Alert alert, final String title ) {
 		titles.put(alert, title);
+	}
+	
+	/**
+	 * Adds a avg icon for a alert.
+	 * @param alert
+	 * @param icon 
+	 */
+	public void addIcon (final GFMAlerts.Alert alert, final String icon ) {
+		icons.put(alert, icon);
 	}
 	
 	@Override
@@ -102,7 +128,7 @@ public class GFMAlertExtension implements Extension {
 		
         return String.format("<div class=\"markdown-alert markdown-alert-%s\"><p class=\"markdown-alert-title\">%s%s</p>\n%s</div>", 
 				alert.name().toLowerCase(Locale.ENGLISH), 
-				GFMAlerts.alertToSVG(alert),
+				icons.get(alert),
 				titles.get(alert),
 				message
 		);

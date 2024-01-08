@@ -75,7 +75,7 @@ public class GFMAlertsTest {
     }
 	
 	@Test
-    public void testWithCustomTitles() throws Exception {
+    public void testWithCustomTitle() throws Exception {
         String md = loadResourceAsString("gfm/alerts/warning.md");
 		
 		Options options = new Options();
@@ -84,7 +84,21 @@ public class GFMAlertsTest {
 		options.addExtension(gfmAlertExtension);
 		
 		String result = Marked.marked(md, options);
-        String expect = loadResourceAsString("gfm/alerts/warning_custom.html");
+        String expect = loadResourceAsString("gfm/alerts/warning_custom_title.html");
+        Assertions.assertThat(result).isEqualToIgnoringWhitespace(expect);
+    }
+	
+	@Test
+    public void testWithCustomIcon() throws Exception {
+        String md = loadResourceAsString("gfm/alerts/warning.md");
+		
+		Options options = new Options();
+		final GFMAlertExtension gfmAlertExtension = new GFMAlertExtension();
+		gfmAlertExtension.addIcon(GFMAlerts.Alert.WARNING, "");
+		options.addExtension(gfmAlertExtension);
+		
+		String result = Marked.marked(md, options);
+        String expect = loadResourceAsString("gfm/alerts/warning_custom_icon.html");
         Assertions.assertThat(result).isEqualToIgnoringWhitespace(expect);
     }
 }
