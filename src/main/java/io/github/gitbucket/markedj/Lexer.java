@@ -159,18 +159,6 @@ public class Lexer {
                 }
             }
 
-            // blockquote
-            {
-                List<String> cap = rules.get("blockquote").exec(src);
-                if(!cap.isEmpty()){
-                    src = src.substring(cap.get(0).length());
-                    context.pushToken(new BlockquoteStartToken());
-                    token(cap.get(0).replaceAll("(?m)^ *> ?", ""), top, true, context);
-                    context.pushToken(new BlockquoteEndToken());
-                    continue;
-                }
-            }
-
 			{
 				Extension.LexResult result = null;
 				for (Extension extension : options.getExtensions()) {
@@ -184,6 +172,18 @@ public class Lexer {
 					continue;
 				}
 			}
+			
+            // blockquote
+            {
+                List<String> cap = rules.get("blockquote").exec(src);
+                if(!cap.isEmpty()){
+                    src = src.substring(cap.get(0).length());
+                    context.pushToken(new BlockquoteStartToken());
+                    token(cap.get(0).replaceAll("(?m)^ *> ?", ""), top, true, context);
+                    context.pushToken(new BlockquoteEndToken());
+                    continue;
+                }
+            }
 			
             // list
             {

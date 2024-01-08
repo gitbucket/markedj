@@ -19,7 +19,7 @@ public class Options {
                                 "colgroup", "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6",
                                 "i", "img", "li", "ol", "p", "pre", "q", "small", "span", "strike", "strong",
                                 "sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u",
-                                "ul", "input", "del", "hr")
+                                "ul", "input", "del", "hr", "svg", "path")
                 .addAttributes("a", "href", "title")
                 .addProtocols("a", "href", "http", "https", "mailto", "ftp", "#")
                 .addAttributes("blockquote", "cite")
@@ -34,7 +34,10 @@ public class Options {
                 .addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
                 .addAttributes("ul", "type")
                 .addAttributes("input", "type", "checked", "name", "value", "disabled")
-                .addAttributes(":all", "id", "class", "style");
+				.addAttributes("svg", "class", "viewBox", "version",  "width", "height", "aria-hidden")
+				.addAttributes("path", "d")
+                .addAttributes(":all", "id", "class", "style")
+			;
 
 	private List<Extension> extensions = new ArrayList<>();
 
