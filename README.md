@@ -72,6 +72,70 @@ String html = Marked.marked("! This is an info message", options);
   // => <div class="notification_info"><p>This is an info message</p></div>
 ```
 
+### GFMAlert extension
+
+Support for github like [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
+
+#### Usage
+
+```java
+Options options = new Options();
+GFMAlertExtension gfmAlerts = new GFMAlertExtension();
+// Override default title for note alert
+gfmAlerts.addTitle(GFMAlerts.Alert.NOTE, "Notice");
+// Override default icon for note alert
+gfmAlerts.setIcon(GFMAlerts.Alert.NOTE, "");
+options.addExtension(gfmAlerts);
+String html = Marked.marked("> [!NOTE]\n>", options);
+```
+
+#### Support alert types
+
+**Note**
+```markdown
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+```
+**Note HTML**
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+
+**Tip**
+```markdown
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+```
+**Note HTML**
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+**Important**
+```markdown
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+```
+**Important HTML**
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+
+**Warning**
+```markdown
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+```
+**Warning HTML**
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+
+**Caution**
+```markdown
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
+```
+**Caution HTML**
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
+
 ### Notification extension
 
 The notification extension helps you to add information messages to your markdown content.
