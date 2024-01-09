@@ -123,7 +123,7 @@ public class GFMAlertExtension implements Extension {
 	private String render(String message, GFMAlerts.Alert alert) {
 		
 		if (!message.startsWith("<p>")) {
-			message = "<p>%s</p>".formatted(message);
+			message = String.format("<p>%s</p>", message);
 		}
 		
         return String.format("<div class=\"markdown-alert markdown-alert-%s\"><p class=\"markdown-alert-title\">%s%s</p>\n%s</div>", 
