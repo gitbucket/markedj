@@ -34,7 +34,7 @@ import java.util.function.Function;
  */
 public class GFMAlertExtension implements Extension {
 
-	public static String EXPRESSION = "(?s)(?m)^> \\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\\](.+?)(^\n|\\Z)";
+	public static String EXPRESSION = "(?s)(?m)\\A^> \\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\\](.+?)(^\n|\\Z)";
 
 	private static final Rule RULE = new FindFirstRule(EXPRESSION);
 	

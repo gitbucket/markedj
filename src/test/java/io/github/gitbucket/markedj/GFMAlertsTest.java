@@ -101,4 +101,17 @@ public class GFMAlertsTest {
         String expect = loadResourceAsString("gfm/alerts/warning_custom_icon.html");
         Assertions.assertThat(result).isEqualToIgnoringWhitespace(expect);
     }
+	
+	@Test
+    public void testWithParagraphBeforeAndAfter() throws Exception {
+        String md = loadResourceAsString("gfm/alerts/testWithParagraphBeforeAndAfter.md");
+		
+		Options options = new Options();
+		final GFMAlertExtension gfmAlertExtension = new GFMAlertExtension();
+		options.addExtension(gfmAlertExtension);
+		
+		String result = Marked.marked(md, options);
+        String expect = loadResourceAsString("gfm/alerts/testWithParagraphBeforeAndAfter.html");
+        Assertions.assertThat(result).isEqualToIgnoringWhitespace(expect);
+    }
 }
