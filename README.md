@@ -76,6 +76,8 @@ String html = Marked.marked("! This is an info message", options);
 
 Support for github like [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
 
+For styling, some project-specific CSS is required. SVG icons are embedded but can be replaced by configuration.
+
 #### Usage
 
 ```java
@@ -89,7 +91,7 @@ options.addExtension(gfmAlerts);
 String html = Marked.marked("> [!NOTE]\n>", options);
 ```
 
-#### Support alert types
+#### Supported alert types
 
 **Note**
 ```markdown
