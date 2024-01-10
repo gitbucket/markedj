@@ -67,9 +67,8 @@ Extensions can be used by adding them to the options.
 
 ```java
 Options options = new Options();
-options.addExtension(new NotificationExtension());
-String html = Marked.marked("! This is an info message", options);
-  // => <div class="notification_info"><p>This is an info message</p></div>
+options.addExtension(new GFMAlertExtension());
+String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
 
 ### GFMAlert extension
@@ -88,7 +87,7 @@ gfmAlerts.addTitle(GFMAlerts.Alert.NOTE, "Notice");
 // Override default icon for note alert
 gfmAlerts.setIcon(GFMAlerts.Alert.NOTE, "");
 options.addExtension(gfmAlerts);
-String html = Marked.marked("> [!NOTE]\n>", options);
+String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
 
 #### Supported alert types
@@ -138,64 +137,6 @@ String html = Marked.marked("> [!NOTE]\n>", options);
 > [!CAUTION]
 > Advises about risks or negative outcomes of certain actions.
 
-### Notification extension
-
-The notification extension helps you to add information messages to your markdown content.
-Keep in mind, you still need the CSS to style the messages as desired.
-
-#### Info message
-```text
-! This is an info message
-```
-```html
-<div class="notification_info">
-  <p>This is an info message</p>
-</div>
-```
-
-#### Success message
-```text
-!v This is a success message
-```
-```html
-<div class="notification_success">
-  <p>This is a success message</p>
-</div>
-```
-
-#### Warning message
-```text
-!! This is a warning message
-```
-```html
-<div class="notification_warning">
-  <p>This is a warning message</p>
-</div>
-```
-
-#### Error message
-```text
-!x  This is an error message
-```
-```html
-<div class="notification_error">
-  <p>This is an error message</p>
-</div>
-```
-
-#### Multiline notifications
-Notifications can span multiple lines.
-
-```text
-! This is an info message
-! That spans over several lines
-```
-```html
-<div class="notification_info">
-<p>This is an info message
-That spans over several lines</p>
-</div>
-```
 
 ## for Developers
 
