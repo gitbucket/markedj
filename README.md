@@ -109,10 +109,12 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Helpful advice for doing things better or more easily.
 ```
 **Note HTML**
+```html
 <div class="markdown-alert markdown-alert-tip">
 	<p class="markdown-alert-title">Tip</p>
 	<p>Helpful advice for doing things better or more easily.</p>
 </div>
+```
 
 **Important**
 ```markdown
@@ -120,10 +122,12 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Key information users need to know to achieve their goal.
 ```
 **Important HTML**
+```html
 <div class="markdown-alert markdown-alert-important">
 	<p class="markdown-alert-title">Important</p>
 	<p>Key information users need to know to achieve their goal.</p>
 </div>
+```
 
 **Warning**
 ```markdown
@@ -131,10 +135,12 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Urgent info that needs immediate user attention to avoid problems.
 ```
 **Warning HTML**
+```html
 <div class="markdown-alert markdown-alert-warning">
 	<p class="markdown-alert-title">Warning</p>
 	<p>Urgent info that needs immediate user attention to avoid problems.</p>
 </div>
+```
 
 **Caution**
 ```markdown
@@ -142,11 +148,12 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Advises about risks or negative outcomes of certain actions.
 ```
 **Caution HTML**
+```html
 <div class="markdown-alert markdown-alert-caution">
 	<p class="markdown-alert-title">Caution</p>
 	<p>Advises about risks or negative outcomes of certain actions.</p>
 </div>
-
+```
 
 ## for Developers
 
