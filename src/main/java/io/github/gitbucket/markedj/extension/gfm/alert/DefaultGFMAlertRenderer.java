@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 GitBucket.
+ * Copyright 2024 GitBucket.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,28 +15,26 @@
  */
 package io.github.gitbucket.markedj.extension.gfm.alert;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  *
  * @author t.marx
  */
-public class GFMAlerts {
+public class DefaultGFMAlertRenderer implements GFMAlertRenderer {
 
-	public enum Alert {
-		NOTE, TIP, IMPORTANT, WARNING, CAUTION;
-
-		public static Alert fromString(String s) {
-			switch (s) {
-				case "TIP":
-					return Alert.TIP;
-				case "IMPORTANT":
-					return Alert.IMPORTANT;
-				case "WARNING":
-					return Alert.WARNING;
-				case "CAUTION":
-					return Alert.CAUTION;
-				default:
-					return Alert.NOTE;
-			}
+	@Override
+	public String render(Map<GFMAlerts.Alert, String> titles, String message, GFMAlerts.Alert alert) {
+		if (!message.startsWith("<p>")) {
+			message = String.format("<p>%s</p>", message);
 		}
+		
+        return String.format("<div class=\"markdown-alert markdown-alert-%s\"><p class=\"markdown-alert-title\">%s</p>\n%s</div>", 
+				alert.name().toLowerCase(Locale.ENGLISH), 
+				titles.get(alert),
+				message
+		);
 	}
+	
 }

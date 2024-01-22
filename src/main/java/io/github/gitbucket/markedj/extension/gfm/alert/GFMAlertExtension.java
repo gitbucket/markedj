@@ -40,7 +40,7 @@ public class GFMAlertExtension implements Extension {
 	
 	private final Map<GFMAlerts.Alert, String> titles = new HashMap<>();
 	
-	private final Map<GFMAlerts.Alert, String> icons = new HashMap<>();
+	private GFMAlertRenderer renderer = new DefaultGFMAlertRenderer();
 
 	/**
 	 * Creates the extension with default titles and icons.
@@ -51,12 +51,10 @@ public class GFMAlertExtension implements Extension {
 		titles.put(GFMAlerts.Alert.IMPORTANT, "Important");
 		titles.put(GFMAlerts.Alert.WARNING, "Warning");
 		titles.put(GFMAlerts.Alert.CAUTION, "Caution");
-		
-		icons.put(GFMAlerts.Alert.TIP, GFMAlerts.Icons.TIP);
-		icons.put(GFMAlerts.Alert.NOTE, GFMAlerts.Icons.NOTE);
-		icons.put(GFMAlerts.Alert.IMPORTANT, GFMAlerts.Icons.IMPORTANT);
-		icons.put(GFMAlerts.Alert.WARNING, GFMAlerts.Icons.WARNING);
-		icons.put(GFMAlerts.Alert.CAUTION, GFMAlerts.Icons.CAUTION);
+	}
+	
+	public void setRenderer (GFMAlertRenderer renderer) {
+		this.renderer = renderer;
 	}
 	
 	/**
@@ -69,14 +67,6 @@ public class GFMAlertExtension implements Extension {
 		titles.put(alert, title);
 	}
 	
-	/**
-	 * Adds a avg icon for a alert.
-	 * @param alert
-	 * @param icon 
-	 */
-	public void addIcon (final GFMAlerts.Alert alert, final String icon ) {
-		icons.put(alert, icon);
-	}
 	
 	@Override
 	public LexResult lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer) {
@@ -121,16 +111,6 @@ public class GFMAlertExtension implements Extension {
 	}
 	
 	private String render(String message, GFMAlerts.Alert alert) {
-		
-		if (!message.startsWith("<p>")) {
-			message = String.format("<p>%s</p>", message);
-		}
-		
-        return String.format("<div class=\"markdown-alert markdown-alert-%s\"><p class=\"markdown-alert-title\">%s%s</p>\n%s</div>", 
-				alert.name().toLowerCase(Locale.ENGLISH), 
-				icons.get(alert),
-				titles.get(alert),
-				message
-		);
+		return renderer.render(titles, message, alert);
     }
 }

@@ -18,6 +18,7 @@ package io.github.gitbucket.markedj;
 import static io.github.gitbucket.markedj.Resources.loadResourceAsString;
 import io.github.gitbucket.markedj.extension.gfm.alert.GFMAlertExtension;
 import io.github.gitbucket.markedj.extension.gfm.alert.GFMAlerts;
+import java.util.Locale;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -89,16 +90,22 @@ public class GFMAlertsTest {
     }
 	
 	@Test
-    public void testWithCustomIcon() throws Exception {
+    public void testWithCustomRenderer() throws Exception {
         String md = loadResourceAsString("gfm/alerts/warning.md");
 		
 		Options options = new Options();
 		final GFMAlertExtension gfmAlertExtension = new GFMAlertExtension();
-		gfmAlertExtension.addIcon(GFMAlerts.Alert.WARNING, "");
+		gfmAlertExtension.setRenderer((titles, message, alert) -> {
+			return String.format("<div class=\"alert %s\"><h3>%s</h3>\n%s</div>", 
+				alert.name().toLowerCase(Locale.ENGLISH), 
+				titles.get(alert),
+				message
+		);
+		});
 		options.addExtension(gfmAlertExtension);
 		
 		String result = Marked.marked(md, options);
-        String expect = loadResourceAsString("gfm/alerts/warning_custom_icon.html");
+        String expect = loadResourceAsString("gfm/alerts/warning_custom_renderer.html");
         Assertions.assertThat(result).isEqualToIgnoringWhitespace(expect);
     }
 	

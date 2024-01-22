@@ -84,8 +84,6 @@ Options options = new Options();
 GFMAlertExtension gfmAlerts = new GFMAlertExtension();
 // Override default title for note alert
 gfmAlerts.addTitle(GFMAlerts.Alert.NOTE, "Notice");
-// Override default icon for note alert
-gfmAlerts.setIcon(GFMAlerts.Alert.NOTE, "");
 options.addExtension(gfmAlerts);
 String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
@@ -98,8 +96,12 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Useful information that users should know, even when skimming content.
 ```
 **Note HTML**
-> [!NOTE]
-> Useful information that users should know, even when skimming content.
+```html
+<div class="markdown-alert markdown-alert-note">
+	<p class="markdown-alert-title">Note</p>
+	<p>Useful information that users should know, even when skimming content.</p>
+</div>
+```
 
 **Tip**
 ```markdown
@@ -107,8 +109,10 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Helpful advice for doing things better or more easily.
 ```
 **Note HTML**
-> [!TIP]
-> Helpful advice for doing things better or more easily.
+<div class="markdown-alert markdown-alert-tip">
+	<p class="markdown-alert-title">Tip</p>
+	<p>Helpful advice for doing things better or more easily.</p>
+</div>
 
 **Important**
 ```markdown
@@ -116,8 +120,10 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Key information users need to know to achieve their goal.
 ```
 **Important HTML**
-> [!IMPORTANT]
-> Key information users need to know to achieve their goal.
+<div class="markdown-alert markdown-alert-important">
+	<p class="markdown-alert-title">Important</p>
+	<p>Key information users need to know to achieve their goal.</p>
+</div>
 
 **Warning**
 ```markdown
@@ -125,8 +131,10 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Urgent info that needs immediate user attention to avoid problems.
 ```
 **Warning HTML**
-> [!WARNING]
-> Urgent info that needs immediate user attention to avoid problems.
+<div class="markdown-alert markdown-alert-warning">
+	<p class="markdown-alert-title">Warning</p>
+	<p>Urgent info that needs immediate user attention to avoid problems.</p>
+</div>
 
 **Caution**
 ```markdown
@@ -134,8 +142,10 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > Advises about risks or negative outcomes of certain actions.
 ```
 **Caution HTML**
-> [!CAUTION]
-> Advises about risks or negative outcomes of certain actions.
+<div class="markdown-alert markdown-alert-caution">
+	<p class="markdown-alert-title">Caution</p>
+	<p>Advises about risks or negative outcomes of certain actions.</p>
+</div>
 
 
 ## for Developers
