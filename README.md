@@ -108,7 +108,7 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 > [!TIP]
 > Helpful advice for doing things better or more easily.
 ```
-**Note HTML**
+**Tip HTML**
 ```html
 <div class="markdown-alert markdown-alert-tip">
 	<p class="markdown-alert-title">Tip</p>
