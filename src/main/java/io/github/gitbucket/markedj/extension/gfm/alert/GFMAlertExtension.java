@@ -36,35 +36,26 @@ public class GFMAlertExtension implements Extension {
 
 	public static String EXPRESSION = "(?s)(?m)\\A^> \\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\\](.+?)(^\n|\\Z)";
 
-	private static final Rule RULE = new FindFirstRule(EXPRESSION);
-	
-	private final Map<GFMAlerts.Alert, String> titles = new HashMap<>();
+	private static final Rule RULE = new FindFirstRule(EXPRESSION);	
 	
 	private GFMAlertRenderer renderer = new DefaultGFMAlertRenderer();
+	
+	private GFMAlertOptions options;
 
-	/**
-	 * Creates the extension with default titles and icons.
-	 */
 	public GFMAlertExtension () {
-		titles.put(GFMAlerts.Alert.TIP, "Tip");
-		titles.put(GFMAlerts.Alert.NOTE, "Note");
-		titles.put(GFMAlerts.Alert.IMPORTANT, "Important");
-		titles.put(GFMAlerts.Alert.WARNING, "Warning");
-		titles.put(GFMAlerts.Alert.CAUTION, "Caution");
+		this(new GFMAlertOptions());
+	}
+	
+	public GFMAlertExtension (GFMAlertOptions options) {
+		this.options = options;
 	}
 	
 	public void setRenderer (GFMAlertRenderer renderer) {
 		this.renderer = renderer;
 	}
 	
-	/**
-	 * Adds the title for an alert.
-	 * 
-	 * @param alert
-	 * @param title 
-	 */
-	public void addTitle (final GFMAlerts.Alert alert, final String title ) {
-		titles.put(alert, title);
+	public void setOptions (GFMAlertOptions options) {
+		this.options = options;
 	}
 	
 	
@@ -111,6 +102,6 @@ public class GFMAlertExtension implements Extension {
 	}
 	
 	private String render(String message, GFMAlerts.Alert alert) {
-		return renderer.render(titles, message, alert);
+		return renderer.render(options, message, alert);
     }
 }

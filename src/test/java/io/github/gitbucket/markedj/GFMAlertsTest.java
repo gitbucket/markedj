@@ -17,6 +17,7 @@ package io.github.gitbucket.markedj;
 
 import static io.github.gitbucket.markedj.Resources.loadResourceAsString;
 import io.github.gitbucket.markedj.extension.gfm.alert.GFMAlertExtension;
+import io.github.gitbucket.markedj.extension.gfm.alert.GFMAlertOptions;
 import io.github.gitbucket.markedj.extension.gfm.alert.GFMAlerts;
 import java.util.Locale;
 import org.assertj.core.api.Assertions;
@@ -80,8 +81,11 @@ public class GFMAlertsTest {
         String md = loadResourceAsString("gfm/alerts/warning.md");
 		
 		Options options = new Options();
-		final GFMAlertExtension gfmAlertExtension = new GFMAlertExtension();
-		gfmAlertExtension.addTitle(GFMAlerts.Alert.WARNING, "Attention!!!");
+		
+		
+		GFMAlertOptions alertOptions = new GFMAlertOptions();
+		alertOptions.setTitle(GFMAlerts.Alert.WARNING, "Attention!!!");
+		final GFMAlertExtension gfmAlertExtension = new GFMAlertExtension(alertOptions);
 		options.addExtension(gfmAlertExtension);
 		
 		String result = Marked.marked(md, options);
@@ -95,10 +99,10 @@ public class GFMAlertsTest {
 		
 		Options options = new Options();
 		final GFMAlertExtension gfmAlertExtension = new GFMAlertExtension();
-		gfmAlertExtension.setRenderer((titles, message, alert) -> {
+		gfmAlertExtension.setRenderer((alertOptions, message, alert) -> {
 			return String.format("<div class=\"alert %s\"><h3>%s</h3>\n%s</div>", 
 				alert.name().toLowerCase(Locale.ENGLISH), 
-				titles.get(alert),
+				alertOptions.getTitle(alert),
 				message
 		);
 		});

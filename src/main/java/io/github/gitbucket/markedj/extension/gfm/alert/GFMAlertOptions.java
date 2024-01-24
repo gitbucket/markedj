@@ -15,25 +15,34 @@
  */
 package io.github.gitbucket.markedj.extension.gfm.alert;
 
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author t.marx
  */
-public class DefaultGFMAlertRenderer implements GFMAlertRenderer {
+public class GFMAlertOptions {
 
-	@Override
-	public String render(GFMAlertOptions options, String message, GFMAlerts.Alert alert) {
-		if (!message.startsWith("<p>")) {
-			message = String.format("<p>%s</p>", message);
-		}
-		
-        return String.format("<div class=\"markdown-alert markdown-alert-%s\"><p class=\"markdown-alert-title\">%s</p>\n%s</div>", 
-				alert.name().toLowerCase(Locale.ENGLISH), 
-				options.getTitle(alert),
-				message
-		);
+	private final Map<GFMAlerts.Alert, String> titles = new HashMap<>();
+	
+	/**
+	 * Creates the options with default titles.
+	 */
+	public GFMAlertOptions () {
+		titles.put(GFMAlerts.Alert.TIP, "Tip");
+		titles.put(GFMAlerts.Alert.NOTE, "Note");
+		titles.put(GFMAlerts.Alert.IMPORTANT, "Important");
+		titles.put(GFMAlerts.Alert.WARNING, "Warning");
+		titles.put(GFMAlerts.Alert.CAUTION, "Caution");
 	}
 	
+	public String getTitle (GFMAlerts.Alert alert) {
+		return titles.get(alert);
+	}
+	
+	public void setTitle (GFMAlerts.Alert alert, String title) {
+		titles.put(alert, title);
+	}
+
 }

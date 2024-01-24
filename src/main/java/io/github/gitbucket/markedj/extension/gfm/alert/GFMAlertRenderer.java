@@ -15,12 +15,11 @@
  */
 package io.github.gitbucket.markedj.extension.gfm.alert;
 
-import java.util.Map;
 
 /**
  *
  * @author t.marx
  */
 public interface GFMAlertRenderer {
-	String render (final Map<GFMAlerts.Alert, String> titles, final String message, GFMAlerts.Alert alert);
+	String render (final GFMAlertOptions options, final String message, GFMAlerts.Alert alert);
 }
