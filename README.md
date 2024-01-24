@@ -81,9 +81,10 @@ For styling, some project-specific CSS is required. SVG icons are embedded but c
 
 ```java
 Options options = new Options();
-GFMAlertExtension gfmAlerts = new GFMAlertExtension();
 // Override default title for note alert
-gfmAlerts.addTitle(GFMAlerts.Alert.NOTE, "Notice");
+GFMAlertOptions alertOptions = new GFMAlertOptions();
+alertOptions.setTitle(GFMAlerts.Alert.WARNING, "Attention!!!");
+GFMAlertExtension gfmAlerts = new GFMAlertExtension(alertOptions);
 options.addExtension(gfmAlerts);
 String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
