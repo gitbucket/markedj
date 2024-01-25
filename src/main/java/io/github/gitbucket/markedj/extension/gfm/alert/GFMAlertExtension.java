@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.gitbucket.markedj.extension.notification;
+package io.github.gitbucket.markedj.extension.gfm.alert;
 
 import io.github.gitbucket.markedj.Lexer;
 import io.github.gitbucket.markedj.Parser;
@@ -22,51 +22,60 @@ import io.github.gitbucket.markedj.extension.TokenConsumer;
 import io.github.gitbucket.markedj.rule.FindFirstRule;
 import io.github.gitbucket.markedj.rule.Rule;
 import io.github.gitbucket.markedj.token.Token;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
  * @author t.marx
  */
-public class NotificationExtension implements Extension {
+public class GFMAlertExtension implements Extension {
 
-	public static String BLOCK_NOTIFICATION = "^((?:(!([xv!]?))[^\n]*(?!^!)\n?)+)";
+	public static String EXPRESSION = "(?s)(?m)\\A^> \\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\\](.+?)(^\n|\\Z)";
 
-	private Rule notificationRule() {
-		return new FindFirstRule(BLOCK_NOTIFICATION);
+	private static final Rule RULE = new FindFirstRule(EXPRESSION);	
+	
+	private GFMAlertRenderer renderer = new DefaultGFMAlertRenderer();
+	
+	private GFMAlertOptions options;
+
+	public GFMAlertExtension () {
+		this(new GFMAlertOptions());
 	}
-
+	
+	public GFMAlertExtension (GFMAlertOptions options) {
+		this.options = options;
+	}
+	
+	public void setRenderer (GFMAlertRenderer renderer) {
+		this.renderer = renderer;
+	}
+	
+	public void setOptions (GFMAlertOptions options) {
+		this.options = options;
+	}
+	
+	
 	@Override
 	public LexResult lex(String source, final Lexer.LexerContext context, final TokenConsumer consumer) {
-		List<String> cap = notificationRule().exec(source);
+		List<String> cap = RULE.exec(source);
 		boolean tokenFound = false;
 		if (!cap.isEmpty()) {
 			// we have detected several contiguous lines of notifications
 			// ensure that all are of same kind
 			String allNotificationsLines = cap.get(0);
+			
+			String content = cap.get(2);
+			
+			content = content.replaceAll("(?m)^ *> ?", "");
 
-			// if other kind of notifications lines are detected
-			// let's split them so that they are handled separately
-			String findOtherLinesPattern = "(?m)^(!" + Notifications.exceptGivenNotificationClass(cap.get(3)) + " .*)";
-			Matcher otherLinesMatcher = Pattern.compile(findOtherLinesPattern).matcher(cap.get(1));
-
-			if (otherLinesMatcher.find()) {
-				String otherLinesSeparated = otherLinesMatcher.replaceAll("\n$1\n");
-
-				// change the source to parse
-				// replace all the notifications lines with separated notifications lines
-				// and reparse the string
-				source = otherLinesSeparated + source.substring(allNotificationsLines.length());
-			} else {
-				source = source.substring(allNotificationsLines.length());
-				context.pushToken(new NotificationStartToken(cap.get(3)));
-				consumer.token(allNotificationsLines.replaceAll("(?m)^" + cap.get(2) + "[ ]?", ""), false, false, context);
-				context.pushToken(new NotificationEndToken());
-			}
+			source = source.substring(allNotificationsLines.length());
+			context.pushToken(new GFMAlertStartToken(cap.get(1)));
+			consumer.token(content, false, false, context);
+			context.pushToken(new GFMAlertEndToken());
 			
 			tokenFound = true;
 		}
@@ -75,16 +84,16 @@ public class NotificationExtension implements Extension {
 
 	@Override
 	public boolean handlesToken(String token) {
-		return NotificationStartToken.TYPE.equals(token);
+		return GFMAlertStartToken.TYPE.equals(token);
 	}
 
 	@Override
 	public String parse(Parser.ParserContext context, Function<Parser.ParserContext, String> tok) {
-		NotificationStartToken t = (NotificationStartToken) context.currentToken();
+		GFMAlertStartToken t = (GFMAlertStartToken) context.currentToken();
 		StringBuilder body = new StringBuilder();
 		while (true) {
 			Token n = context.nextToken();
-			if (n == null || n.getType().equals("NotificationEndToken")) {
+			if (n == null || n.getType().equals(GFMAlertEndToken.TYPE)) {
 				break;
 			}
 			body.append(tok.apply(context));
@@ -92,7 +101,7 @@ public class NotificationExtension implements Extension {
 		return render(body.toString(), t.getNotification());
 	}
 	
-	private String render(String info, Notifications.Notification notification) {
-        return String.format("<div class=\"notification_%s\">\n%s</div>\n", notification.name().toLowerCase(Locale.ENGLISH), info);
+	private String render(String message, GFMAlerts.Alert alert) {
+		return renderer.render(options, message, alert);
     }
 }

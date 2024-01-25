@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.gitbucket.markedj.extension.notification;
+package io.github.gitbucket.markedj.extension.gfm.alert;
 
 import io.github.gitbucket.markedj.token.Token;
 
@@ -21,13 +21,13 @@ import io.github.gitbucket.markedj.token.Token;
  *
  * @author t.marx
  */
-public class NotificationStartToken implements Token {
-	protected static String TYPE = "NotificationStartToken";
+public class GFMAlertStartToken implements Token {
+	protected static String TYPE = "GFMAlertStartToken";
     
-	private Notifications.Notification notification;
+	private GFMAlerts.Alert alert;
 
-    public NotificationStartToken(String type) {
-        this.notification = Notifications.Notification.fromString(type);
+    public GFMAlertStartToken(String type) {
+        this.alert = GFMAlerts.Alert.fromString(type);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class NotificationStartToken implements Token {
         return TYPE;
     }
     
-    public Notifications.Notification getNotification() {
-        return notification;
+    public GFMAlerts.Alert getNotification() {
+        return alert;
     }
 }

@@ -67,67 +67,92 @@ Extensions can be used by adding them to the options.
 
 ```java
 Options options = new Options();
-options.addExtension(new NotificationExtension());
-String html = Marked.marked("! This is an info message", options);
-  // => <div class="notification_info"><p>This is an info message</p></div>
+options.addExtension(new GFMAlertExtension());
+String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
 
-### Notification extension
+### GFMAlert extension
 
-The notification extension helps you to add information messages to your markdown content.
-Keep in mind, you still need the CSS to style the messages as desired.
+Support for github like [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
 
-#### Info message
-```text
-! This is an info message
+For styling, some project-specific CSS is required. SVG icons are embedded but can be replaced by configuration.
+
+#### Usage
+
+```java
+Options options = new Options();
+// Override default title for note alert
+GFMAlertOptions alertOptions = new GFMAlertOptions();
+alertOptions.setTitle(GFMAlerts.Alert.WARNING, "Attention!!!");
+GFMAlertExtension gfmAlerts = new GFMAlertExtension(alertOptions);
+options.addExtension(gfmAlerts);
+String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
+
+#### Supported alert types
+
+**Note**
+```markdown
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+```
+**Note HTML**
 ```html
-<div class="notification_info">
-  <p>This is an info message</p>
+<div class="markdown-alert markdown-alert-note">
+	<p class="markdown-alert-title">Note</p>
+	<p>Useful information that users should know, even when skimming content.</p>
 </div>
 ```
 
-#### Success message
-```text
-!v This is a success message
+**Tip**
+```markdown
+> [!TIP]
+> Helpful advice for doing things better or more easily.
 ```
+**Tip HTML**
 ```html
-<div class="notification_success">
-  <p>This is a success message</p>
+<div class="markdown-alert markdown-alert-tip">
+	<p class="markdown-alert-title">Tip</p>
+	<p>Helpful advice for doing things better or more easily.</p>
 </div>
 ```
 
-#### Warning message
-```text
-!! This is a warning message
+**Important**
+```markdown
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
 ```
+**Important HTML**
 ```html
-<div class="notification_warning">
-  <p>This is a warning message</p>
+<div class="markdown-alert markdown-alert-important">
+	<p class="markdown-alert-title">Important</p>
+	<p>Key information users need to know to achieve their goal.</p>
 </div>
 ```
 
-#### Error message
-```text
-!x  This is an error message
+**Warning**
+```markdown
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
 ```
+**Warning HTML**
 ```html
-<div class="notification_error">
-  <p>This is an error message</p>
+<div class="markdown-alert markdown-alert-warning">
+	<p class="markdown-alert-title">Warning</p>
+	<p>Urgent info that needs immediate user attention to avoid problems.</p>
 </div>
 ```
 
-#### Multiline notifications
-Notifications can span multiple lines.
-
-```text
-! This is an info message
-! That spans over several lines
+**Caution**
+```markdown
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
 ```
+**Caution HTML**
 ```html
-<div class="notification_info">
-<p>This is an info message
-That spans over several lines</p>
+<div class="markdown-alert markdown-alert-caution">
+	<p class="markdown-alert-title">Caution</p>
+	<p>Advises about risks or negative outcomes of certain actions.</p>
 </div>
 ```
 
