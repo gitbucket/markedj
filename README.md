@@ -46,6 +46,7 @@ sanitize     | false   | Ignore any HTML that has been input.
 langPrefix   | "lang-" | Prefix of class attribute of code block
 headerPrefix | ""      | Prefix of id attribute of header
 safelist     | See [Options.java](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/Options.java) | Safelist of HTML tags.
+extensions   | empty   | Extensions. See [Extensions](#extensions) section
 
 By default, markedj uses Jsoup's safelist mechanism for HTML rendering. It restricts renderable tags, attributes and even protocols of attribute values. For example, the image url must be `http://` or `https://` by default. You can remove this restriction by customizing the safelist as follows:
 
@@ -75,9 +76,7 @@ String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 
 Support for github like [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
 
-For styling, some project-specific CSS is required. SVG icons are embedded but can be replaced by configuration.
-
-#### Usage
+For styling, some project-specific CSS is required.
 
 ```java
 Options options = new Options();
@@ -89,72 +88,23 @@ options.addExtension(gfmAlerts);
 String html = Marked.marked("> [!NOTE]\n> This is a note!", options);
 ```
 
-#### Supported alert types
+Supported alert types are `NOTE`, `TOP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Here is a Markdown example:
 
-**Note**
 ```markdown
 > [!NOTE]
 > Useful information that users should know, even when skimming content.
 ```
-**Note HTML**
+
+This is translated to the following HTML:
+
 ```html
 <div class="markdown-alert markdown-alert-note">
-	<p class="markdown-alert-title">Note</p>
-	<p>Useful information that users should know, even when skimming content.</p>
+  <p class="markdown-alert-title">Note</p>
+  <p>Useful information that users should know, even when skimming content.</p>
 </div>
 ```
 
-**Tip**
-```markdown
-> [!TIP]
-> Helpful advice for doing things better or more easily.
-```
-**Tip HTML**
-```html
-<div class="markdown-alert markdown-alert-tip">
-	<p class="markdown-alert-title">Tip</p>
-	<p>Helpful advice for doing things better or more easily.</p>
-</div>
-```
-
-**Important**
-```markdown
-> [!IMPORTANT]
-> Key information users need to know to achieve their goal.
-```
-**Important HTML**
-```html
-<div class="markdown-alert markdown-alert-important">
-	<p class="markdown-alert-title">Important</p>
-	<p>Key information users need to know to achieve their goal.</p>
-</div>
-```
-
-**Warning**
-```markdown
-> [!WARNING]
-> Urgent info that needs immediate user attention to avoid problems.
-```
-**Warning HTML**
-```html
-<div class="markdown-alert markdown-alert-warning">
-	<p class="markdown-alert-title">Warning</p>
-	<p>Urgent info that needs immediate user attention to avoid problems.</p>
-</div>
-```
-
-**Caution**
-```markdown
-> [!CAUTION]
-> Advises about risks or negative outcomes of certain actions.
-```
-**Caution HTML**
-```html
-<div class="markdown-alert markdown-alert-caution">
-	<p class="markdown-alert-title">Caution</p>
-	<p>Advises about risks or negative outcomes of certain actions.</p>
-</div>
-```
+Generated HTML can be customized by implementing your own renderer. [DefaultGFMAlertRenderer](https://github.com/gitbucket/markedj/blob/master/src/main/java/io/github/gitbucket/markedj/extension/gfm/alert/DefaultGFMAlertRenderer.java) is used by default.
 
 ## for Developers
 
