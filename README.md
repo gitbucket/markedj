@@ -1,4 +1,4 @@
-# markedj [![build](https://github.com/gitbucket/markedj/workflows/build/badge.svg?branch=master)](https://github.com/gitbucket/markedj/actions?query=branch%3Amaster+workflow%3Abuild) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.gitbucket/markedj/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.gitbucket/markedj) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/gitbucket/markedj/blob/master/LICENSE)
+# markedj [![build](https://github.com/gitbucket/markedj/actions/workflows/build.yml/badge.svg)](https://github.com/gitbucket/markedj/actions/workflows/build.yml) [![Maven Central](https://img.shields.io/maven-central/v/io.github.gitbucket/solidbase)](https://central.sonatype.com/artifact/io.github.gitbucket/matkedj) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/gitbucket/markedj/blob/master/LICENSE)
 
 JVM port of graceful markdown processor [marked.js](https://github.com/chjj/marked).
 
