@@ -273,11 +273,67 @@ public class MarkedTest {
                 " Line 2</p>", result);
     }
 
+    // Options' default Safelist allows the "style" attribute on every tag (":all"),
+    // but jsoup only checks whether an attribute may exist -- it never validates CSS
+    // *content*. Arbitrary attacker-controlled style is a real primitive (clickjacking
+    // overlays via `position:fixed`, data exfiltration via CSS attribute selectors),
+    // reachable via any raw HTML in markdown (sanitize=false is also the default).
+    // The only legitimate producer of `style` in this library is
+    // Renderer.tablecell()'s "text-align: left|right|center", so nothing but that
+    // exact shape should ever survive.
+    @Test
+    public void testStyleAttributeRejectsArbitraryCss() throws Exception {
+        String result = Marked.marked(
+                "<div style=\"position:fixed;top:0;left:0;width:100%;height:100%;" +
+                "background:url(javascript:alert(1))\">clickjack</div>");
+        assertEquals("<div>\n clickjack\n</div>", result);
+    }
+
+    // The fix for the above must not break the one legitimate use of `style`:
+    // column alignment on tables.
+    @Test
+    public void testStyleAttributeAllowsTableAlignment() throws Exception {
+        String result = Marked.marked("|A|B|\n|--:|:--|\n|1|2|");
+        assertTrue(result.contains("style=\"text-align: right\""));
+        assertTrue(result.contains("style=\"text-align: left\""));
+    }
+
     @Test
     public void testHardLineBreakWithBackslash() {
         String result = Marked.marked("Line 1\\\n" +
                 "Line 2");
         assertEquals("<p>Line 1<br>\n" +
                 " Line 2</p>", result);
+    }
+
+    // Reproduces a quadratic-time blowup in the inline "text" rule (Grammer.INLINE_TEXT).
+    // A single character followed by a long run of trailing spaces and no terminating
+    // newline forces the lazy `[\s\S]+?` loop to re-probe the ` {2,}\n` lookahead at
+    // every one of the ~50,000 positions, and each probe rescans the remaining space
+    // run looking for a `\n` that never comes -- O(n^2) total work from one paragraph.
+    // This is trivially reachable via any GitBucket issue/PR/comment/wiki body.
+    @Test(timeout = 2000)
+    public void testLongTrailingSpacesDoesNotHang() {
+        StringBuilder sb = new StringBuilder("x");
+        for (int i = 0; i < 50_000; i++) {
+            sb.append(' ');
+        }
+        Marked.marked(sb.toString());
+    }
+
+    // Lexer.token() recurses once per nesting level of "> " to handle nested
+    // blockquotes, with no depth limit. A few thousand nesting levels (trivially
+    // reachable via any GitBucket issue/PR/comment/wiki body) blow the JVM call
+    // stack with an uncaught StackOverflowError, which -- unlike a checked
+    // exception -- will not be caught by ordinary `catch (Exception e)` error
+    // handling around the rendering call, and can crash the calling thread.
+    @Test
+    public void testDeeplyNestedBlockquoteDoesNotOverflow() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 5_000; i++) {
+            sb.append("> ");
+        }
+        sb.append("hello");
+        Marked.marked(sb.toString());
     }
 }

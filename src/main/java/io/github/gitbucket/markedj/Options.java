@@ -3,6 +3,9 @@ package io.github.gitbucket.markedj;
 import io.github.gitbucket.markedj.extension.Extension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Element;
 import org.jsoup.safety.Safelist;
 
 public class Options {
@@ -13,7 +16,28 @@ public class Options {
     private boolean sanitize = false;
     private String langPrefix = "lang-";
     private String headerPrefix = "";
-    private Safelist safelist = new Safelist()
+
+    // jsoup only checks whether "style" may exist on a tag, never what CSS it contains,
+    // so allowing it unconditionally would let raw HTML in markdown carry arbitrary CSS
+    // (clickjacking overlays via position:fixed, data exfiltration via attribute
+    // selectors, etc). The only legitimate producer of "style" in this library is
+    // Renderer.tablecell()'s table-column alignment, so that exact shape is all that's
+    // allowed through; everything else is stripped.
+    private static final Pattern SAFE_STYLE_VALUE =
+            Pattern.compile("^text-align: (left|right|center)$");
+
+    private Safelist safelist = new Safelist() {
+                @Override
+                public boolean isSafeAttribute(String tagName, Element el, Attribute attr) {
+                    if (!super.isSafeAttribute(tagName, el, attr)) {
+                        return false;
+                    }
+                    if ("style".equals(attr.getKey())) {
+                        return SAFE_STYLE_VALUE.matcher(attr.getValue()).matches();
+                    }
+                    return true;
+                }
+            }
                 .addTags(
                         "a", "b", "blockquote", "br", "caption", "cite", "code", "col",
                                 "colgroup", "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6",
