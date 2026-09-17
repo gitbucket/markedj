@@ -108,7 +108,10 @@ public class Grammer {
 
         INLINE_BREAKS_RULES.putAll(INLINE_GFM_RULES);
         INLINE_BREAKS_RULES.put("br", new FindFirstRule(INLINE_BR.replace("{2,}", "*")));
-        INLINE_BREAKS_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|").replace("{2,20}", "*")));
+        // Use "{0,20}" here, not "*": breaks mode only needs to lower the minimum from
+        // 2 spaces to 0 (any single newline is a break), not drop the upper bound that
+        // keeps this lookahead from being the same O(n^2) trap described above.
+        INLINE_BREAKS_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|").replace("{2,20}", "{0,20}")));
     }
 
 }

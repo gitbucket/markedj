@@ -321,6 +321,21 @@ public class MarkedTest {
         Marked.marked(sb.toString());
     }
 
+    // Same reproduction as testLongTrailingSpacesDoesNotHang, but with breaks=true.
+    // INLINE_BREAKS_RULES built its "text" rule by replacing the bounded "{2,20}"
+    // quantifier with an unbounded "*", silently re-introducing the O(n^2) blowup
+    // the bound above was added to fix, only reachable through this option.
+    @Test(timeout = 2000)
+    public void testLongTrailingSpacesDoesNotHangWithBreaks() {
+        StringBuilder sb = new StringBuilder("x");
+        for (int i = 0; i < 50_000; i++) {
+            sb.append(' ');
+        }
+        Options options = new Options();
+        options.setBreaks(true);
+        Marked.marked(sb.toString(), options);
+    }
+
     // Lexer.token() recurses once per nesting level of "> " to handle nested
     // blockquotes, with no depth limit. A few thousand nesting levels (trivially
     // reachable via any GitBucket issue/PR/comment/wiki body) blow the JVM call
