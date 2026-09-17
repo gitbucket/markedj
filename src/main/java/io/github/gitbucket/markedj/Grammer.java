@@ -76,7 +76,13 @@ public class Grammer {
     public static Map<String, Rule> INLINE_BREAKS_RULES = new HashMap<>();
 
     public static String INLINE_ESCAPE = "^\\\\([\\\\`*{}\\[\\]()#+\\-.!_>])";
-    public static String INLINE_TEXT   = "^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,}\\n|$)";
+    // The trailing-space branch is bounded (rather than " {2,}") because an unbounded
+    // quantifier here is re-probed by the lazy `[\s\S]+?` loop at every character of a
+    // long run of spaces, turning a single "hard line break" check into O(n^2) work
+    // over a long run of trailing whitespace with no following newline. Two or more
+    // spaces is all CommonMark/GFM ever require to recognize a hard break, so bounding
+    // the run length doesn't change behavior for any real input.
+    public static String INLINE_TEXT   = "^[\\s\\S]+?(?=[\\\\<!\\[_*`]| {2,20}\\n|$)";
     public static String INLINE_BR     = "^( {2,}|\\\\)\\n(?!\\s*$)";
 
     static {
@@ -102,7 +108,10 @@ public class Grammer {
 
         INLINE_BREAKS_RULES.putAll(INLINE_GFM_RULES);
         INLINE_BREAKS_RULES.put("br", new FindFirstRule(INLINE_BR.replace("{2,}", "*")));
-        INLINE_BREAKS_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|").replace("{2,}", "*")));
+        // Use "{0,20}" here, not "*": breaks mode only needs to lower the minimum from
+        // 2 spaces to 0 (any single newline is a break), not drop the upper bound that
+        // keeps this lookahead from being the same O(n^2) trap described above.
+        INLINE_BREAKS_RULES.put("text", new FindFirstRule(INLINE_TEXT.replace("]|", "~]|").replace("|", "|https?://|").replace("{2,20}", "{0,20}")));
     }
 
 }

@@ -10,8 +10,17 @@ import io.github.gitbucket.markedj.extension.Extension;
 
 public class Lexer {
 
+    // token() recurses once per nesting level for blockquotes and list items (and for
+    // any Extension that re-enters via TokenConsumer). With no limit, a document with a
+    // few thousand nesting levels overflows the JVM call stack with an uncaught
+    // StackOverflowError instead of a catchable failure. This bounds recursion to a
+    // depth no real-world document comes close to, and degrades gracefully by rendering
+    // anything nested deeper than this as plain text rather than crashing.
+    private static final int MAX_NESTING_DEPTH = 100;
+
     protected Options options;
     protected Map<String, Rule> rules = null;
+    private int depth = 0;
 
     public Lexer(Options options){
         this.options = options;
@@ -39,6 +48,21 @@ public class Lexer {
     }
 
     protected void token(String src, boolean top, boolean bq, LexerContext context){
+        depth++;
+        try {
+            if(depth > MAX_NESTING_DEPTH){
+                if(!src.isEmpty()){
+                    context.pushToken(new ParagraphToken(src));
+                }
+                return;
+            }
+            tokenInternal(src, top, bq, context);
+        } finally {
+            depth--;
+        }
+    }
+
+    private void tokenInternal(String src, boolean top, boolean bq, LexerContext context){
         while(src.length() > 0){
             // newline
             {
