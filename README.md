@@ -110,11 +110,11 @@ Generated HTML can be customized by implementing your own renderer. [DefaultGFMA
 
 ### Release
 
-Run the following command to upload artifacts to sonatype:
+Run the following command to upload artifacts to Sonatype's Central Portal:
 
 ```
 mvn clean deploy -DperformRelease=true
 ```
 
-Then, go to https://oss.sonatype.org/, close and release the staging repository. 
+Then, go to https://central.sonatype.com/, close and release the staging repository. 
 
