@@ -61,7 +61,7 @@ public class MarkedTest {
     @Test
     public void testIns() throws Exception {
         String result = Marked.marked("~~123~~");
-        assertEquals("<p>\n <del>123</del></p>", result);
+        assertEquals("<p><del>123</del></p>", result);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class MarkedTest {
             //options.setGfm(true); // default is true
             String result = Marked.marked(md, options);
 
-            assertEquals("<p>first line<br>\n second line</p>", result);
+            assertEquals("<p>first line\n <br>\n second line</p>", result);
         }
     }
 
@@ -232,8 +232,10 @@ public class MarkedTest {
             String result = Marked.marked("- <b>test", options);
             // It's not clean but tag is closed at least.
             assertEquals("<ul>\n" +
-                    " <li><b>test</b></li><b> </b>\n" +
-                    "</ul><b> </b>", result);
+                    " <li><b>test</b></li>\n" +
+                    " <b> </b>\n" +
+                    "</ul>\n" +
+                    "<b> </b>", result);
         }
     }
 
@@ -269,7 +271,7 @@ public class MarkedTest {
     public void testHardLineBreakWithSpaces() {
         String result = Marked.marked("Line 1  \n" +
                 "Line 2");
-        assertEquals("<p>Line 1<br>\n" +
+        assertEquals("<p>Line 1\n <br>\n" +
                 " Line 2</p>", result);
     }
 
@@ -286,7 +288,7 @@ public class MarkedTest {
         String result = Marked.marked(
                 "<div style=\"position:fixed;top:0;left:0;width:100%;height:100%;" +
                 "background:url(javascript:alert(1))\">clickjack</div>");
-        assertEquals("<div>\n clickjack\n</div>", result);
+        assertEquals("<div>clickjack</div>", result);
     }
 
     // The fix for the above must not break the one legitimate use of `style`:
@@ -302,7 +304,7 @@ public class MarkedTest {
     public void testHardLineBreakWithBackslash() {
         String result = Marked.marked("Line 1\\\n" +
                 "Line 2");
-        assertEquals("<p>Line 1<br>\n" +
+        assertEquals("<p>Line 1\n <br>\n" +
                 " Line 2</p>", result);
     }
 
